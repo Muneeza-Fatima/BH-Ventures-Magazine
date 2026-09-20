@@ -1,0 +1,130 @@
+/* ============================================================
+   BH VENTURES FZE LLC — Magazine Edition 01
+   tokens.css — single source of truth for colour, type, space.
+
+   Change a value here and it propagates to the print PDF and
+   the digital edition. Nothing else should hard-code a colour
+   or a font size.
+   ============================================================ */
+
+:root {
+
+  /* ---------- PALETTE ----------------------------------------
+     Every value extracted from the BH Ventures logo.
+     No colour from outside the mark. Warmth comes from the
+     photography, not from the palette.
+     ---------------------------------------------------------- */
+
+  /* Structure */
+  --ink:        #0E1B2B;   /* primary navy — the logo's own ground */
+  --ink-deep:   #0A1420;   /* near-black, for statement pages */
+  --ink-soft:   #16273B;   /* raised panels on dark pages */
+  --paper:      #FAFAF8;   /* light ground — never pure #FFF */
+  --paper-alt:  #F1F0EC;   /* secondary light panels */
+
+  /* Brand */
+  --mint:       #61DECE;   /* gradient light stop */
+  --aqua:       #2DD4C0;   /* rules, numerals, accents — DARK PAGES ONLY (1.8:1 on paper) */
+  --teal:       #0B8F81;   /* fills, icons, gradients */
+  --teal-deep:  #185D58;   /* the only teal safe as TEXT on light pages (7.3:1) */
+
+  /* Text */
+  --muted:      #5A6672;   /* body text on light (5.6:1) */
+  --muted-dark: #8FA3B5;   /* body text on dark  (6.6:1) */
+
+  /* Hairlines — the structural lines of the "Infrastructure" concept */
+  --rule-dark:  rgba(45, 212, 192, 0.28);   /* aqua hairline on dark */
+  --rule-light: rgba(24, 93, 88, 0.22);     /* teal hairline on light */
+
+  --grad-brand: linear-gradient(135deg, #61DECE 0%, #2DD4C0 38%, #0B8F81 72%, #185D58 100%);
+
+
+  /* ---------- PAGE GEOMETRY ----------------------------------
+     A4 trim 210x297mm + 3mm bleed on all four sides.
+     Media box therefore 216x303mm = 612x859pt.
+
+     The reference sample shipped at 793x1122pt because its HTML
+     px were exported as pt. build/verify-pdf.mjs asserts the pt
+     value so that can never ship again.
+     ---------------------------------------------------------- */
+
+  --trim-w:     210mm;
+  --trim-h:     297mm;
+  --bleed:      3mm;
+  --page-w:     216mm;   /* trim + 2x bleed */
+  --page-h:     303mm;
+
+  /* Margins measured from TRIM, not from the page edge */
+  --m-top:      15mm;
+  --m-bottom:   20mm;    /* deeper — the folio lives here */
+  --m-outer:    16mm;
+  --m-inner:    20mm;    /* deeper — saddle-stitch eats the gutter */
+
+  /* Same margins measured from the PAGE edge (what CSS needs) */
+  --p-top:      18mm;    /* bleed + m-top */
+  --p-bottom:   23mm;
+  --p-outer:    19mm;
+  --p-inner:    23mm;
+
+  /* The datum line: one hairline at the same height on every
+     page, photo or text. The eye locks onto it while flipping. */
+  --datum:      65mm;    /* bleed + 62mm from trim */
+
+  /* 12-column grid */
+  --cols:       12;
+  --gutter:     4mm;
+
+  /* 4mm baseline grid — keeps facing pages' lines aligned */
+  --baseline:   4mm;
+
+
+  /* ---------- TYPE SCALE -------------------------------------
+     Fraunces  — display, editorial serif with real character
+     Inter     — body, neutral and excellent at 9.5pt
+     Space Grotesk — kickers, folios, numerals; geometric, so it
+                     rhymes with the all-caps logo wordmark
+     ---------------------------------------------------------- */
+
+  /* Three optical sizes, three families. Static instances cannot
+     carry a variation axis, and Fraunces' optical size is the
+     reason it was chosen — so it is baked in per size instead. */
+  --font-display:    "Fraunces 144", Georgia, "Times New Roman", serif;
+  --font-display-72: "Fraunces 72",  Georgia, "Times New Roman", serif;
+  --font-display-36: "Fraunces 36",  Georgia, "Times New Roman", serif;
+  --font-body:    "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono:    "Space Grotesk", "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --t-display-xl: 88pt;   --lh-display-xl: 84pt;
+  --t-display-l:  72pt;   --lh-display-l:  70pt;
+  --t-display-m:  48pt;   --lh-display-m:  50pt;
+  --t-display-s:  28pt;   --lh-display-s:  36pt;
+  --t-deck:       13pt;   --lh-deck:       20pt;
+  --t-body:      9.5pt;   --lh-body:       15pt;
+  --t-caption:     8pt;   --lh-caption:    12pt;
+  --t-kicker:      8pt;   --lh-kicker:      8pt;
+  --t-folio:       7pt;   --lh-folio:       7pt;
+  --t-stat:       42pt;   --lh-stat:       40pt;
+
+  --track-display: -0.02em;   /* large type looks loose untracked */
+  --track-kicker:   0.18em;
+  --track-folio:    0.14em;
+
+  /* Optical size axis values for Fraunces */
+  --opsz-xl: 144;
+  --opsz-m:   72;
+  --opsz-s:   36;
+
+
+  /* ---------- SPACING ----------------------------------------
+     Everything is a multiple of the 4mm baseline. */
+  --s-1:  4mm;
+  --s-2:  8mm;
+  --s-3: 12mm;
+  --s-4: 16mm;
+  --s-6: 24mm;
+  --s-8: 32mm;
+
+  /* One stroke weight for every icon, rule and diagram.
+     Mixed stroke weights are the loudest amateur tell. */
+  --stroke: 0.4pt;
+}

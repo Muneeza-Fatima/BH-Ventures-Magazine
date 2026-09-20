@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 165 900 615" width="900" height="615" role="img" aria-label="Network of BH Ventures markets, plotted by true bearing and distance from Dubai">
+  <title>Markets by bearing and distance from Dubai</title>
+  <style>
+    .ring-label { font-family: "Space Grotesk", sans-serif; font-size: 9px; letter-spacing: .16em; fill: #2DD4C0; opacity: .34; }
+    .node-name  { font-family: "Space Grotesk", sans-serif; font-size: 12px; letter-spacing: .14em; fill: #FAFAF8; }
+    .node-name.partner { fill: #8FA3B5; }
+    .node-coord { font-family: "Space Grotesk", sans-serif; font-size: 8px;  letter-spacing: .10em; fill: #2DD4C0; opacity: .7; }
+    .legend     { font-family: "Space Grotesk", sans-serif; font-size: 9px;  letter-spacing: .16em; fill: #8FA3B5; }
+    .legend-n   { font-family: "Space Grotesk", sans-serif; font-size: 9px;  letter-spacing: .16em; fill: #2DD4C0; }
+    .origin-name{ font-family: "Space Grotesk", sans-serif; font-size: 13px; letter-spacing: .2em; fill: #FAFAF8; }
+    .cardinal   { font-family: "Space Grotesk", sans-serif; font-size: 9px;  letter-spacing: .2em;  fill: #2DD4C0; opacity: .3; }
+  </style>
+
+  <g id="spokes">
+    <line x1="430.0" y1="471.2" x2="430.0" y2="215.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="466.9" y1="481.1" x2="595.0" y2="259.2" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="493.9" y1="508.1" x2="715.8" y2="380.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="503.8" y1="545.0" x2="760.0" y2="545.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="493.9" y1="581.9" x2="715.8" y2="710.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="466.9" y1="608.9" x2="595.0" y2="830.8" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="430.0" y1="618.8" x2="430.0" y2="875.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="393.1" y1="608.9" x2="265.0" y2="830.8" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="366.1" y1="581.9" x2="144.2" y2="710.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="356.2" y1="545.0" x2="100.0" y2="545.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="366.1" y1="508.1" x2="144.2" y2="380.0" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+    <line x1="393.1" y1="481.1" x2="265.0" y2="259.2" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>
+  </g>
+
+  <g id="rings">
+    <circle cx="430" cy="545" r="95.3" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.16"/>
+    <text x="434" y="444.7" class="ring-label">1,000 KM</text>
+    <circle cx="430" cy="545" r="165.0" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.16"/>
+    <text x="434" y="375.0" class="ring-label">3,000 KM</text>
+    <circle cx="430" cy="545" r="233.3" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.16"/>
+    <text x="434" y="306.7" class="ring-label">6,000 KM</text>
+    <circle cx="430" cy="545" r="330.0" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.16"/>
+    <text x="434" y="210.0" class="ring-label">12,000 KM</text>
+  </g>
+
+  <g id="cardinals">
+    <text x="430" y="195" text-anchor="middle" class="cardinal">N</text>
+  </g>
+
+  <g id="arcs">
+    <path d="M430.0 545.0 Q490.6 536.5 535.0 494.4" fill="none" stroke="var(--aqua, #2DD4C0)" stroke-width="1" opacity="0.55"/>
+    <path d="M430.0 545.0 Q380.9 438.8 279.2 380.9" fill="none" stroke="var(--aqua, #2DD4C0)" stroke-width="1" opacity="0.55"/>
+    <path d="M430.0 545.0 Q377.2 385.1 241.4 285.6" fill="none" stroke="var(--aqua, #2DD4C0)" stroke-width="1" opacity="0.55"/>
+    <path d="M430.0 545.0 Q376.3 443.8 273.9 392.6" fill="none" stroke="var(--aqua, #2DD4C0)" stroke-width="1" opacity="0.55"/>
+    <path d="M430.0 545.0 Q393.3 443.9 304.7 383.0" fill="none" stroke="var(--teal, #0B8F81)" stroke-width="1" stroke-dasharray="3 4" opacity="0.4"/>
+    <path d="M430.0 545.0 Q419.3 439.7 349.5 360.2" fill="none" stroke="var(--teal, #0B8F81)" stroke-width="1" stroke-dasharray="3 4" opacity="0.4"/>
+    <path d="M430.0 545.0 Q399.6 439.4 313.5 371.2" fill="none" stroke="var(--teal, #0B8F81)" stroke-width="1" stroke-dasharray="3 4" opacity="0.4"/>
+    <path d="M430.0 545.0 Q409.2 453.6 339.2 391.2" fill="none" stroke="var(--teal, #0B8F81)" stroke-width="1" stroke-dasharray="3 4" opacity="0.4"/>
+    <path d="M430.0 545.0 Q385.2 532.2 341.3 547.8" fill="none" stroke="var(--teal, #0B8F81)" stroke-width="1" stroke-dasharray="3 4" opacity="0.4"/>
+  </g>
+
+  <g id="nodes">
+    <g>
+      <circle cx="430" cy="545" r="26" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.35"/>
+      <circle cx="430" cy="545" r="15" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.7"/>
+      <circle cx="430" cy="545" r="4.5" fill="#2DD4C0"/>
+      <text x="430" y="593" text-anchor="middle" class="origin-name">DUBAI</text>
+      <text x="430" y="607" text-anchor="middle" class="node-coord">25°12′N 55°16′E</text>
+    </g>
+    <g>
+      <path d="M535.0 494.4 L770.0 490.4 L762.0 490.4" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="535.0" cy="494.4" r="4" fill="#2DD4C0"/>
+      <text x="886" y="488.4" text-anchor="end" class="node-name direct">PAKISTAN</text>
+      <text x="886" y="500.4" text-anchor="end" class="node-coord">30°22′N 69°21′E &#183; 1,498 KM</text>
+    </g>
+    <g>
+      <path d="M279.2 380.9 L130.0 442.0 L138.0 442.0" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="279.2" cy="380.9" r="4" fill="#2DD4C0"/>
+      <text x="14" y="440.0" text-anchor="start" class="node-name direct">UNITED KINGDOM</text>
+      <text x="14" y="452.0" text-anchor="start" class="node-coord">51°30′N 00°07′W &#183; 5,473 KM</text>
+    </g>
+    <g>
+      <path d="M241.4 285.6 L130.0 275.4 L138.0 275.4" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="241.4" cy="285.6" r="4" fill="#2DD4C0"/>
+      <text x="14" y="273.4" text-anchor="start" class="node-name direct">UNITED STATES</text>
+      <text x="14" y="285.4" text-anchor="start" class="node-coord">38°54′N 77°02′W &#183; 11,332 KM</text>
+    </g>
+    <g>
+      <path d="M273.9 392.6 L130.0 580.0 L138.0 580.0" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="273.9" cy="392.6" r="4" fill="#2DD4C0"/>
+      <text x="14" y="578.0" text-anchor="start" class="node-name direct">FRANCE</text>
+      <text x="14" y="590.0" text-anchor="start" class="node-coord">48°51′N 02°21′E &#183; 5,247 KM</text>
+    </g>
+    <g>
+      <path d="M304.7 383.0 L130.0 488.0 L138.0 488.0" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="304.7" cy="383.0" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>
+      <text x="14" y="486.0" text-anchor="start" class="node-name partner">GERMANY</text>
+      <text x="14" y="498.0" text-anchor="start" class="node-coord">52°31′N 13°24′E &#183; 4,624 KM</text>
+    </g>
+    <g>
+      <path d="M349.5 360.2 L130.0 350.0 L138.0 350.0" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="349.5" cy="360.2" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>
+      <text x="14" y="348.0" text-anchor="start" class="node-name partner">ESTONIA</text>
+      <text x="14" y="360.0" text-anchor="start" class="node-coord">59°26′N 24°45′E &#183; 4,478 KM</text>
+    </g>
+    <g>
+      <path d="M313.5 371.2 L130.0 396.0 L138.0 396.0" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="313.5" cy="371.2" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>
+      <text x="14" y="394.0" text-anchor="start" class="node-name partner">DENMARK</text>
+      <text x="14" y="406.0" text-anchor="start" class="node-coord">55°40′N 12°34′E &#183; 4,825 KM</text>
+    </g>
+    <g>
+      <path d="M339.2 391.2 L130.0 534.0 L138.0 534.0" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="339.2" cy="391.2" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>
+      <text x="14" y="532.0" text-anchor="start" class="node-name partner">UKRAINE</text>
+      <text x="14" y="544.0" text-anchor="start" class="node-coord">50°27′N 30°31′E &#183; 3,516 KM</text>
+    </g>
+    <g>
+      <path d="M341.3 547.8 L130.0 626.0 L138.0 626.0" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="341.3" cy="547.8" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>
+      <text x="14" y="624.0" text-anchor="start" class="node-name wider">SAUDI ARABIA</text>
+      <text x="14" y="636.0" text-anchor="start" class="node-coord">24°42′N 46°41′E &#183; 868 KM</text>
+    </g>
+  </g>
+
+  <g id="legend" transform="translate(0 696)">
+    <line x1="0" y1="0" x2="900" y2="0" stroke="#2DD4C0" stroke-width="0.6" opacity="0.22"/>
+    <circle cx="8" cy="26" r="4" fill="#2DD4C0"/>
+    <text x="22" y="30" class="legend-n">DIRECT OPERATIONS</text>
+    <text x="196" y="30" class="legend">5</text>
+
+    <circle cx="8" cy="52" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>
+    <text x="22" y="56" class="legend">STRATEGIC PARTNERSHIPS</text>
+    <text x="252" y="56" class="legend">4</text>
+
+    <text x="380" y="30" class="legend">PLOTTED BY TRUE BEARING FROM DUBAI</text>
+    <text x="380" y="56" class="legend">RINGS ARE GREAT-CIRCLE DISTANCE</text>
+  </g>
+</svg>

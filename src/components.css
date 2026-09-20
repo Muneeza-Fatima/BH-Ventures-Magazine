@@ -1,0 +1,412 @@
+/* ============================================================
+   components.css — the parts the pages are assembled from.
+   Page geometry lives in print.css; colour and scale in tokens.css.
+   ============================================================ */
+
+/* ---------- KICKER ------------------------------------------
+   'O3 · THE WORLD WE OPERATE IN' — the running head of each
+   section. Space Grotesk, wide tracking, small. */
+
+.kicker {
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  font-family: var(--font-mono);
+  font-size: var(--t-kicker);
+  line-height: var(--lh-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--muted-dark);
+}
+
+.page--light .kicker { color: var(--muted); }
+
+.kicker__n {
+  font-family: var(--font-display);
+  font-family: var(--font-display-36);
+  font-size: 12pt;
+  letter-spacing: 0;
+  color: var(--aqua);
+  font-feature-settings: "tnum" 1;
+}
+
+.page--light .kicker__n { color: var(--teal-deep); }
+
+/* ---------- SHEET NUMERAL ----------------------------------
+   The section number set the way a drawing set numbers its
+   sheets: very large, outlined, bleeding off the edge. Structure,
+   not ornament — so it is never filled, never centred. */
+
+.sheet-numeral {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 132pt;
+  line-height: 0.8;
+  font-weight: 500;
+  color: transparent;
+  -webkit-text-stroke: 0.6pt var(--aqua);
+  /* Quiet. It is a sheet number, not a headline — at 0.38 it was
+     competing with the section title for the top of the page. */
+  opacity: 0.2;
+  font-feature-settings: "tnum" 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.page--light .sheet-numeral {
+  -webkit-text-stroke-color: var(--teal-deep);
+  opacity: 0.22;
+}
+
+/* ---------- DISPLAY TYPE ------------------------------------ */
+
+.display-xl,
+.display-l,
+.display-m,
+.display-s {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: var(--track-display);
+  margin: 0;
+  /* Display type is always ragged right. Justifying a headline
+     opens rivers you cannot close. */
+  text-wrap: balance;
+  hyphens: none;
+}
+
+.display-xl { font-size: var(--t-display-xl); line-height: var(--lh-display-xl); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1; }
+.display-l  { font-size: var(--t-display-l);  line-height: var(--lh-display-l);  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1; }
+.display-m  { font-family: var(--font-display-72); font-size: var(--t-display-m);  line-height: var(--lh-display-m);  font-variation-settings: "opsz" 72,  "SOFT" 0, "WONK" 1; }
+.display-s  { font-family: var(--font-display-36); font-size: var(--t-display-s);  line-height: var(--lh-display-s);  font-variation-settings: "opsz" 36,  "SOFT" 0, "WONK" 1; }
+
+/* The second half of a two-part headline, set in italic teal.
+   Used sparingly — it is the magazine's one flourish. */
+.em {
+  font-style: italic;
+  color: var(--aqua);
+}
+
+.page--light .em { color: var(--teal-deep); }
+
+/* ---------- BODY -------------------------------------------- */
+
+.deck {
+  font-family: var(--font-body);
+  font-size: var(--t-deck);
+  line-height: var(--lh-deck);
+  font-weight: 400;
+  color: var(--muted-dark);
+  margin: 0;
+  max-width: 105mm;
+}
+
+.page--light .deck { color: var(--muted); }
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--muted-dark);
+  /* Oldstyle figures sit inside a line of prose instead of
+     shouting out of it. */
+  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+  orphans: 3;
+  widows: 3;
+  margin: 0 0 var(--s-1);
+  /* 60–70 characters is the readable measure. Wider tires the
+     eye; narrower breaks the rhythm. */
+  max-width: 82mm;
+}
+
+.page--light .body { color: var(--muted); }
+
+.body strong {
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.page--light .body strong { color: var(--ink); }
+
+/* Two-column setting is the one place justification belongs —
+   it is the magazine convention, and the column is narrow
+   enough that hyphenation can close the gaps. */
+.body--2col {
+  column-count: 2;
+  column-gap: var(--gutter);
+  max-width: none;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* ---------- RULES -------------------------------------------
+   Every rule in the book is the same weight. */
+
+.rule {
+  height: 0;
+  border-top: var(--stroke) solid var(--rule-dark);
+  margin: 0;
+}
+
+.page--light .rule { border-top-color: var(--rule-light); }
+
+.rule--brand {
+  height: 0.8mm;
+  border: 0;
+  background: var(--grad-brand);
+}
+
+/* ---------- PULL-QUOTE --------------------------------------
+   Hanging punctuation: the opening quote mark sits outside the
+   measure, so the left edge stays optically straight. Without
+   this the whole block looks indented by accident. */
+
+.pullquote {
+  position: relative;
+  font-family: var(--font-display-36);
+  font-size: var(--t-display-s);
+  line-height: var(--lh-display-s);
+  font-weight: 400;
+  letter-spacing: var(--track-display);
+  margin: 0;
+  max-width: 96mm;
+}
+
+.pullquote::before {
+  content: "“";
+  position: absolute;
+  left: -0.42em;
+  top: -0.06em;
+  font-size: 1.5em;
+  line-height: 1;
+  color: var(--aqua);
+  opacity: 0.55;
+}
+
+.page--light .pullquote::before { color: var(--teal-deep); }
+
+.pullquote--bare::before { content: none; }
+
+.pullquote__attrib {
+  display: block;
+  margin-top: var(--s-1);
+  font-family: var(--font-mono);
+  font-size: var(--t-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--muted-dark);
+}
+
+/* ---------- STAT BLOCK --------------------------------------
+   Tabular figures are not optional. Without "tnum" the digits
+   in 9 / 5 / 4 / 150+ have different widths and the row of
+   numbers visibly staggers. */
+
+.stats {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--gutter);
+}
+
+.stat {
+  padding-top: var(--s-1);
+  border-top: var(--stroke) solid var(--rule-dark);
+}
+
+.page--light .stat { border-top-color: var(--rule-light); }
+
+.stat__value {
+  display: block;
+  font-family: var(--font-display);
+  font-family: var(--font-display-72);
+  font-size: var(--t-stat);
+  line-height: var(--lh-stat);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--aqua);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.page--light .stat__value { color: var(--teal-deep); }
+
+.stat__label {
+  display: block;
+  margin-top: 2mm;
+  font-family: var(--font-mono);
+  font-size: var(--t-kicker);
+  line-height: 11pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.page--light .stat__label { color: var(--ink); }
+
+.stat__note {
+  display: block;
+  margin-top: 1.5mm;
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  line-height: var(--lh-caption);
+  color: var(--muted-dark);
+}
+
+.page--light .stat__note { color: var(--muted); }
+
+/* An unresolved [X] placeholder. Deliberately loud: a number
+   that never got filled must not be able to reach a printer
+   quietly. build.mjs also warns on every one of these. */
+.stat--todo .stat__value {
+  color: transparent;
+  -webkit-text-stroke: 0.4pt var(--aqua);
+  opacity: 0.8;
+}
+
+.stat--todo {
+  border-top-style: dashed;
+  border-top-width: 0.5pt;
+}
+
+/* ---------- VENTURE CARD ------------------------------------ */
+
+.venture {
+  display: grid;
+  grid-template-columns: 9mm 1fr;
+  column-gap: 3mm;
+  padding: var(--s-1) 0;
+  border-top: var(--stroke) solid var(--rule-dark);
+  break-inside: avoid;
+}
+
+.page--light .venture { border-top-color: var(--rule-light); }
+
+.venture__n {
+  font-family: var(--font-display);
+  font-family: var(--font-display-36);
+  font-size: 13pt;
+  line-height: 15pt;
+  color: var(--aqua);
+  font-feature-settings: "tnum" 1;
+}
+
+.page--light .venture__n { color: var(--teal-deep); }
+
+.venture__name {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 10.5pt;
+  line-height: 14pt;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.page--light .venture__name { color: var(--ink); }
+
+.venture__desc {
+  margin: 1.5mm 0 0;
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  line-height: var(--lh-caption);
+  color: var(--muted-dark);
+  max-width: 62mm;
+}
+
+.page--light .venture__desc { color: var(--muted); }
+
+/* The paint has to be set on the <svg> itself, not on descendant
+   selectors. <use> clones its target into a shadow tree, and
+   document CSS does not match elements inside it — only inherited
+   properties cross that boundary. fill and stroke are inherited;
+   `.venture__icon path { ... }` is not, which is why every icon
+   first printed as a solid black blob. */
+.venture__icon {
+  width: 7mm;
+  height: 7mm;
+  margin-bottom: 1.5mm;
+  display: block;
+  overflow: visible;
+
+  fill: none;
+  stroke: var(--aqua);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.page--light .venture__icon { stroke: var(--teal-deep); }
+
+.group-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--aqua);
+  margin: 0 0 2mm;
+}
+
+.page--light .group-label { color: var(--teal-deep); }
+
+/* ---------- PHOTOGRAPHY -------------------------------------
+   Images arrive already graded by sharp. Nothing here filters,
+   blends or masks: a CSS blend mode would export into the PDF
+   as live transparency, which is exactly the bug that turns
+   every photo pink in Firefox. */
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-soft);
+}
+
+.photo-bleed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.photo-caption {
+  font-family: var(--font-mono);
+  font-size: 6.5pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--muted-dark);
+  margin-top: 2mm;
+}
+
+.page--light .photo-caption { color: var(--muted); }
+
+/* ---------- COORDINATES ------------------------------------- */
+
+.coords {
+  font-family: var(--font-mono);
+  font-size: 6.5pt;
+  letter-spacing: 0.1em;
+  color: var(--aqua);
+  opacity: 0.75;
+  font-feature-settings: "tnum" 1;
+}
+
+.page--light .coords { color: var(--teal-deep); }
+
+/* ---------- LAYOUT HELPERS ---------------------------------- */
+
+.stack   { display: flex; flex-direction: column; }
+.gap-1   { gap: var(--s-1); }
+.gap-2   { gap: var(--s-2); }
+.gap-3   { gap: var(--s-3); }
+.gap-4   { gap: var(--s-4); }
+.mt-auto { margin-top: auto; }
+.rel     { position: relative; z-index: 1; }
+
+/* Content sits below the datum line on most pages. */
+.below-datum { margin-top: calc(var(--datum) - var(--p-top) + var(--s-2)); }

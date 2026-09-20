@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Geometry test</title>
+<link rel="stylesheet" href="../brand/tokens.css">
+<link rel="stylesheet" href="../src/print.css">
+<style>
+  /* Marks that make a wrong page size obvious by eye as well as
+     by verify-pdf.mjs. The inner box sits exactly on the trim. */
+  .trimbox {
+    position: absolute;
+    top: var(--bleed); left: var(--bleed);
+    width: var(--trim-w); height: var(--trim-h);
+    border: 0.3mm dashed rgba(45,212,192,.55);
+  }
+  .label {
+    position: absolute; left: var(--p-inner); top: var(--p-top);
+    font-family: var(--font-mono); font-size: 11pt; letter-spacing: .1em;
+    color: var(--aqua);
+  }
+  .note { position:absolute; left: var(--p-inner); top: 80mm;
+    font-family: var(--font-body); font-size: 10pt; line-height: 16pt; color: var(--paper); max-width: 120mm; }
+  .swatches { position:absolute; left: var(--p-inner); bottom: 45mm; display:flex; gap:3mm; }
+  .sw { width: 18mm; height: 18mm; }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="trimbox"></div>
+  <div class="label">GEOMETRY TEST · PAGE 01 · RECTO</div>
+  <div class="note">
+    Dashed line = trim edge (210&times;297mm). Everything outside it is the 3mm bleed.
+    The hairline above is the datum, 62mm from trim on every page.
+    The four swatches below prove <code>print-color-adjust: exact</code> is working —
+    if any of them prints white, backgrounds are being dropped.
+  </div>
+  <div class="swatches">
+    <div class="sw" style="background:var(--ink-soft)"></div>
+    <div class="sw" style="background:var(--teal)"></div>
+    <div class="sw" style="background:var(--aqua)"></div>
+    <div class="sw" style="background:var(--mint)"></div>
+  </div>
+  <div class="folio">
+    <span>BH VENTURES · 25°12′N 55°16′E</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">01</span>
+  </div>
+</section>
+
+<section class="page page--light">
+  <div class="trimbox"></div>
+  <div class="label" style="color:var(--teal-deep)">GEOMETRY TEST · PAGE 02 · VERSO</div>
+  <div class="note" style="color:var(--muted)">
+    This page is light. Margins mirror: the deeper 20mm inner margin is now on the
+    right, because a verso binds on its right edge. The datum line mirrors with it.
+  </div>
+  <div class="swatches">
+    <div class="sw" style="background:var(--paper-alt)"></div>
+    <div class="sw" style="background:var(--teal-deep)"></div>
+    <div class="sw" style="background:var(--teal)"></div>
+    <div class="sw" style="background:var(--ink)"></div>
+  </div>
+  <div class="folio">
+    <span>BH VENTURES · 25°12′N 55°16′E</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">02</span>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+/* ============================================================
+   fonts.css — self-hosted STATIC instances.
+
+   Two decisions here, both forced by how the PDF has to behave.
+
+   1. LOCAL, NOT A CDN. A slow fetch and Chrome prints the
+      fallback instead, silently, and nobody sees it until the
+      job is on paper.
+
+   2. STATIC, NOT VARIABLE. Chrome's PDF export embeds a variable
+      font as a Type 3 font — glyphs as drawing programs rather
+      than as a real embedded typeface. It looks right on screen,
+      but Type 3 is not allowed in PDF/X-4 and prepress RIPs
+      reject or rasterise it. Measured both ways on this project:
+      variable gave "Type3: 1, FontFile2: 0"; static gives
+      "Type3: 0, FontFile2: 1".
+
+   Because the instances are static, Fraunces' optical-size axis
+   cannot be set in CSS any more. So it is baked into three
+   separate families instead — which is exactly what an optical
+   size is for, and the reason Fraunces was chosen at all:
+
+     Fraunces 144   display, 48pt and up: sharp serifs, high
+                    contrast, tight apertures
+     Fraunces 72    section headings and figures
+     Fraunces 36    pull-quotes and statement text: opened up,
+                    lighter, readable at 28pt
+
+   All three carry WONK=1, the axis that gives the face its
+   character rather than making it generic.
+   ============================================================ */
+
+@font-face {
+  font-family: "Fraunces 144";
+  src: url("../assets/fonts/fraunces-144.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;   /* block, not swap — a flash of fallback would bake into the PDF */
+}
+
+@font-face {
+  font-family: "Fraunces 144";
+  src: url("../assets/fonts/fraunces-144i.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Fraunces 72";
+  src: url("../assets/fonts/fraunces-72.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Fraunces 72";
+  src: url("../assets/fonts/fraunces-72i.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Fraunces 36";
+  src: url("../assets/fonts/fraunces-36.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Fraunces 36";
+  src: url("../assets/fonts/fraunces-36i.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../assets/fonts/grotesk-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../assets/fonts/grotesk-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}

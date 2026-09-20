@@ -1,0 +1,250 @@
+/* ============================================================
+   print.css — page geometry only.
+   Component styling lives in components.css.
+
+   This file is the one that has to be right before any design
+   happens. The reference sample's fatal bug (793x1122pt instead
+   of 612x859pt) was a geometry bug, not a design bug.
+   ============================================================ */
+
+@page {
+  size: 216mm 303mm;   /* A4 trim + 3mm bleed on all sides */
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #6b6b6b;           /* screen only — the pasteboard around pages */
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+
+  /* Without this every dark page prints white. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: geometricPrecision;
+}
+
+/* ---------- THE PAGE ---------------------------------------- */
+
+.page {
+  position: relative;
+  width: var(--page-w);
+  height: var(--page-h);
+  overflow: hidden;
+  break-after: page;
+  break-inside: avoid;
+  page-break-after: always;       /* legacy alias, harmless */
+  background: var(--ink);
+  color: var(--paper);
+
+  /* Content box: margins measured from the page edge, so they
+     already include the 3mm bleed. */
+  padding: var(--p-top) var(--p-outer) var(--p-bottom) var(--p-inner);
+}
+
+.page:last-of-type {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+/* Recto (odd) pages bind on the left; verso (even) on the right.
+   Page 1 is the cover, so odd == right-hand page. */
+.page:nth-of-type(even) {
+  padding-left: var(--p-outer);
+  padding-right: var(--p-inner);
+}
+
+/* Light pages flip the whole colour contract. */
+.page--light {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.page--deep {
+  background: var(--ink-deep);
+}
+
+/* Full-bleed pages manage their own insets. */
+.page--bleed {
+  padding: 0;
+}
+
+/* ---------- THE DATUM LINE ----------------------------------
+   One hairline at exactly the same height on every page. It is
+   the spine of the "Infrastructure" concept: the eye locks onto
+   it while flipping and reads the whole book as one system. */
+
+.page::before {
+  content: "";
+  position: absolute;
+  left: var(--p-inner);
+  right: var(--p-outer);
+  top: var(--datum);
+  height: 0;
+  border-top: var(--stroke) solid var(--rule-dark);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.page:nth-of-type(even)::before {
+  left: var(--p-outer);
+  right: var(--p-inner);
+}
+
+.page--light::before {
+  border-top-color: var(--rule-light);
+}
+
+/* Over photography the datum has to survive a bright sky. */
+.page--bleed::before {
+  left: var(--p-inner);
+  right: var(--p-outer);
+  border-top-color: rgba(250, 250, 248, 0.35);
+}
+
+.page--no-datum::before {
+  display: none;
+}
+
+/* ---------- THE FOLIO ---------------------------------------
+   'BH VENTURES · 25°12'N 55°16'E' left, page number right.
+   The coordinates are the Dubai address, repeated on every page:
+   specificity reads as credibility. */
+
+.folio {
+  position: absolute;
+  left: var(--p-inner);
+  right: var(--p-outer);
+  bottom: calc(var(--bleed) + 9mm);
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+
+  font-family: var(--font-mono);
+  font-size: var(--t-folio);
+  line-height: var(--lh-folio);
+  letter-spacing: var(--track-folio);
+  text-transform: uppercase;
+  color: var(--paper);
+  opacity: 0.4;
+  z-index: 4;
+}
+
+.page:nth-of-type(even) .folio {
+  left: var(--p-outer);
+  right: var(--p-inner);
+}
+
+.page--light .folio {
+  color: var(--ink);
+  opacity: 0.45;
+}
+
+.folio__rule {
+  flex: 1;
+  height: 0;
+  border-top: var(--stroke) solid currentColor;
+  opacity: 0.5;
+}
+
+.folio__n {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ---------- GRID -------------------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  column-gap: var(--gutter);
+}
+
+/* ---------- CROP MARKS (opt-in via ?crops=1) ----------------
+   Printers that impose the job themselves do not want these,
+   so they are off unless asked for. */
+
+.crops .page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background:
+    /* top-left */
+    linear-gradient(to right, #000 0 3mm) 0 3mm / 3mm 0.2mm no-repeat,
+    linear-gradient(to bottom, #000 0 3mm) 3mm 0 / 0.2mm 3mm no-repeat,
+    /* top-right */
+    linear-gradient(to left, #000 0 3mm) 100% 3mm / 3mm 0.2mm no-repeat,
+    linear-gradient(to bottom, #000 0 3mm) calc(100% - 3mm) 0 / 0.2mm 3mm no-repeat,
+    /* bottom-left */
+    linear-gradient(to right, #000 0 3mm) 0 calc(100% - 3mm) / 3mm 0.2mm no-repeat,
+    linear-gradient(to top, #000 0 3mm) 3mm 100% / 0.2mm 3mm no-repeat,
+    /* bottom-right */
+    linear-gradient(to left, #000 0 3mm) 100% calc(100% - 3mm) / 3mm 0.2mm no-repeat,
+    linear-gradient(to top, #000 0 3mm) calc(100% - 3mm) 100% / 0.2mm 3mm no-repeat;
+}
+
+/* ---------- TRIMMED WEB VARIANT (?trim=1) -------------------
+   Same HTML, 210x297mm, no bleed, no crops — for WhatsApp and
+   email, where bleed marks just look like a mistake. */
+
+.trim .page {
+  width: var(--trim-w);
+  height: var(--trim-h);
+  padding: var(--m-top) var(--m-outer) var(--m-bottom) var(--m-inner);
+}
+
+.trim .page:nth-of-type(even) {
+  padding-left: var(--m-outer);
+  padding-right: var(--m-inner);
+}
+
+.trim .page::before {
+  left: var(--m-inner);
+  right: var(--m-outer);
+  top: 62mm;
+}
+
+.trim .page:nth-of-type(even)::before {
+  left: var(--m-outer);
+  right: var(--m-inner);
+}
+
+.trim .folio {
+  left: var(--m-inner);
+  right: var(--m-outer);
+  bottom: 9mm;
+}
+
+.trim .page:nth-of-type(even) .folio {
+  left: var(--m-outer);
+  right: var(--m-inner);
+}
+
+/* ---------- SCREEN PREVIEW ONLY ------------------------------
+   Never applies during PDF export, because @media print wins. */
+
+@media screen {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10mm;
+    padding: 10mm 0;
+  }
+  .page {
+    box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.45);
+  }
+}

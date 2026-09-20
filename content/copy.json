@@ -1,0 +1,467 @@
+{
+  "_README": "Every word of text in the magazine lives in this file, verbatim from the client draft. Edit here, rebuild, and both the PDF and the digital edition update. Never edit text inside the HTML. Anything still containing [X] is an unresolved placeholder and the build will warn about it.",
+  "meta": {
+    "company": "BH Ventures FZE LLC",
+    "city": "Dubai",
+    "country": "United Arab Emirates",
+    "email": "info@bhventures.ae",
+    "site": "bhventures.ae",
+    "edition": "Edition 01",
+    "year": "MMXXVI",
+    "coords": "25°12′N 55°16′E",
+    "tagline": "Building opportunities. Creating global impact.",
+    "licence": ""
+  },
+  "cover": {
+    "kicker": "BH Ventures FZE LLC · Dubai, UAE · Edition 01",
+    "title_a": "Building the Future",
+    "title_b": "of Ventures.",
+    "deck": "Bridging Trade, Technology & Innovation from the UAE.",
+    "footer": "Ten disciplines · Nine markets · One standard"
+  },
+  "s01": {
+    "n": "01",
+    "kicker": "The Opening",
+    "statement": "Where trade meets technology, and ambition becomes architecture.",
+    "statement_tail": "This is BH Ventures.",
+    "body": "From a single address in Dubai, BH Ventures moves cars, cargo, code, and capital across nine countries and counting. It is not one business — it is ten disciplines operating on one standard, built by a licensed free-zone company that treats ambition as infrastructure, not inspiration."
+  },
+  "s02": {
+    "n": "02",
+    "kicker": "The Company",
+    "title_a": "Who",
+    "title_b": "We Are",
+    "body": [
+      "BH Ventures FZE LLC is a UAE-based, licensed free-zone company built around a simple conviction: opportunity has no single address.",
+      "What began as an international trading operation has grown into a portfolio of ventures spanning global trade, artificial intelligence, Web3, digital analytics, marketing, and market intelligence — unified not by industry, but by discipline.",
+      "The company operates as a builder of businesses rather than a single business itself: identifying high-potential markets, constructing ventures inside them, and connecting the partnerships that let those ventures scale. Every division — from automobile export to AI consultancy — answers to the same address in Dubai."
+    ],
+    "spans_label": "Portfolio spans",
+    "spans": [
+      "Global Trade",
+      "Artificial Intelligence",
+      "Web3",
+      "Digital Analytics",
+      "Marketing",
+      "Market Intelligence"
+    ],
+    "pullquote_a": "Ten disciplines.",
+    "pullquote_b": "One standard."
+  },
+  "s03": {
+    "n": "03",
+    "kicker": "The World We Operate In",
+    "title": "Where We Operate",
+    "lede": "BH Ventures runs on two kinds of presence: direct operations, and strategic partnership.",
+    "direct_label": "Direct Operations",
+    "direct": [
+      {
+        "name": "United Arab Emirates",
+        "coords": "25°12′N 55°16′E"
+      },
+      {
+        "name": "Pakistan",
+        "coords": "30°22′N 69°21′E"
+      },
+      {
+        "name": "United Kingdom",
+        "coords": "51°30′N 00°07′W"
+      },
+      {
+        "name": "United States",
+        "coords": "38°54′N 77°02′W"
+      },
+      {
+        "name": "France",
+        "coords": "48°51′N 02°21′E"
+      }
+    ],
+    "partners_label": "Strategic Partnerships",
+    "partners": [
+      {
+        "name": "Germany",
+        "coords": "52°31′N 13°24′E"
+      },
+      {
+        "name": "Estonia",
+        "coords": "59°26′N 24°45′E"
+      },
+      {
+        "name": "Denmark",
+        "coords": "55°40′N 12°34′E"
+      },
+      {
+        "name": "Ukraine",
+        "coords": "50°27′N 30°31′E"
+      }
+    ],
+    "wider_label": "Wider network",
+    "wider": [
+      {
+        "name": "Saudi Arabia",
+        "coords": "24°42′N 46°41′E"
+      }
+    ],
+    "body": "Add Saudi Arabia to the wider network, and the footprint stretches across the Gulf, South Asia, Europe, and North America — nine markets and growing, each chosen for what it adds to the whole rather than for its size alone. Beyond direct geography, the company's trading community reaches further still — a network built for traders across 150+ countries, proof that BH Ventures' idea of “market” was never bound by borders in the first place.",
+    "stats": [
+      {
+        "value": "9",
+        "label": "Locations"
+      },
+      {
+        "value": "5",
+        "label": "Direct Operations"
+      },
+      {
+        "value": "4",
+        "label": "Strategic Partnerships"
+      },
+      {
+        "value": "150+",
+        "label": "Countries in Trading Network"
+      }
+    ]
+  },
+  "s04": {
+    "n": "04",
+    "kicker": "The Ventures",
+    "title_a": "Ten Disciplines,",
+    "title_b": "One Address.",
+    "groups": [
+      {
+        "label": "Global Trade",
+        "items": [
+          {
+            "n": "01",
+            "name": "New Automobile Trading (Export)",
+            "desc": "Moving vehicles out of the UAE and into new markets, built on precision logistics and trusted export channels.",
+            "icon": "auto"
+          },
+          {
+            "n": "02",
+            "name": "Foodstuff Trading",
+            "desc": "Import and export of foodstuff, connecting supply chains across borders with reliability at scale.",
+            "icon": "food"
+          }
+        ]
+      },
+      {
+        "label": "Venture Building",
+        "items": [
+          {
+            "n": "03",
+            "name": "Web3 Venture Studio",
+            "desc": "From concept to launch, building decentralized ventures for a market still being defined.",
+            "icon": "web3"
+          }
+        ]
+      },
+      {
+        "label": "Data & Insight",
+        "items": [
+          {
+            "n": "04",
+            "name": "Digital Analytics Services",
+            "desc": "Dashboards and attribution that turn scattered data into decisions.",
+            "icon": "analytics"
+          }
+        ]
+      },
+      {
+        "label": "Growth",
+        "items": [
+          {
+            "n": "05",
+            "name": "Marketing via Social Media",
+            "desc": "Strategy and amplification for brands that need to be seen, not just heard.",
+            "icon": "social"
+          },
+          {
+            "n": "06",
+            "name": "Advertising",
+            "desc": "Campaign strategy and execution built for reach and recall.",
+            "icon": "ads"
+          },
+          {
+            "n": "07",
+            "name": "Marketing Management",
+            "desc": "Strategy and growth, managed end to end.",
+            "icon": "manage"
+          }
+        ]
+      },
+      {
+        "label": "Innovation",
+        "items": [
+          {
+            "n": "08",
+            "name": "AI Research & Consultancies",
+            "desc": "An innovation practice exploring where artificial intelligence actually creates value.",
+            "icon": "ai"
+          }
+        ]
+      },
+      {
+        "label": "Assessment",
+        "items": [
+          {
+            "n": "09",
+            "name": "Surveying & Evaluating",
+            "desc": "Ground-truth services that inform decisions before capital moves.",
+            "icon": "survey"
+          }
+        ]
+      },
+      {
+        "label": "Experience",
+        "items": [
+          {
+            "n": "10",
+            "name": "Exhibition Organizing",
+            "desc": "From concept to on-site execution, building the moments where business happens in person.",
+            "icon": "expo"
+          }
+        ]
+      }
+    ],
+    "closing": "Trade. Web3. AI. Marketing. Nine services, one address — each engineered to the same exacting standard.",
+    "_closing_note": "PRE-PRINT ITEM 1: the draft says 'Nine services' but lists ten ventures, and sections 02 and 06 both say 'ten disciplines'. Change to 'Ten ventures' once the client confirms."
+  },
+  "s05": {
+    "n": "05",
+    "kicker": "The People Behind the Vision",
+    "title_a": "The People",
+    "title_b": "Behind the Vision",
+    "body": "Behind every venture is a decision made by someone who chose to build rather than wait. BH Ventures is run by a small team of operators — traders, technologists, and market builders — who treat every new market the way an architect treats a blank site: with respect for what's already there, and a plan for what isn't yet.",
+    "pullquote_a": "We don't enter markets.",
+    "pullquote_b": "We build inside them."
+  },
+  "s06": {
+    "n": "06",
+    "kicker": "The Way We Create Value",
+    "title": "Built for Global Growth",
+    "lede": "BH Ventures creates value through four disciplines, applied consistently across every venture:",
+    "items": [
+      {
+        "n": "01",
+        "name": "Strategic Market Expansion",
+        "desc": "Identifying high-potential markets before they're obvious, and building the on-ramps into them."
+      },
+      {
+        "n": "02",
+        "name": "Diversified Business Ventures",
+        "desc": "Constructing and supporting businesses across trading, technology, digital solutions, and emerging industries — so growth in one discipline strengthens the others."
+      },
+      {
+        "n": "03",
+        "name": "Technology-Driven Innovation",
+        "desc": "Applying AI, Web3, and modern digital infrastructure not as buzzwords, but as working tools inside every venture."
+      },
+      {
+        "n": "04",
+        "name": "Trusted Global Partnerships",
+        "desc": "Treating every partner relationship as long-term infrastructure, not a transaction."
+      }
+    ],
+    "closing_a": "This is not diversification for its own sake — it's",
+    "closing_em": "a single operating model",
+    "closing_b": ", applied to ten different disciplines."
+  },
+  "s07": {
+    "n": "07",
+    "kicker": "Global Connections",
+    "title": "Beyond Borders",
+    "body": "Direct operations in the UAE, Pakistan, the UK, the US, and France give BH Ventures hands-on presence in five markets. Strategic partnerships in Germany, Estonia, Denmark, and Ukraine extend that reach into Europe's trading and technology corridors. Together, they form a network built not for size, but for relevance — every connection chosen because it opens a door somewhere else.",
+    "pullquote": "A trading community trusted by traders across 150+ countries — real opportunities, structured access, without requiring traders to risk their own capital."
+  },
+  "s08": {
+    "n": "08",
+    "kicker": "Proof",
+    "title_a": "Not Claims.",
+    "title_b": "Outcomes.",
+    "body": "Numbers rarely tell the whole story, but they mark the distance travelled. A licensed free-zone company. Nine markets, five of them direct. Ten active ventures under one roof. A trading network built for a global community, not a local one.",
+    "stats": [
+      {
+        "value": "9",
+        "label": "Markets",
+        "note": "Gulf · South Asia · Europe · N. America"
+      },
+      {
+        "value": "5",
+        "label": "Direct Operations",
+        "note": "Wholly operated by BH Ventures"
+      },
+      {
+        "value": "10",
+        "label": "Active Ventures",
+        "note": "Under one licensed roof"
+      },
+      {
+        "value": "150+",
+        "label": "Countries in Network",
+        "note": "Trading community reach"
+      }
+    ],
+    "community_label": "Trading Community",
+    "community": [
+      {
+        "value": "[X]+",
+        "label": "Countries Registered"
+      },
+      {
+        "value": "[X]h",
+        "label": "Average Payout Processing"
+      },
+      {
+        "value": "$[X]K+",
+        "label": "Paid Out to Traders"
+      },
+      {
+        "value": "[X]K+",
+        "label": "Traders Worldwide"
+      }
+    ],
+    "_community_note": "PRE-PRINT ITEM 2: the client's own draft says 'Confirm real numbers with the client before print'. These four must be filled before the PDF goes to a printer.",
+    "closing_a": "Every number here is a marker,",
+    "closing_em": "not a ceiling."
+  },
+  "s09": {
+    "n": "09",
+    "kicker": "The Future",
+    "title": "What Comes Next",
+    "body": [
+      "BH Ventures was never built to stay ten disciplines wide. Every venture added has followed the same test: does it open a market, sharpen a capability, or strengthen a partnership? The ones that pass, stay.",
+      "What's next is more of the same discipline, applied further — deeper AI and Web3 capability, new trade corridors, and partnerships in markets not yet on the map. The company isn't forecasting where global business is headed. It's building the infrastructure to be there first."
+    ],
+    "pullquote_a": "We're not predicting the next market.",
+    "pullquote_b": "We're building the road to it."
+  },
+  "s10": {
+    "n": "10",
+    "kicker": "Let's Build",
+    "title_a": "Let's",
+    "title_b": "Build.",
+    "body": "Every venture on these pages started as a conversation. If there's a market you're trying to enter, a business you're trying to build, or a partnership you're trying to form — this is where it starts.",
+    "contact_label": "Contact",
+    "footer": "Trade · Technology · Innovation"
+  },
+  "contents": [
+    {
+      "n": "01",
+      "title": "The Opening",
+      "page": "03"
+    },
+    {
+      "n": "02",
+      "title": "The Company",
+      "page": "04"
+    },
+    {
+      "n": "03",
+      "title": "The World We Operate In",
+      "page": "05"
+    },
+    {
+      "n": "04",
+      "title": "The Ventures",
+      "page": "07"
+    },
+    {
+      "n": "05",
+      "title": "The People Behind the Vision",
+      "page": "10"
+    },
+    {
+      "n": "06",
+      "title": "The Way We Create Value",
+      "page": "11"
+    },
+    {
+      "n": "07",
+      "title": "Global Connections",
+      "page": "12"
+    },
+    {
+      "n": "08",
+      "title": "Proof",
+      "page": "13"
+    },
+    {
+      "n": "09",
+      "title": "The Future",
+      "page": "14"
+    },
+    {
+      "n": "10",
+      "title": "Let's Build",
+      "page": "15"
+    }
+  ],
+  "presentation": {
+    "concept": {
+      "kicker": "Design Concept",
+      "title": "Infrastructure",
+      "lede": "The design idea is not imported. It comes out of the company's own language.",
+      "quotes": [
+        {
+          "text": "…treats ambition as infrastructure, not inspiration.",
+          "src": "§01 The Opening"
+        },
+        {
+          "text": "…treat every new market the way an architect treats a blank site.",
+          "src": "§05 The People Behind the Vision"
+        },
+        {
+          "text": "We're not predicting the next market. We're building the road to it.",
+          "src": "§09 The Future"
+        }
+      ],
+      "body": "BH Ventures describes itself in the language of an architect. So the magazine is built with an architect's discipline: every element sits on a visible system, and nothing is arbitrary. That is the same thing the copy says — ten disciplines, one standard — said in layout instead of words.",
+      "caveat": "This is not a blueprint aesthetic. Blue paper and dashed lines would be a costume. This is the discipline of one.",
+      "devices": [
+        {
+          "name": "Datum line",
+          "desc": "One hairline at 62mm from trim on every page, photo or text."
+        },
+        {
+          "name": "Sheet numerals",
+          "desc": "Section numbers set as outline figures, the way a drawing set numbers its sheets."
+        },
+        {
+          "name": "Coordinates",
+          "desc": "25°12′N 55°16′E in every folio; every market carries its own."
+        },
+        {
+          "name": "Structural map",
+          "desc": "The network drawn as a technical diagram, not a decorative globe."
+        },
+        {
+          "name": "One stroke weight",
+          "desc": "Every icon, rule and diagram drawn at 0.4pt."
+        }
+      ]
+    },
+    "palette": {
+      "kicker": "Colour System",
+      "title": "Drawn from the mark",
+      "lede": "Every value below was sampled from the BH Ventures logo. Nothing comes from outside it. Warmth and variety come from the photography, not from adding colours.",
+      "note": "Each pairing is listed with its measured WCAG contrast ratio. Colour here is an engineering decision, not a preference.",
+      "rules": [
+        "Aqua is never text on a light page — it measures 1.8:1.",
+        "Accent colour never exceeds about a tenth of the ink on a page.",
+        "Every page is either dark-dominant or light-dominant, never half and half."
+      ]
+    },
+    "type": {
+      "kicker": "Typography",
+      "title": "Fraunces · Inter · Space Grotesk",
+      "lede": "A serif for display against a geometric sans for text. That contrast is the difference between a magazine and a corporate deck — and it answers the logo's all-caps geometric wordmark instead of imitating it.",
+      "specimen": "From a single address in Dubai, BH Ventures moves cars, cargo, code, and capital across nine countries and counting.",
+      "notes": [
+        "Fraunces carries an optical-size axis, so the same family is dramatic at 88pt and still open and readable at 9.5pt.",
+        "Every statistic is set with tabular figures, so the digits in 9 · 5 · 4 · 150+ align down the column.",
+        "Body text uses oldstyle figures, which sit inside a line of prose instead of shouting out of it."
+      ]
+    }
+  }
+}

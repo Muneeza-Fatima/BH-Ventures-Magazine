@@ -1,0 +1,21 @@
+{
+  "name": "bh-ventures-magazine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "BH Ventures FZE LLC - Corporate Magazine, Edition 01",
+  "scripts": {
+    "dev": "node build/dev-server.mjs",
+    "images:fetch": "node build/fetch-images.mjs",
+    "images:grade": "node build/grade-images.mjs",
+    "map": "node build/make-map.mjs",
+    "html": "node build/build.mjs",
+    "pdf": "node build/render-pdf.mjs",
+    "check:fit": "node build/check-fit.mjs",
+    "check:pdf": "node build/verify-pdf.mjs out/sample/BH-Ventures-SAMPLE.pdf --pages=7",
+    "build": "npm run html && npm run pdf && npm run check:fit && npm run check:pdf"
+  },
+  "dependencies": {
+    "sharp": "^0.34.2"
+  }
+}

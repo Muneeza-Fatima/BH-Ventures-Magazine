@@ -14,6 +14,14 @@
      4. FONTS      a PDF with unembedded fonts resets to Times at
                    the print shop.
 
+   The fifth is not from the sample — it is from this magazine:
+
+     5. TYPE 3     our own PDF shipped three Type 3 fonts, from
+                   -webkit-text-stroke on two components. Type 3 is
+                   not permitted in PDF/X-4. The whole pinned-axis
+                   design of fetch-fonts.mjs exists to prevent this
+                   and nothing was checking that it worked.
+
    Usage:  node build/verify-pdf.mjs <file.pdf> [--pages=N] [--trim] [--stitched]
            --stitched  also require a multiple of 4 (final magazine only;
                        a 7-page sample is not going to be bound)
@@ -162,12 +170,64 @@ if (!embedded) {
   pass(`${embedded} embedded font file(s): ${clean.join(', ') || '(unnamed)'}`);
 }
 
-const expectedFaces = ['Fraunces', 'Inter', 'SpaceGrotesk', 'Space Grotesk'];
-const missing = ['Fraunces', 'Inter', 'Space Grotesk'].filter(
+const expectedFaces = ['Playfair', 'Inter'];
+const missing = expectedFaces.filter(
   (want) => !clean.some((f) => f.replace(/\s/g, '').toLowerCase().includes(want.replace(/\s/g, '').toLowerCase())),
 );
 if (embedded && missing.length) {
   warn(`expected face(s) not found in PDF: ${missing.join(', ')} — check @font-face paths resolved`);
+}
+
+/* And nothing BUT those. A face we did not self-host got into the
+   PDF means Chrome fell back, which it does silently and per
+   GLYPH — so the page looks right and one character in it is set
+   in whatever the rendering machine happened to have.
+
+   This is not hypothetical. Poppins had no PRIME (U+2032) and
+   this book prints 25°12′N 55°16′E on nearly every page, so
+   Segoe UI was being embedded until Inter was named in the stack
+   ahead of the system fonts. A missing-face warning would never
+   have caught it: every expected face was present. */
+const foreign = clean.filter(
+  (f) => !expectedFaces.some((want) => f.replace(/\s/g, '').toLowerCase().includes(want.toLowerCase())),
+);
+if (foreign.length) {
+  fail(`font(s) we do not self-host got embedded: ${foreign.join(', ')}`);
+  fail('  ↳ Chrome fell back for a glyph one of our faces is missing.');
+  fail('    Name the other embedded family in that stack before any system font.');
+} else if (embedded) {
+  pass('no fallback faces — every glyph came from a self-hosted font');
+}
+
+/* ---------- 4b. NO TYPE 3 ----------------------------------
+   Type 3 is the failure build/fetch-fonts.mjs exists to prevent,
+   and until now nothing asserted it. There are two ways in:
+
+     · a VARIABLE font. Chrome embeds one as Type 3 glyph
+       procedures — little drawing programs — rather than as a
+       typeface. Pinning every axis in the css2 request is what
+       stops it, which is why fetch-fonts.mjs is written the way
+       it is.
+     · OUTLINED TEXT. -webkit-text-stroke makes Chrome draw the
+       glyphs instead of setting them, which is also Type 3.
+
+   The second one had already happened and shipped. .sheet-numeral
+   and .stat--todo .stat__value both carried -webkit-text-stroke,
+   and the magazine went out with three Type 3 fonts in it. The
+   pinned-axis discipline was being followed correctly and the PDF
+   was failing anyway, because nothing measured the thing that
+   discipline protects. That is the whole argument for this check.
+
+   Type 3 is not permitted in PDF/X-4, and many prepress RIPs
+   reject it or silently rasterise it. */
+
+const type3 = (raw.match(/\/Subtype\s*\/Type3/g) ?? []).length;
+if (type3) {
+  fail(`${type3} Type 3 font(s) — not permitted in PDF/X-4`);
+  fail('  ↳ either a variable font was embedded (pin every axis in fetch-fonts.mjs),');
+  fail('    or text was outlined with -webkit-text-stroke (use a fill or a border instead)');
+} else if (embedded) {
+  pass('no Type 3 fonts');
 }
 
 /* ---------- 5. DARK PAGES ACTUALLY PRINTED ------------------

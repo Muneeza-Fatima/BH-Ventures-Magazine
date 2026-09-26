@@ -1,0 +1,2213 @@
+/* ============================================================
+   magazine.css — the page layouts, 26 of them.
+   Shared components live in components.css; geometry in
+   print.css; colour and scale in tokens.css.
+
+   SPACE IS THE SUBJECT OF THIS FILE.
+
+   The client's note was "spaces ka laazmi khayal rakhna", and the
+   sample they were shown earned it: the bottom third of The
+   Opening was empty, and so was the foot of every venture page.
+   Neither was a decision — both were what was left over after the
+   content ran out.
+
+   So the working rule here is that a page ends rather than stops.
+   Every layout below either fills to its foot or is deliberately
+   bottom-anchored, and build/check-space.mjs measures the largest
+   untouched block on each page and fails the build above 28mm.
+   Whitespace is only premium when it is intentional; left-over
+   space is just a hole.
+
+   Every vertical value is a multiple of the 4mm baseline, via the
+   --s-* tokens. Arbitrary numbers are what make a grid stop
+   reading as a grid.
+   ============================================================ */
+
+
+/* ============================================================
+   p1 · COVER
+
+   Built to the reference cover the client supplied, element for
+   element: a short paper band carrying a very large lockup, then a
+   full-bleed photograph holding a theme line, a capitalised
+   headline, a deck, three numbered teasers and a place stamp.
+
+   WHAT CHANGED FROM THE VERSION BEFORE IT, and why each one:
+
+     band 26% -> 20%      the reference fills its band with the
+                          LOGO rather than with air under it, so
+                          the band can be shorter and the mark
+                          bigger at the same time.
+     lockup 150 -> 165mm  the single loudest difference between
+                          the two covers.
+     headline -> CAPITALS Playfair in caps is the reference's main
+                          editorial signal.
+     deck -> roman sans   it was italic serif; the reference sets
+                          it upright in the label face, which stops
+                          it competing with the italic tail of the
+                          headline.
+     teasers 4 -> 3       with a large numeral and a rule beside
+                          it, a fourth row crowds the foot.
+
+   The words are the client's approved copy, NOT the reference's.
+   The reference reads "Driving", "Global Ventures" and "The Future
+   of Business"; the approved text reads "Bridging", "The Ventures"
+   and "Global Connections". Layout is ours to match, copy is not.
+   THE TYPE IS PAPER ON A DARK SKY. It was navy for a while, while
+   the cover carried the cloth frame and its pale left third; when
+   the skyline came back the type had to reverse with it. The two
+   go together and neither works with the other's picture.
+   ============================================================ */
+
+/* 20%, and the band is now filled by the mark rather than by the
+   space under it. 20% of 303mm is 61mm; the rail, rule and a 165mm
+   lockup take about 50mm of that.
+
+   BOXES.coverband in grade-images.mjs MUST track this number. If
+   the two drift the page crops the graded file a second time -
+   object-fit:cover against a slot of a different aspect - and that
+   second crop takes the sides off the towers. */
+.cover__ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20%;
+  bottom: 0;
+  background: var(--ink);
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cover__wash { display: none; }
+
+.cover__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cover__img--cut {
+  inset: auto 0 0 0;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.cover__inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Every number here was measured off the reference cover rather
+     than chosen: its rail sets at 9.4mm from the sheet edge, its
+     left margin is 13.7mm, and its place stamp sits at 287.1mm. */
+  padding: calc(var(--bleed) + 4.7mm) calc(var(--bleed) + 10.5mm) calc(var(--bleed) + 9.2mm);
+}
+
+/* THE HEAD RAIL, on paper. */
+/* --ink, and it is the one line on this cover that must NOT
+   follow the rest. Everything else sits on the photograph and
+   reverses out of it; the rail sits on the paper band above it.
+
+   A blanket reversal of the cover's colours set this to --paper
+   too and it printed white on white - the exact fault
+   components.css records as "the imprint page printed its own
+   address in invisible ink", and it went unseen for one render
+   because a missing line looks like empty space. */
+.cover__rail {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 7.5pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Short, left, and in brand colour - not a full-measure hairline.
+   Run edge to edge and it reads as a divider between two things;
+   held to the width of the words above it, it reads as belonging
+   to them. */
+.cover__toprule {
+  display: block;
+  width: 46.5mm;
+  height: 0;
+  border-top: 1.2pt solid var(--aqua);
+  margin: 2.5mm 0 8.9mm;
+}
+
+/* THE MASTHEAD. 165mm of a 216mm sheet - the reference's loudest
+   decision and the client's oldest instruction, which was simply
+   that the logo be prominent. At 6.17:1 this stands about 27mm. */
+.cover__masthead {
+  position: relative;
+  width: 161mm;
+}
+
+.cover__masthead img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* THE HEAD BLOCK, on the photograph.
+
+   NO margin-top:auto. That is what was wrong before: auto pushed
+   the whole text block to the foot of the sheet, which put the
+   theme line 59mm below where the reference has it and left the
+   top half of the picture empty.
+
+   The reference starts its text 15mm under the band and lets the
+   slack fall LOWER DOWN, between the deck and the teasers. So the
+   head is pinned here and .cover__lines carries the auto instead.
+
+   26mm is measured from the foot of the lockup. */
+.cover__head {
+  margin-top: 23.9mm;
+  position: relative;
+  max-width: 145mm;
+}
+
+/* THE THEME LINE. New copy - there was nothing in the client's
+   draft for this slot. The {{#if}} around it in the markup means
+   deleting the field closes the slot cleanly rather than leaving
+   a stray rule behind. */
+.cover__themes {
+  margin: 0;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 8.5pt;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.cover__themerule {
+  display: block;
+  width: 14.3mm;
+  height: 0;
+  border-top: 1.2pt solid var(--aqua);
+  margin: 3.5mm 0 15.1mm;
+}
+
+/* THE HEADLINE, in capitals.
+
+   Caps need tracking put BACK: --track-display is negative, which
+   is right for large mixed case and wrong for capitals - without
+   the correction the letters collide. The italic tail stays mixed
+   case and keeps the original tracking, so the two halves of the
+   sentence read as two voices rather than one shout.
+
+   46pt against 125mm of measure. "THE FUTURE" sets about 115mm of
+   that, which is the widest line and therefore the one the size is
+   chosen against - reading the ceiling off the first line instead
+   of the widest is what put a two-letter widow under this headline
+   twice before. */
+.cover__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* 51pt / 53pt, both read off the reference: its capitals stand
+     13.9mm and its lines step 18.6mm. Tracking is zero - at 0.01em
+     the line ran 5mm wider than the reference's. */
+  /* 44pt, and the ceiling is the PICTURE now rather than the
+     measure. The cloth tower stands from 117mm across the page;
+     the column starts at 17mm, so the longest line has 100mm
+     before it runs onto the building. THE FUTURE set 112mm at
+     51pt and did exactly that. At 44 it sets 97mm and stops with
+     three millimetres of sky to spare. */
+  font-size: 58pt;
+  line-height: 60pt;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--paper);
+  max-width: 140mm;
+}
+
+.cover__title .em {
+  display: inline-block;
+  margin-top: 1mm;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: var(--track-display);
+  color: var(--aqua);
+}
+
+/* THE DECK. Upright, in the label face, not italic serif. Set
+   against the headline's italic tail an italic deck reads as a
+   continuation of it; upright, it reads as a separate statement,
+   which is what it is. */
+.cover__deck {
+  margin: 5.9mm 0 0;
+  max-width: 70mm;
+  font-family: var(--font-body);
+  font-size: 12.5pt;
+  line-height: 18pt;
+  color: var(--paper);
+}
+
+/* THE TEASERS. A large numeral in brand colour, a hairline, and
+   the title in the display face - the reference's own device, and
+   it is what stops three lines of text reading as a contents page.
+
+   The measure is deliberately short so each title wraps to two
+   lines. A single long line beside a 26pt numeral leaves the
+   numeral stranded; two short lines give it something to sit
+   against. */
+/* The auto lives HERE, so the sheet's slack becomes the gap above
+   the teasers - 37mm of it on the reference - rather than a gap
+   under the masthead. */
+.cover__lines {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 72mm;
+}
+
+/* min-height, not padding alone. The reference's three titles all
+   wrap to two lines; ours are the client's approved titles and two
+   of the three fit on one. Without a floor the rows would come out
+   unevenly spaced where the reference's are regular. */
+.cover__lines li {
+  display: grid;
+  grid-template-columns: 15mm 1fr;
+  align-items: center;
+  min-height: 22.5mm;
+  padding: 0;
+}
+
+.cover__lines-n {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 27pt;
+  line-height: 27pt;
+  color: var(--aqua);
+  font-feature-settings: "lnum" 1;
+}
+
+/* min-height of two lines, whatever the title actually runs to.
+
+   The reference's three titles all wrap to two lines; ours are the
+   client's approved titles and two of the three fit on one. Left
+   alone, a one-line row centres its single line in the 22.5mm row
+   while a two-line row does not, so the rows drifted 3mm out of
+   step with the reference - and the hairline beside a one-line
+   title came out half the height of the one beside a two-line
+   title, which is the more visible fault of the two.
+
+   Giving the text box a floor of two lines fixes both at once: the
+   rule is always the same length and every title starts at the
+   same height in its row. */
+.cover__lines-t {
+  min-height: 11.3mm;
+  border-left: var(--stroke) solid var(--rule-dark);
+  padding-left: 5mm;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13.5pt;
+  line-height: 17pt;
+  color: var(--paper);
+}
+
+/* THE PLACE STAMP. A dash, then the city. It is a stamp, not a
+   line to be read, so it is small with the tracking opened up -
+   wide tracking at small sizes is what makes micro type look
+   deliberate rather than merely small. */
+/* The 10mm is load-bearing. .cover__foot is pushed down by
+   margin-top:auto, so without a gap here the stamp sits straight
+   under the last teaser and reads as a fourth row of it rather
+   than as the foot of the page. */
+.cover__place {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+  margin: 15mm 0 0;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 7pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.cover__place-dash {
+  flex: none;
+  width: 10mm;
+  height: 0;
+  border-top: 1.2pt solid var(--aqua);
+}
+
+
+/* ============================================================
+   p2 · THE INSIDE FRONT
+
+   White page, two inset frames at the head, a statement across
+   the measure, a navy band at the foot.
+
+   NO page--bleed AND NO page--photo on the section, and both
+   absences matter. Without page--photo the page is measured by
+   check-ink and has to carry 10% navy, which is the band's real
+   job. Without page--bleed it is measured by check-space too, so
+   no gap down the middle 60% may exceed 28mm.
+   ============================================================ */
+
+.imprint {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Kicker first, then the rule, the same order and the same
+   3mm as every other page. It was the other way up, so the book's
+   first hairline after the cover sat 7mm higher than the rest. */
+.imprint__rule {
+  width: 46.5mm;
+  margin: var(--rule-gap) 0 0;
+}
+
+.imprint__kicker {
+  margin: 0;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: var(--t-kicker);
+  line-height: var(--lh-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+/* THE MARK, behind everything.
+
+   The two photographs that were here are gone and the monogram
+   has the page instead. At this size it is a texture rather than
+   a logo placement - it is not there to be read, it is there so
+   the upper half is not empty paper.
+
+   The wash is baked into the PNG at 7% ink by grade-images.mjs,
+   not set with opacity here. An element at opacity below 1 becomes
+   its own transparency group in the PDF; flat PNG alpha is a
+   single /SMask, which is the one form of transparency this book
+   ships with.
+
+   Bled off the right and the top so it reads as a fragment of a
+   much larger mark rather than as a stamp sitting in a corner. */
+.imprint__mark {
+  position: absolute;
+  top: -26mm;
+  right: -34mm;
+  width: 168mm;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.imprint__mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* THE STATEMENT, under both pictures rather than beside one.
+
+   That is what let it be set large. Beside the tower it was boxed
+   into a 105mm column and already filled 99mm of it at 30pt. With
+   both frames moved up to the head it has the whole 174mm measure
+   and sets at 44pt. Half again as large, and the page did not
+   grow - the pictures moved.
+
+   129mm of margin, measured rather than guessed: the kicker ends
+   at 31mm and the tower - the taller of the two - ends at 143mm,
+   so anything under 112mm puts the statement BEHIND the frames.
+   It did, at 34mm: they are absolutely placed and won the
+   stacking, and the headline read as printed behind them. */
+.imprint__statement {
+  position: relative;
+  z-index: 1;
+  /* 62mm, not 129. The 129 was measured to clear the taller of
+     the two photographs, which ended at 143mm. They are gone, so
+     the statement comes up to the waist of the page and the mark
+     sits behind and above it.
+
+     58pt to match the cover. The two pages open the book together
+     and a statement set smaller than the cover headline on the
+     very next page reads as a step down rather than as a second
+     beat. */
+  /* 78mm, not 62. At 62 the statement ended at 178mm and the
+     band starts at 211, which left 51mm of empty paper between
+     them - check-space calls anything over 28mm a hole, and it
+     was right: the page stopped rather than ended.
+
+     The mark behind does not close it. check-space measures the
+     ELEMENT's opacity, and the wash is baked into the PNG at 7%
+     alpha with the element at full opacity - so it counts as
+     filling its own rows, and it simply does not reach that far
+     down the page. */
+  /* 87mm, not 84: the head above it got 2.8mm shorter when the
+     kicker took the kicker line-height, and the statement keeps
+     its place on the page. */
+  margin: 87mm 0 0;
+  max-width: 174mm;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 58pt;
+  line-height: 60pt;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--fg);
+}
+
+.imprint__statement .em {
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: var(--track-display);
+  color: var(--fg-accent);
+}
+
+/* THE BAND. Full bleed, square corners, and it carries the ink.
+
+   216 x 74mm is 15984mm2 of a 65448mm2 sheet, about 24% navy
+   against a 10% floor. The headroom is the point: check-ink's
+   near() is a distance from #0E1B2B under 70, not a darkness
+   test, so neither photograph contributes anything at all.
+
+   .panel flips the colour contract for its children, so the dt
+   and dd below use var(--fg) and var(--fg-accent) and come out
+   paper and aqua without anything being hard-coded - which is the
+   fault components.css records as "the imprint page printed its
+   own address in invisible ink". */
+.imprint__foot {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  /* 96mm, not 74. Closing the gap under the statement took both
+     ends: the statement came down 22mm and the band came up 22.
+     Moving only the statement would have left it sitting low on
+     an otherwise empty page, which is the same hole with the type
+     in a different place. */
+  min-height: 96mm;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* On the text column: p2 is a verso, so outer is left and the
+     binding is right. It was 19mm both sides, which ran the facts
+     4mm into the gutter. */
+  padding: 14mm var(--p-inner) 14mm var(--p-outer);
+}
+
+/* The folio sits on the band, not on paper, and outside .panel so
+   print.css's reversal does not reach it. Navy-on-navy made the
+   page number all but invisible. */
+.imprint__folio {
+  color: rgba(250, 250, 248, 0.45);
+}
+
+.imprint__facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5mm 8mm;
+  margin: 0;
+}
+
+.imprint__fact dt {
+  margin: 0 0 1.4mm;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 6.5pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+.imprint__fact dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 9pt;
+  line-height: 13pt;
+  color: var(--fg);
+}
+
+.imprint__colophon {
+  margin: 7mm 0 0;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 6.5pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+
+/* ============================================================
+   p3 · CONTENTS
+
+   Ten cards rather than ten ruled rows. A table of contents with
+   leader dots is a book convention; this book is a brochure, and
+   the reference sets every list of things as cards.
+   ============================================================ */
+
+/* THE CONTENTS, as a list rather than as ten cards.
+
+   It was a 2 x 5 grid of rounded boxes, and that is the one thing
+   a contents page must not be: ten boxes read as ten equal
+   objects to be scanned, where a contents page is a column to be
+   read DOWN. A magazine's contents is always a list - number,
+   title, folio - because the page number is the whole point and a
+   page number is only findable if every one of them sits on the
+   same axis.
+
+   So: hairline between entries, the section number small in
+   accent at the left, the title in the display face, and the
+   folio right-aligned in tabular figures. Nothing is boxed.
+
+   THE HEADING IS ON PAPER, not in the navy band the other section
+   pages open with. The client's note was that blocks look wrong
+   here, and a contents page is the one page where a heavy header
+   fights the thing beneath it - the list needs the whole page to
+   run down. The global .headband is untouched. */
+.contents__rail {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: var(--t-kicker);
+  line-height: var(--lh-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.contents__rule { margin: var(--rule-gap) 0 0; }
+
+.contents__title {
+  margin: var(--title-gap) 0 var(--s-3);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-display-m);
+  line-height: var(--lh-display-m);
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+.toc {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 12mm / 1fr / 14mm. The two outer columns are fixed so the
+   numbers and the folios each hold one axis down the page; only
+   the titles flex. */
+.toc__row {
+  display: grid;
+  grid-template-columns: 12mm 1fr 14mm;
+  align-items: baseline;
+  gap: 0 6mm;
+  /* 7.6mm. The band under this list is gone, so the ten rows
+     have the whole page and the spacing opens to fill it -
+     leaving them tight at the top with 90mm of empty paper below
+     would be the same page with a hole in it. */
+  padding: 6.5mm 0;
+  border-top: var(--stroke) solid var(--fg-rule);
+}
+
+.toc__row:last-child { border-bottom: var(--stroke) solid var(--fg-rule); }
+
+.toc__n {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-kicker);
+  letter-spacing: var(--track-folio);
+  color: var(--fg-accent);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.toc__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15pt;
+  line-height: 20pt;
+  color: var(--fg);
+}
+
+/* Tabular figures are not optional here. A folio column set in
+   proportional numerals puts 04 and 11 on different widths and
+   the right edge stops being a line. */
+.toc__page {
+  justify-self: end;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-kicker);
+  letter-spacing: var(--track-folio);
+  color: var(--fg-muted);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* 58mm. The navy header used to carry this page's ink; with the
+   heading on paper the band is the only navy left, and check-ink
+   holds every measured page to a 10% floor. 174 x 58mm is about
+   15% of the sheet - headroom rather than luck. */
+.contents__band { gap: var(--s-1); min-height: 52mm; }
+
+.contents__strap {
+  margin: var(--s-1) 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 15pt;
+  line-height: 21pt;
+  color: var(--paper);
+  max-width: 130mm;
+  text-wrap: balance;
+}
+
+
+/* ============================================================
+   p4 · 01 THE OPENING
+
+   The photograph was a full-width band running off both edges.
+   It is 4032x3024, so it was never going to bleed to a 303mm
+   portrait page without upscaling and losing the horizon — and
+   on a white page a band off both edges now reads as a different
+   kind of object from everything else in the book. Rounded
+   frame, sitting on the paper.
+   ============================================================ */
+
+/* THE BAND. Full bleed on three sides.
+
+   The negative margins are the page's own padding tokens rather
+   than numbers, and they are mirrored for a verso page, because
+   the inner and outer margins are not equal - 23mm against 19mm.
+   Writing -19mm here would have put the picture 4mm short of one
+   edge on half the book, which is the kind of error that only
+   shows up on a printed proof.
+
+   The height is not free. 144mm against the full 216mm width is
+   3:2, which is the aspect grade-images.mjs cuts the file to, so
+   object-fit has nothing left to crop. Change one and the other
+   must change with it. */
+.opening__band {
+  flex: none;
+  height: 144mm;
+  margin-top: calc(-1 * var(--p-top));
+  margin-left: calc(-1 * var(--p-inner));
+  margin-right: calc(-1 * var(--p-outer));
+  overflow: hidden;
+  background: var(--paper-alt);
+}
+
+/* THE NAVY STRATUM.
+
+   Same width as the picture, square corners, hard against its
+   underside - no gap, no radius, no shadow. The two together read
+   as one block of the page rather than as two things that happen
+   to be near each other.
+
+   It uses .panel, so it joins the dark contract in components.css
+   and every --fg-* inside it flips at once. The colours are not
+   set here; that is what produced the invisible-ink fault the
+   first time. */
+.opening__stratum {
+  flex: none;
+  border-radius: 0;
+  margin-left: calc(-1 * var(--p-inner));
+  margin-right: calc(-1 * var(--p-outer));
+  padding: 13mm var(--p-outer) 24mm var(--p-inner);
+}
+
+.page:nth-of-type(even) .opening__band,
+.page:nth-of-type(even) .opening__stratum {
+  margin-left: calc(-1 * var(--p-outer));
+  margin-right: calc(-1 * var(--p-inner));
+}
+
+.page:nth-of-type(even) .opening__stratum {
+  padding-left: var(--p-outer);
+  padding-right: var(--p-inner);
+}
+
+/* Section number left, picture credit right, on one line. The
+   credit was white type over the sky before, where it was close
+   to invisible; on navy it is legible and it stops the band from
+   needing anything printed on it. */
+.opening__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8mm;
+  margin-bottom: 7mm;
+}
+
+.opening__credit {
+  font-family: var(--font-label);
+  font-size: 6.5pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+/* 32pt, not the 31pt of a page heading. This is the first
+   sentence of the magazine and it is the only one set at this
+   size, so it should not measure the same as the headings that
+   follow it. */
+.opening__statement {
+  margin: 0;
+  max-width: 168mm;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32pt;
+  line-height: 37pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+/* The two columns sit clear of the stratum rather than tucked
+   under it. The gap is measured, not chosen: check-space fails
+   any vertical run over 28mm through the middle of the page, and
+   the run under the last line of body copy has to clear the folio
+   as well. */
+.opening__rule { margin: 14mm 0 0; }
+
+.opening__text { margin: 6mm 0 0; }
+
+/* ============================================================
+   p5 · 02 WHO WE ARE
+
+   A paper page with a photograph at its foot. No headband, no
+   foot panel, no quote card - three devices removed, and the
+   page reads calmer for it.
+   ============================================================ */
+
+.company__kicker { margin: 0; }
+
+.company__rule { margin: var(--rule-gap) 0 0; }
+
+/* The heading on paper, at the size it used to be inside the
+   band. It loses nothing by not being reversed: 46pt of Playfair
+   in navy on warm white is a stronger opening than the same words
+   in white on a slab, and it is what the client asked for. */
+.company__title {
+  margin: var(--title-gap) 0 var(--s-3);
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* 54pt on two lines, not 46pt on one. The heading had to grow
+     for two reasons at once: it is the page opener now that the
+     navy band is gone and needs the weight, and the column of
+     type above the photograph was 31mm short of it - check-space
+     called the gap a hole, which it was. A bigger heading fills
+     it with the thing the page is about. */
+  max-width: 95mm;
+  font-size: 54pt;
+  line-height: 56pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+/* --col-gap (6mm), the same as every two-column page. Two justified columns at
+   4mm apart read as one block of grey with a scratch down it;
+   the eye needs the gap to be wider than the word spaces inside
+   the lines, or it reads across the gutter. */
+.company__cols {
+  column-count: 2;
+  column-gap: var(--col-gap);
+  margin: 0;
+}
+
+.company__cols .body {
+  max-width: none;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* THE BAND. Absolute, so it reaches three paper edges without
+   fighting the page's padding, and wrapped in .decor so check-fit
+   knows it is meant to.
+
+   153mm is half the sheet. That is the point: this page carries
+   no navy device at all, so the picture has to be the weight at
+   the foot that the panel used to be. */
+.company__band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 153mm;
+  overflow: hidden;
+  background: var(--paper-alt);
+}
+
+/* THE PULL-QUOTE, on the sky.
+
+   Navy, not white. The sky in this frame is pale, so white would
+   have to be shadowed or scrimmed to hold - and a scrim over a
+   sunrise to make room for two words is the tail wagging the dog.
+   Navy on pale blue has more contrast than white would, and it
+   ties the sentence to the type on the rest of the page.
+
+   Placed clear of the marble pier at the left edge and above the
+   olive tree, in the one part of the frame that is empty by
+   composition rather than by accident. */
+.company__quote {
+  position: absolute;
+  top: 17mm;
+  left: var(--p-inner);
+  max-width: 108mm;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 27pt;
+  line-height: 32pt;
+  letter-spacing: var(--track-display);
+  color: var(--ink);
+  z-index: 2;
+}
+
+/* No picture credit on this page. It was set on the sky at the
+   top right, which is where the Burj's spire is - the one part of
+   an empty sky that is not empty. The credit on p4 carries the
+   same two facts for the same city; a second one here was
+   repetition that had nowhere to sit. */
+
+/* The folio lands on the stone at the foot of the photograph, not
+   on paper, so it reverses. Same reasoning as the imprint page:
+   print.css only flips a folio inside a .panel, and this one is
+   over a picture. */
+.company__folio { color: rgba(250, 250, 248, 0.9); }
+
+
+/* ============================================================
+   p6 · 03 WHERE WE OPERATE
+
+   Three strata again: type on paper, a navy map that bleeds, and
+   three lists on paper. The rounded header band, the rounded map
+   frame and the three cards at the foot have all gone - that is
+   five boxes off one page.
+   ============================================================ */
+
+.map__kicker { margin: 0; }
+
+.map__rule { margin: var(--rule-gap) 0 0; }
+
+.map__title {
+  margin: var(--title-gap) 0 var(--s-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+.map__deck {
+  margin: 0;
+  max-width: var(--measure-narrow);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13pt;
+  line-height: 19pt;
+  color: var(--fg-muted);
+}
+
+/* THE MAP, off both edges.
+
+   It used to be inset 9mm on each side with a 9mm radius, to
+   line up with the header band above it. There is no band above
+   it any more, so there is nothing to line up with - and a map
+   that stops short of the paper on both sides is a map of a
+   rectangle. Running it out to the trim is the whole point of
+   putting a world on a page.
+
+   The fallback ground is --ink rather than --paper-alt, because
+   if the picture is ever missing this band still has to be the
+   navy the page is counted on for. */
+.map__band {
+  flex: none;
+  height: 110mm;
+  margin-top: var(--s-4);
+  /* 12mm under, 16mm over. Not symmetry: the lists below have a
+     rule over each column and that rule needs to sit closer to
+     the map than the map does to the deck, or the three columns
+     read as a separate page. It also buys back 4mm at the foot,
+     where this page was clearing the bottom margin by under 3. */
+  margin-bottom: var(--s-3);
+  margin-left: calc(-1 * var(--p-inner));
+  margin-right: calc(-1 * var(--p-outer));
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.page:nth-of-type(even) .map__band {
+  margin-left: calc(-1 * var(--p-outer));
+  margin-right: calc(-1 * var(--p-inner));
+}
+
+/* THE THREE LISTS. A rule over each column instead of a border
+   round it. Three rules read as one system; three boxes read as
+   three objects, which is the note the client has now given on
+   four separate pages.
+
+   The legend swatches went with the SVG map. They were a key to
+   the colours that map filled its countries with, and keeping a
+   key to a map that is no longer there would have been a lie in
+   2.6mm. */
+.countries {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 8mm;
+  align-items: start;
+}
+
+.countries__col {
+  padding: var(--s-2) 0 0;
+  border-top: 1.2pt solid var(--fg-accent);
+}
+
+.countries__col .group-label {
+  display: block;
+  margin-bottom: 2mm;
+}
+
+/* "United Arab Emirates" and "United Kingdom" were breaking
+   across two lines, which makes a tidy list look accidental. */
+.countries .country { grid-template-columns: 7mm 1fr; gap: 0 2.4mm; padding: 1.9mm 0; }
+.countries .country__name { font-size: 8.5pt; line-height: 11pt; white-space: nowrap; }
+.countries .country__coords { display: none; }
+.countries .flag { height: 3.4mm; }
+
+
+/* ============================================================
+   p7 · 03 THE NUMBERS
+
+   Nothing on this page has a ground behind it. It faces the map,
+   which is navy across its whole width, so the spread reads as
+   weight on the left and air on the right - and that alternation
+   is doing the job the foot panel used to do, one page over
+   instead of on the same sheet.
+   ============================================================ */
+
+.reach__kicker { margin: 0; }
+
+.reach__rule { margin: var(--rule-gap) 0 0; }
+
+/* The lede is the argument of the section, so it is set at
+   reading size in the display face rather than as a caption. It
+   is the only paragraph on the page; giving it 14pt and 22pt of
+   lead costs nothing and stops it reading as a footnote to the
+   figures. */
+.reach__lede {
+  margin: var(--s-4) 0 0;
+  max-width: var(--measure-wide);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14pt;
+  line-height: 22pt;
+  color: var(--fg);
+}
+
+.reach__figures {
+  margin: var(--s-4) 0 0;
+  padding: 0;
+}
+
+/* Numeral at the left margin, label at the right one, baselines
+   aligned, a rule between the rows. It is the same figure the
+   contents page is set in - number, air, label - and it is here
+   for the same reason: it uses the whole measure, so the space
+   in the middle is the design rather than a gap.
+
+   A fixed 56mm first column was tried first and was wrong. It
+   has to be 56mm to hold "150+", which left 9, 5 and 4 stranded
+   with 40mm of nothing after them - the empty half of the old
+   tiles, moved sideways. */
+.reach__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0 8mm;
+  padding: 8.5mm 0;
+  border-top: var(--stroke) solid var(--fg-rule);
+}
+
+.reach__row:last-child { border-bottom: var(--stroke) solid var(--fg-rule); }
+
+/* Lining, tabular figures. The book sets oldstyle numerals in
+   running prose on purpose, and this is the exact opposite case:
+   a column of numbers read against each other needs every digit
+   on the same width and the same height. */
+.reach__n {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 62pt;
+  line-height: 58pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg-accent);
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+.reach__label {
+  margin: 0;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-kicker);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  justify-self: end;
+}
+
+
+/* ============================================================
+   p8 · 04 THE VENTURES — the chapter opener
+
+   One of the three pages that go properly dark, and the only
+   chapter opener in the book, so it is allowed the largest type
+   on any interior page. Beyond that it is type and hairlines and
+   nothing else: no icons, no panels, no tiles. A chapter opener
+   earns its weight from size and space, and anything added to it
+   reads as nerves.
+   ============================================================ */
+
+.ventures-opener__rule { margin: var(--rule-gap) 0 0; }
+
+/* 46pt against the 31pt it was set at. This page announces ten
+   pages of the book and it was opening them at the size the
+   ordinary section headings use. */
+.ventures-opener__title {
+  margin: var(--title-gap) 0 var(--s-2);
+  /* 134mm, so the line breaks at the comma. At 152mm it broke
+     after "One" and left "Address." alone on the second line,
+     which splits the phrase in the wrong place - the title is
+     two halves and the break should be between them. */
+  max-width: 134mm;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--track-display);
+  color: var(--paper);
+}
+
+.ventures-opener__title .em { color: var(--aqua); }
+
+.ventures-opener__deck {
+  margin: 0;
+  max-width: 134mm;   /* the title's measure, one right edge */
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13.5pt;
+  line-height: 20pt;
+  color: var(--mint);
+}
+
+/* THE INDEX.
+
+   flex:1 with justify-content:center is gone. It made the list a
+   box that filled the page while the rows sat in a band across
+   the middle of it - check-space measures boxes, so the page
+   passed while looking hollow. The rows are now set at 4.5mm of
+   padding, which is the height that actually reaches the foot -
+   measured against check-fit, not guessed. The first guess was
+   7.4mm and it ran 50mm off the bottom of the sheet; 5.1mm still
+   ran 4.5mm over.
+
+   The icons are gone too. Ten 6mm line drawings down the left of
+   a chapter opener read as a toolbar; they stay on the ten
+   venture pages, where each one has a whole page to itself and
+   something to label. */
+.vindex {
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 12mm / 1fr / 14mm - the same three columns the contents page
+   is set in. Two lists in one book should be the same list. */
+.vindex__row {
+  display: grid;
+  grid-template-columns: 12mm 1fr 14mm;
+  align-items: baseline;
+  gap: 0 6mm;
+  padding: 4.5mm 0;
+  border-top: var(--stroke) solid var(--rule-dark);
+}
+
+.vindex__row:last-child { border-bottom: var(--stroke) solid var(--rule-dark); }
+
+.vindex__n {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-kicker);
+  letter-spacing: var(--track-folio);
+  color: var(--aqua);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* The display face, not the body face. On the contents page the
+   entries are Playfair and these are the same kind of entry;
+   setting them in Inter bold made a list of services look like a
+   menu of settings. */
+.vindex__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13.5pt;
+  line-height: 18pt;
+  color: var(--paper);
+}
+
+.vindex__page {
+  justify-self: end;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-kicker);
+  letter-spacing: var(--track-folio);
+  color: var(--muted-dark);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+
+/* ============================================================
+   p9–18 · THE TEN VENTURES
+
+   SCALE. A numeral at 100pt over a name at 34pt over a sentence
+   at 12.5pt - three sizes, each roughly a third of the one above
+   it, on a page whose other type is 7.5pt. Nothing else in the
+   book has that range, which is the point: a section of ten
+   needs a shape of its own or it is just ten more pages.
+
+   An earlier pass hung the number in a 30mm column with the name
+   beside it, and the two ended up the same weight arguing with
+   each other. Stacking them settles it - the number is first,
+   the name is second, and neither has to be shouted.
+
+   A fixed grid, and the fixed part is the type rather than the
+   picture. The name gets two lines whether it needs two or one,
+   and the sentence gets two the same way. Ten pages then start
+   their plate at the same height, which is what makes them read
+   as one section instead of ten layouts.
+
+   It also makes the page deterministic. With the slots free, the
+   shortest entry - "Advertising", one line over one line - left a
+   70mm hole above its picture while the longest left 26mm, and
+   no single set of margins could have served both.
+   ============================================================ */
+
+.venture__rail {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8mm;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: var(--t-kicker);
+  line-height: var(--lh-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* "01 / 10" was a teal pill on a navy band. Both are gone; as
+   plain tabular figures it says the same thing and weighs
+   nothing. Tabular, because 01/10 and 10/10 have to be the same
+   width or the right edge of the page moves. */
+.venture__count {
+  color: var(--fg-accent);
+  letter-spacing: var(--track-folio);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* The 0.8mm brand bar, not the book's hairline. It is the one
+   place in the magazine that uses it at full width, and it marks
+   these ten pages from the top of the sheet. .rule--brand is a
+   flat filled rectangle - it was a gradient once, which exports
+   as a tiling pattern plus a shading dictionary for something
+   that only ever needed to be a filled box. */
+.venture__rule { margin: var(--rule-gap) 0 0; }
+
+/* THE NUMERAL. 100pt, and set on a 62pt line so the space under
+   it is the space the name needs rather than the space Playfair's
+   own descenders ask for. Tabular figures: 01 and 10 must occupy
+   the same width or the left edge of ten pages moves.
+
+   Deep green, not navy. Navy would make it a second heading in
+   the same colour as the name under it and the two would merge;
+   the accent puts the number in front, which is the order this
+   page is meant to be read in. */
+.venture__n {
+  display: block;
+  margin-top: 10mm;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 100pt;
+  line-height: 62pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg-accent);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* 34pt. It was 46 when it was the only thing at the top of the
+   page and 40 when it shared a line with a 64pt numeral; under a
+   110pt one it can come down again. The page does not need three
+   large sizes, it needs one. */
+/* 16mm, and it went 4 -> 7 -> 16 one complaint at a time.
+
+   At 4 the cap of a name starting with a tall letter came up
+   against the bowl of the numeral - fine on 01, touching on 06.
+   At 7 they no longer touched but they still read as one object,
+   which is worse than touching: a number that has merged into a
+   heading is a number nobody can see.
+
+   16mm is the gap that makes them two things. The numeral is the
+   page's mark and the name is the page's heading, and there has
+   to be air between them or neither is doing its job. */
+.venture__title {
+  margin: 16mm 0 0;
+  min-height: 27mm;
+  max-width: var(--measure);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 34pt;
+  line-height: 38pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+/* THE PLATE. Inset, bordered, square corners, no rotation.
+
+   13mm in from each paper edge - 10mm of clear paper either side
+   once the sheet is trimmed. The inset is measured from the PAGE
+   edge rather than from the text column, so the picture sits the
+   same distance from the trim on a recto and a verso; measured
+   from the column it would jump 4mm every time the page turned,
+   because the inner and outer margins are not equal.
+
+   190mm is wider than the 174mm text column, so the plate
+   overhangs the type on both sides and crosses the 38mm axis.
+   That is deliberate: it is the one element per page that breaks
+   the grid, and without it ten strictly-set pages read as a form.
+
+   The keyline is a hairline, not a frame. It is there to stop a
+   pale sky dissolving into the paper at the top edge, which is
+   the only edge that needs it - but a border on three sides is a
+   mistake, not a decision, so it goes all the way round.
+
+   The height is the same 114mm the grade box cuts to. Change one
+   and change the other, or object-fit crops the file twice. */
+.venture__band {
+  /* Positioned, because the plate inside it is inset:0 and would
+     otherwise take the PAGE as its containing block - which is
+     exactly what it did, covering all eight placeholder pages
+     end to end. */
+  position: relative;
+  flex: none;
+  height: 114mm;
+  margin-top: 8mm;
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  margin-right: calc(var(--plate-inset) - var(--p-outer));
+  overflow: hidden;
+  background: var(--ink);
+  border: var(--stroke) solid var(--rule-photo);
+}
+
+.page:nth-of-type(even) .venture__band {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+  margin-right: calc(var(--plate-inset) - var(--p-inner));
+}
+
+/* All ten photographs have arrived, so the plate fallback is now
+   a path nothing takes. It is kept working because the contract
+   is that any picture can go missing and the page still prints. */
+.venture__band .plate__tag {
+  left: 7mm;
+  top: 7mm;
+}
+
+/* THE CREDIT, hung on the plate rather than on the axis.
+
+   It takes the picture's own left edge - the same negative margin
+   the plate takes - so it reads as belonging to the photograph
+   instead of to the text under it. 4mm below, which is close
+   enough to be attached and far enough not to touch. */
+.venture__credit {
+  display: block;
+  margin: 4mm 0 0;
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  font-family: var(--font-label);
+  font-size: 6.5pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.page:nth-of-type(even) .venture__credit {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+}
+
+/* THE SENTENCE, back on the axis, under the picture. 12.5pt
+   rather than 13.5: it is no longer the second thing on the page
+   competing with the name, it is the last thing. */
+.venture__desc {
+  /* 13.5mm, which is two lines, and two is the real maximum of
+     the ten in this 136mm measure - measured off the render, not
+     counted off the character count.
+
+     It was set at four for one build, and four was a symptom: a
+     dead .venture__desc rule left in components.css was capping
+     this paragraph at 66mm of the 136mm it has, so the slot was
+     being fitted to a bug instead of to the type. The rule is
+     gone; so are .venture__name and .venture__n beside it, which
+     nothing had used since the old card design.
+
+     The short ones are padded to the same height on purpose: this
+     slot is what holds the foot of all ten pages on one line. */
+  margin: 8mm 0 0;
+  min-height: 13.5mm;
+  max-width: var(--measure);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 12.5pt;
+  line-height: 19pt;
+  color: var(--fg-muted);
+}
+
+/* The last line of the page, and the quietest thing on it: a
+   hairline and the address, at 6.5pt, under 110pt of numeral. */
+.venture__foot {
+  margin-top: 7mm;
+  padding-top: 3mm;
+  border-top: var(--stroke) solid var(--fg-rule);
+}
+
+
+/* ============================================================
+   p19 · 05 THE PEOPLE BEHIND THE VISION
+
+   Type, a panoramic plate, two columns, and one sentence at the
+   foot. The page is built the way the ventures are - the same
+   190mm plate, 13mm in from each paper edge, with the same
+   hairline round it - so the section that follows the ten reads
+   as part of the same book rather than as a different one.
+   ============================================================ */
+
+.people__kicker { margin: 0; }
+
+.people__rule { margin: var(--rule-gap) 0 0; }
+
+.people__title {
+  margin: var(--title-gap) 0 0;
+  max-width: var(--measure-wide);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+/* The same plate the ventures use, at 2.11:1 instead of 1.67. A
+   panorama, because the frame is four people crossing a space:
+   the width is the subject and the ceiling is not. */
+.people__plate {
+  position: relative;
+  flex: none;
+  height: 90mm;
+  margin-top: var(--s-3);
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  margin-right: calc(var(--plate-inset) - var(--p-outer));
+  overflow: hidden;
+  background: var(--ink);
+  border: var(--stroke) solid var(--rule-photo);
+}
+
+.page:nth-of-type(even) .people__plate {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+  margin-right: calc(var(--plate-inset) - var(--p-inner));
+}
+
+/* Hung on the plate's own edge, not on the text column - the
+   same rule the venture credits follow. */
+.people__credit {
+  display: block;
+  margin: 4mm 0 0;
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  font-family: var(--font-label);
+  font-size: 6.5pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.page:nth-of-type(even) .people__credit {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+}
+
+.people__body {
+  margin: var(--s-3) 0 0;
+  max-width: none;
+}
+
+/* THE CLOSING LINE.
+
+   24pt, open on the paper, with nothing under it but the folio.
+   It was set at 16pt inside a warm rounded card, which is the
+   device the client has now had removed from four pages: a box
+   round a sentence does not make the sentence important, it makes
+   it a caption for the box.
+
+   The two halves are BLOCKS, not a line the measure happens to
+   break in the right place. That was tried first, at 150mm and
+   then at 104, and both pulled a word or two of the second
+   sentence up onto the first line - a break that lands inside a
+   clause reads as a mistake, and no measure fixes it for every
+   width. One element each, and the line is where it is written.
+   The italic on the second is what turns a statement into an
+   answer. */
+.people__quote {
+  margin: var(--s-4) 0 0;
+  max-width: var(--measure);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 24pt;
+  line-height: 32pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+  hyphens: none;
+}
+
+.people__quote span { display: block; }
+
+
+/* ============================================================
+   p20 · 06 THE WAY WE CREATE VALUE
+
+   Two columns of unequal width, 70mm against the rest, and the
+   only page in the book set that way. The portrait plate is the
+   reason and it is the only portrait frame in the magazine.
+   ============================================================ */
+
+.value__kicker { margin: 0; }
+
+.value__rule { margin: var(--rule-gap) 0 0; }
+
+.value__title {
+  margin: var(--title-gap) 0 0;
+  max-width: var(--measure-wide);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+.value__lede {
+  margin: var(--s-2) 0 0;
+  max-width: var(--measure-narrow);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13pt;
+  line-height: 20pt;
+  color: var(--fg-muted);
+}
+
+.value__body {
+  display: grid;
+  grid-template-columns: 70mm 1fr;
+  gap: 0 10mm;
+  align-items: start;
+  margin-top: var(--s-3);
+}
+
+/* The plate reaches 13mm from the OUTER paper edge, the same
+   distance every other plate in the book stands off the trim, so
+   it has to hang out of the text column by the difference. The
+   two margins are not equal, so the two cases are written out
+   rather than averaged. */
+.value__plate {
+  position: relative;
+  height: 125mm;
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  overflow: hidden;
+  background: var(--ink);
+  border: var(--stroke) solid var(--rule-photo);
+}
+
+.page:nth-of-type(even) .value__plate {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+}
+
+/* On the picture, not under it. There is no room under it - the
+   list beside it ends at the same line - so it sits reversed in
+   the plate's own bottom-left corner, over the darkest part of
+   a dusk frame. */
+.value__credit {
+  position: absolute;
+  left: 5mm;
+  bottom: 4mm;
+  font-family: var(--font-label);
+  font-size: 6pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: rgba(250, 250, 248, 0.75);
+}
+
+/* Four rows with a hairline between them, not four cards. The
+   cards were the client's note on this page and on four others:
+   a box round each of four items makes four objects to be
+   scanned, where a list of four is meant to be read down. */
+.value__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.value__item {
+  display: grid;
+  grid-template-columns: 11mm 1fr;
+  gap: 0 4mm;
+  align-items: baseline;
+  padding: 5mm 0;
+  border-top: var(--stroke) solid var(--fg-rule);
+}
+
+.value__item:first-child { padding-top: 0; border-top: 0; }
+.value__item:last-child { padding-bottom: 0; }
+
+.value__n {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-kicker);
+  letter-spacing: var(--track-folio);
+  color: var(--fg-accent);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.value__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12pt;
+  line-height: 16pt;
+  color: var(--fg);
+}
+
+.value__desc {
+  margin: 1.5mm 0 0;
+  font-family: var(--font-body);
+  font-size: 8.5pt;
+  line-height: 13.5pt;
+  color: var(--fg-muted);
+}
+
+/* The closing line runs the full measure under both columns, so
+   it reads as the conclusion of the page rather than of the
+   list. It was reversed out of a navy panel; on paper at 14pt it
+   says the same thing without the weight. */
+.value__closing {
+  margin: var(--s-3) 0 0;
+  max-width: var(--measure-wide);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14pt;
+  line-height: 21pt;
+  color: var(--fg);
+}
+
+
+/* ============================================================
+   p21 · 07 GLOBAL CONNECTIONS
+
+   Type, a plate, two columns, and a sentence. The plate is the
+   venture plate - same 190mm, same 13mm off each paper edge,
+   same hairline - because this page follows ten of them and
+   should not announce a new grid to say one more thing.
+   ============================================================ */
+
+.connect__kicker { margin: 0; }
+
+.connect__rule { margin: var(--rule-gap) 0 0; }
+
+.connect__title {
+  margin: var(--title-gap) 0 0;
+  max-width: var(--measure-wide);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+.connect__plate {
+  position: relative;
+  flex: none;
+  height: 106mm;
+  margin-top: var(--s-3);
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  margin-right: calc(var(--plate-inset) - var(--p-outer));
+  overflow: hidden;
+  background: var(--ink);
+  border: var(--stroke) solid var(--rule-photo);
+}
+
+.page:nth-of-type(even) .connect__plate {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+  margin-right: calc(var(--plate-inset) - var(--p-inner));
+}
+
+.connect__credit {
+  display: block;
+  margin: 4mm 0 0;
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  font-family: var(--font-label);
+  font-size: 6.5pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.page:nth-of-type(even) .connect__credit {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+}
+
+.connect__body {
+  margin: var(--s-3) 0 0;
+  max-width: none;
+}
+
+/* The sentence about the trading community closes the page. It
+   was reversed out of a navy panel under a WIDER NETWORK label;
+   the label was ours rather than the client's and it was
+   labelling a claim that does not need one. */
+.connect__quote {
+  margin: var(--s-3) 0 0;
+  max-width: var(--measure-wide);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 16pt;
+  line-height: 24pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+
+/* ============================================================
+   p22 · 08 PROOF
+
+   The one page in the book where the type is the illustration.
+   It gets the largest figures in the magazine and the only
+   turquoise rules in it, and nothing else at all.
+   ============================================================ */
+
+.proof__kicker { margin: 0; }
+
+.proof__rule { margin: var(--rule-gap) 0 0; }
+
+/* 72pt, and 72 rather than 96 because "Not Claims." is eleven
+   characters: at 96 it measured 186mm against a 174mm column
+   and broke after "Not", which puts the line end in the middle
+   of the phrase. */
+.proof__title {
+  margin: var(--title-gap) 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 72pt;
+  line-height: 70pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+/* One column, not two. The paragraph is four lines long, and
+   four lines in two columns is two of two - a contents list,
+   not a paragraph. */
+.proof__body {
+  margin: var(--s-4) 0 0;
+  max-width: var(--measure);
+  font-family: var(--font-body);
+  font-size: 11pt;
+  line-height: 18pt;
+  color: var(--fg-muted);
+}
+
+.proof__figures {
+  margin: var(--s-4) 0 0;
+  padding: 0;
+}
+
+/* THE ZONE. Figure at the left margin, label at the right one,
+   baselines aligned, a hairline over each and under the last.
+
+   The rules are the book's own 0.35mm in the accent colour
+   rather than in grey - four lines is the whole ornament of the
+   page, and the colour is enough to say they are not the same
+   as every other hairline in the book. They were 0.5mm for one
+   build and at that weight they stopped being rules and started
+   being stripes. */
+.proof__zone {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0 8mm;
+  padding: 5mm 0;
+  border-top: var(--stroke) solid var(--fg-accent);
+}
+
+.proof__zone:last-child { border-bottom: var(--stroke) solid var(--fg-accent); }
+
+/* 44pt, on 40pt of lead. The lead has to be close to the size:
+   at 38pt on 44 the line box was shorter than the face, the
+   baseline sat on the bottom edge of the zone, and the label -
+   which is aligned to that baseline - landed on the rule. */
+.proof__n {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 44pt;
+  line-height: 40pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.proof__label {
+  margin: 0;
+  justify-self: end;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--t-kicker);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.proof__closing {
+  margin: 12mm 0 0;
+  max-width: var(--measure);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 15pt;
+  line-height: 22pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+
+/* ============================================================
+   p23 · 09 THE FUTURE
+
+   A tall plate at the outer edge with the text in a narrow
+   column beside it. The second of the book's two portrait
+   frames, weighted the opposite way to the first.
+   ============================================================ */
+
+.future__kicker { margin: 0; }
+
+.future__rule { margin: var(--rule-gap) 0 0; }
+
+/* 40pt, not 46. It sits in a 74mm column now rather than across
+   the 174mm measure, and at 46 "What Comes Next" broke to three
+   lines with one word on the last. */
+.future__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 40pt;
+  line-height: 44pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+/* Text inside, picture outside. On a verso the two swap, which
+   is what the order property is for - the plate always stands at
+   the edge
+   of the paper, never in the gutter, because a photograph that
+   runs into a saddle-stitched fold loses its edge to the
+   binding. */
+/* Picture LEFT, text right, on both rectos and versos.
+
+   It was picture-outside / text-inside, which is the safer rule -
+   a photograph that runs to the outer trim never touches the
+   binding. The client asked for it on the left and on a recto
+   that is the gutter side, so the plate gives up the 13mm
+   overhang and sits square on the text column instead. It cannot
+   hang past the inner margin: on a saddle-stitched sheet that
+   margin is where the paper folds, and anything in it disappears
+   into the staple. */
+.future__body {
+  display: grid;
+  grid-template-columns: 90mm 1fr;
+  gap: 0 10mm;
+  align-items: start;
+  margin-top: var(--plate-gap);
+}
+
+.future__text {
+  display: flex;
+  flex-direction: column;
+  min-height: 219mm;
+}
+
+.future__text .body { max-width: none; }
+
+/* 11pt in a 74mm column, against the book's 9.5pt across 83mm.
+   Narrower measures take larger type - and the extra 18mm of
+   depth is 18mm less air between the description and the line
+   that closes it. */
+.future__text .body {
+  margin: 0;
+  font-size: 11pt;
+  line-height: 17.5pt;
+}
+
+/* The heading and the paragraphs are ONE block; only the
+   closing line is pushed to the foot.
+
+   space-between was tried across all three and it put as much
+   air between the name and the argument as between the argument
+   and the conclusion - so the heading floated free of the text
+   it belongs to. A heading sits on its paragraph. */
+.future__title { margin: 0 0 var(--s-3); }
+
+.future__text .future__quote { margin-top: auto; }
+
+.future__paras .body + .body { margin-top: var(--s-2); }
+
+.future__plate {
+  position: relative;
+  height: 219mm;
+  overflow: hidden;
+  background: var(--ink);
+  border: var(--stroke) solid var(--rule-photo);
+}
+
+/* On the picture. The column beside it ends at the same line, so
+   there is no paper under the plate to hang a credit on - and
+   the foot of this frame is the darkest part of it. */
+/* Top left, not bottom left. The foot of this frame is a lit
+   road and a row of towers; the head of it is clear evening sky,
+   which is the only part of the picture a 6pt reversed line can
+   sit on and still be read. */
+.future__credit {
+  position: absolute;
+  left: 5mm;
+  top: 5mm;
+  font-family: var(--font-label);
+  font-size: 6pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: rgba(250, 250, 248, 0.75);
+}
+
+/* The closing line, at the foot of the text column. margin-top
+   auto pushes it there, which is why that column is a flex box
+   and not a plain div.
+
+   The two halves are separate blocks, so the break is where the
+   sentence is written rather than where the measure happens to
+   fall. */
+.future__quote {
+  margin: var(--s-3) 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  /* 15pt, not 20. The text column is 74mm wide, and at 20
+     the two halves broke to five lines between them. */
+  font-size: 15pt;
+  line-height: 22pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+  hyphens: none;
+}
+
+.future__quote span { display: block; }
+
+
+/* ============================================================
+   p24 · 10 LET'S BUILD
+
+   The invitation. Large type, one sentence, one photograph, and
+   no address - the address is on the facing page and putting it
+   here as well is what made the two pages look like one page
+   printed twice.
+   ============================================================ */
+
+.build__kicker { margin: 0; }
+
+.build__rule { margin: var(--rule-gap) 0 0; }
+
+/* 84pt, down from 96. The page carries a 106mm plate now as
+   well as the title, and at 96 the two largest things on it
+   left the sentence between them with nowhere to sit. */
+.build__title {
+  margin: var(--title-gap) 0 0;
+  max-width: var(--measure);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 84pt;
+  line-height: 82pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+/* Lead size, not body size. It is the only paragraph on the
+   page and it is the last thing the reader is asked to act on. */
+.build__text {
+  margin: var(--s-3) 0 0;
+  max-width: var(--measure);
+  font-family: var(--font-body);
+  font-size: 13pt;
+  line-height: 21pt;
+  color: var(--fg-muted);
+}
+
+/* The same plate the ventures and the corridor use: 190mm, 13mm
+   off each paper edge, one hairline round it. The book has one
+   way of putting a photograph on a page and this is it. */
+.build__plate {
+  position: relative;
+  flex: none;
+  height: 106mm;
+  margin-top: var(--plate-gap);
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  margin-right: calc(var(--plate-inset) - var(--p-outer));
+  overflow: hidden;
+  background: var(--ink);
+  border: var(--stroke) solid var(--rule-photo);
+}
+
+.page:nth-of-type(even) .build__plate {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+  margin-right: calc(var(--plate-inset) - var(--p-inner));
+}
+
+.build__credit {
+  display: block;
+  margin: 4mm 0 0;
+  margin-left: calc(var(--plate-inset) - var(--p-inner));
+  font-family: var(--font-label);
+  font-size: 6.5pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.page:nth-of-type(even) .build__credit {
+  margin-left: calc(var(--plate-inset) - var(--p-outer));
+}
+
+
+/* ============================================================
+   p25 · CONTACT
+
+   A colophon, not a card. Everything is left on the text column
+   except the mark, which is the one thing on the page that is
+   allowed to be centred.
+   ============================================================ */
+
+.contact__rail {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8mm;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: var(--t-kicker);
+  line-height: var(--lh-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.contact__rule { margin: var(--rule-gap) 0 0; }
+
+.contact__title {
+  margin: var(--title-gap) 0 0;
+  max-width: var(--measure-wide);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+.contact__place {
+  margin: var(--s-2) 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14pt;
+  line-height: 21pt;
+  color: var(--fg-muted);
+}
+
+/* The label above the thing rather than beside it. A two-column
+   key-value list needs a fixed label column to line up, and at
+   three rows a fixed column is more machinery than the page
+   needs. */
+.contact__keys {
+  margin: 22mm 0 0;
+  padding: 0;
+}
+
+.contact__row {
+  padding: 5mm 0;
+  border-top: var(--stroke) solid var(--fg-rule);
+}
+
+.contact__row:last-child { border-bottom: var(--stroke) solid var(--fg-rule); }
+
+.contact__row dt {
+  margin: 0 0 1.5mm;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 6.5pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.contact__row dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17pt;
+  line-height: 22pt;
+  /* Lining figures. Playfair defaults to old-style, which dropped
+     the 5 in 25°12′N below the line and set the coordinates
+     bouncing on a page where they sit alone at 17pt. */
+  font-variant-numeric: lining-nums;
+  color: var(--fg);
+}
+
+/* Centred on the PAGE, not on the text column. auto margins
+   centre it between the 23mm binding and the 19mm outer margin,
+   which put it 2mm off the sheet's axis - and the back cover,
+   which faces it when the book is closed, is on the true centre. */
+.contact__mark {
+  position: relative;
+  left: calc((var(--p-outer) - var(--p-inner)) / 2);
+  width: 52mm;
+  margin: 24mm auto 0;
+}
+
+.contact__mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.contact__foot {
+  margin-top: 20mm;
+  padding-top: 3mm;
+  border-top: var(--stroke) solid var(--fg-rule);
+}
+
+.contact__strap {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 15pt;
+  line-height: 22pt;
+  letter-spacing: var(--track-display);
+  color: var(--fg);
+}
+
+
+/* ============================================================
+   p26 · BACK COVER
+
+   One axis, centred, with the mark on the upper third and the
+   details closing the page. Nothing here is large; the back of
+   a magazine is read at arm's length on a desk, not across a
+   room.
+   ============================================================ */
+
+.back__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 96mm down, not 58. At 58 the mark sat near the top edge and
+     the foot block at the bottom, with 85mm of nothing between
+     two things that are meant to read as one column. 96mm puts
+     the mark on the optical centre of the upper half, which is
+     where the eye looks for it on a closed magazine. */
+  padding: 96mm var(--p-outer) 34mm;
+}
+
+.back__mark {
+  width: 86mm;
+}
+
+.back__mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.back__foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.back__brandrule {
+  display: block;
+  width: 26mm;
+  margin-bottom: var(--s-3);
+}
+
+.back__strap {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24pt;
+  line-height: 32pt;
+  letter-spacing: var(--track-display);
+  color: var(--paper);
+}
+
+.back__company {
+  margin: var(--s-2) 0 0;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 8pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.back__lines {
+  margin: 3mm 0 0;
+  font-family: var(--font-body);
+  font-size: 9pt;
+  line-height: 15pt;
+  color: var(--muted-dark);
+}
+
+.back__coords {
+  display: block;
+  margin-top: 5mm;
+}

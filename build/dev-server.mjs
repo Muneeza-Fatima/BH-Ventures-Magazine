@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = 5173;
-const PAGE = '/out/sample/preview.html';
+const PAGE = '/out/magazine/preview.html';
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

@@ -15,68 +15,67 @@
       variable gave "Type3: 1, FontFile2: 0"; static gives
       "Type3: 0, FontFile2: 1".
 
-   Because the instances are static, Fraunces' optical-size axis
-   cannot be set in CSS any more. So it is baked into three
-   separate families instead — which is exactly what an optical
-   size is for, and the reason Fraunces was chosen at all:
+      build/verify-pdf.mjs now asserts Type3 = 0, because the
+      discipline was being followed and the PDF was failing anyway:
+      -webkit-text-stroke on two components was outlining text,
+      which is also Type 3, and nothing was measuring it.
 
-     Fraunces 144   display, 48pt and up: sharp serifs, high
-                    contrast, tight apertures
-     Fraunces 72    section headings and figures
-     Fraunces 36    pull-quotes and statement text: opened up,
-                    lighter, readable at 28pt
+   TWO FAMILIES, ONE JOB EACH.
 
-   All three carry WONK=1, the axis that gives the face its
-   character rather than making it generic.
+     Poppins   display, headings, card titles, kickers, pills,
+               folios, numerals. Geometric, high x-height, single-
+               storey 'a' — this is the voice the client's
+               reference is written in. It also has real italics,
+               which the sub-descriptions depend on.
+
+     Inter     body copy only. Poppins is wide and tiring over a
+               paragraph at 9.5pt; Inter is not, and the body
+               measure is already calibrated to it.
+
+   Poppins ships from Google as static weights — there is no
+   variable Poppins — so these files are static by construction as
+   well as by request.
    ============================================================ */
 
-@font-face {
-  font-family: "Fraunces 144";
-  src: url("../assets/fonts/fraunces-144.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: block;   /* block, not swap — a flash of fallback would bake into the PDF */
-}
+
+/* ---------- PLAYFAIR DISPLAY — display, headings ------------
+   font-display: block, not swap — a flash of fallback would bake
+   into the PDF. */
 
 @font-face {
-  font-family: "Fraunces 144";
-  src: url("../assets/fonts/fraunces-144i.woff2") format("woff2");
-  font-weight: 500;
-  font-style: italic;
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Fraunces 72";
-  src: url("../assets/fonts/fraunces-72.woff2") format("woff2");
+  font-family: "Playfair Display";
+  src: url("../assets/fonts/playfair-500.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: block;
 }
 
 @font-face {
-  font-family: "Fraunces 72";
-  src: url("../assets/fonts/fraunces-72i.woff2") format("woff2");
+  font-family: "Playfair Display";
+  src: url("../assets/fonts/playfair-500i.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: block;
 }
 
 @font-face {
-  font-family: "Fraunces 36";
-  src: url("../assets/fonts/fraunces-36.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Playfair Display";
+  src: url("../assets/fonts/playfair-700.woff2") format("woff2");
+  font-weight: 700;
   font-style: normal;
   font-display: block;
 }
 
 @font-face {
-  font-family: "Fraunces 36";
-  src: url("../assets/fonts/fraunces-36i.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Playfair Display";
+  src: url("../assets/fonts/playfair-700i.woff2") format("woff2");
+  font-weight: 700;
   font-style: italic;
   font-display: block;
 }
+
+
+/* ---------- INTER — body, labels, figures ------------------- */
 
 @font-face {
   font-family: "Inter";
@@ -88,24 +87,24 @@
 
 @font-face {
   font-family: "Inter";
+  src: url("../assets/fonts/inter-400i.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Inter";
   src: url("../assets/fonts/inter-600.woff2") format("woff2");
   font-weight: 600;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../assets/fonts/grotesk-400.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../assets/fonts/grotesk-500.woff2") format("woff2");
-  font-weight: 500;
   font-style: normal;
   font-display: block;
 }

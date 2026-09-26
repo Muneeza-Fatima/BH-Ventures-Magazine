@@ -45,8 +45,12 @@ body {
   break-after: page;
   break-inside: avoid;
   page-break-after: always;       /* legacy alias, harmless */
-  background: var(--ink);
-  color: var(--paper);
+  /* LIGHT IS THE DEFAULT. The client asked for a light book that
+     still carries the brand — so the page is paper, and navy
+     arrives as panels, bands and sidebars rather than as the
+     ground. .page--dark is the exception, not the rule. */
+  background: var(--paper);
+  color: var(--ink);
 
   /* Content box: margins measured from the page edge, so they
      already include the 3mm bleed. */
@@ -65,14 +69,22 @@ body {
   padding-right: var(--p-inner);
 }
 
-/* Light pages flip the whole colour contract. */
-.page--light {
-  background: var(--paper);
-  color: var(--ink);
+/* The exceptions. */
+.page--dark {
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .page--deep {
   background: var(--ink-deep);
+  color: var(--paper);
+}
+
+/* Kept so existing markup does not break; light is now the default
+   so this class is a no-op. */
+.page--light {
+  background: var(--paper);
+  color: var(--ink);
 }
 
 /* Full-bleed pages manage their own insets. */
@@ -80,42 +92,26 @@ body {
   padding: 0;
 }
 
-/* ---------- THE DATUM LINE ----------------------------------
-   One hairline at exactly the same height on every page. It is
-   the spine of the "Infrastructure" concept: the eye locks onto
-   it while flipping and reads the whole book as one system. */
+/* ---------- THE DATUM LINE, RETIRED -------------------------
+   There used to be one hairline at exactly the same height on
+   every page — the spine of the "Infrastructure" concept, so the
+   eye locked onto it while flipping.
 
-.page::before {
-  content: "";
-  position: absolute;
-  left: var(--p-inner);
-  right: var(--p-outer);
-  top: var(--datum);
-  height: 0;
-  border-top: var(--stroke) solid var(--rule-dark);
-  pointer-events: none;
-  z-index: 3;
-}
+   It does not survive the change of ground. On a dark editorial
+   page a single pale rule across the sheet is structure; on a
+   white page full of rounded cards and panels it is just one more
+   line, and it cuts through the cards rather than organising
+   them. The rounded header band does that job now, and it does it
+   per page rather than by decree.
 
-.page:nth-of-type(even)::before {
-  left: var(--p-outer);
-  right: var(--p-inner);
-}
+   The --datum TOKEN is deliberately kept, at 0mm. Deleting it
+   makes build/check-space.mjs parse an empty string, get NaN, and
+   silently start its scan somewhere other than where it means to —
+   with no error to tell anyone. It is guarded there as well now,
+   but two guards on a silent failure is the right number.
 
-.page--light::before {
-  border-top-color: var(--rule-light);
-}
-
-/* Over photography the datum has to survive a bright sky. */
-.page--bleed::before {
-  left: var(--p-inner);
-  right: var(--p-outer);
-  border-top-color: rgba(250, 250, 248, 0.35);
-}
-
-.page--no-datum::before {
-  display: none;
-}
+   .page--no-datum is still accepted in the markup and is a no-op.
+   ---------------------------------------------------------- */
 
 /* ---------- THE FOLIO ---------------------------------------
    'BH VENTURES · 25°12'N 55°16'E' left, page number right.
@@ -126,18 +122,20 @@ body {
   position: absolute;
   left: var(--p-inner);
   right: var(--p-outer);
-  bottom: calc(var(--bleed) + 9mm);
+  bottom: var(--folio-drop);
   display: flex;
   align-items: center;
   gap: var(--s-1);
 
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: var(--t-folio);
   line-height: var(--lh-folio);
   letter-spacing: var(--track-folio);
   text-transform: uppercase;
-  color: var(--paper);
-  opacity: 0.4;
+  /* A mixed colour, not opacity. An opacity below 1 puts the
+     element into its own transparency group in the PDF; the old
+     book shipped 138 of them, almost all from lines like this. */
+  color: rgba(14, 27, 43, 0.5);
   z-index: 4;
 }
 
@@ -146,16 +144,23 @@ body {
   right: var(--p-inner);
 }
 
-.page--light .folio {
-  color: var(--ink);
-  opacity: 0.45;
+.page--dark .folio,
+.page--deep .folio {
+  color: rgba(250, 250, 248, 0.45);
 }
 
+/* Inside a navy foot panel the folio has to reverse out too. */
+.panel--foot .folio,
+.panel .folio {
+  color: rgba(250, 250, 248, 0.45);
+}
+
+/* currentColor already carries the folio's alpha, so the rule
+   lands a touch lighter than the type without a second opacity. */
 .folio__rule {
   flex: 1;
   height: 0;
   border-top: var(--stroke) solid currentColor;
-  opacity: 0.5;
 }
 
 .folio__n {
@@ -171,9 +176,27 @@ body {
   column-gap: var(--gutter);
 }
 
-/* ---------- CROP MARKS (opt-in via ?crops=1) ----------------
-   Printers that impose the job themselves do not want these,
-   so they are off unless asked for. */
+/* ---------- CROP MARKS (opt-in: render-pdf.mjs --crops) -----
+   Printers that impose the job themselves do not want these, so
+   they are off unless asked for. DEFAULT IS OFF and that is the
+   file to send unless the printer asks otherwise.
+
+   They were opt-in via ?crops=1 for a while and that did nothing
+   at all - nothing read the query string, because there is no
+   JavaScript in this page and there must not be. The class goes
+   on <body> now, written into a copy of the page by
+   render-pdf.mjs.
+
+   WHERE THEY SIT, measured off the render rather than assumed.
+   Each mark runs from the paper edge inwards and stops ON the
+   trim line, so it lies entirely in the 3mm of bleed that gets
+   cut away. That is correct, and it is also tight: convention
+   leaves a gap between the mark and the trim corner so that a
+   millimetre of trimming variance cannot leave a black speck on
+   the finished edge. There is no room for that gap here, because
+   the media box is trim + bleed exactly with nothing spare. A
+   press file with proper offset marks needs a LARGER media box -
+   226 x 313mm - which is a pre-press step, not a CSS one. */
 
 .crops .page::after {
   content: "";

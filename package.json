@@ -8,12 +8,19 @@
     "dev": "node build/dev-server.mjs",
     "images:fetch": "node build/fetch-images.mjs",
     "images:grade": "node build/grade-images.mjs",
+    "flags": "node build/fetch-flags.mjs",
+    "fonts": "node build/fetch-fonts.mjs",
     "map": "node build/make-map.mjs",
     "html": "node build/build.mjs",
     "pdf": "node build/render-pdf.mjs",
+    "shoot": "node build/shoot-pages.mjs",
+    "check:copy": "node build/check-copy.mjs",
     "check:fit": "node build/check-fit.mjs",
-    "check:pdf": "node build/verify-pdf.mjs out/sample/BH-Ventures-SAMPLE.pdf --pages=7",
-    "build": "npm run html && npm run pdf && npm run check:fit && npm run check:pdf"
+    "check:space": "node build/check-space.mjs",
+    "check:align": "node build/check-align.mjs",
+    "check:pdf": "node build/verify-pdf.mjs \"out/magazine/BH VENTURES FZE.pdf\" --pages=26 --stitched",
+    "check:ink": "node build/shoot-pages.mjs && node build/check-ink.mjs",
+    "build": "npm run check:copy && npm run html && npm run pdf && npm run check:fit && npm run check:align && npm run check:space && npm run check:pdf && npm run check:ink"
   },
   "dependencies": {
     "sharp": "^0.34.2"

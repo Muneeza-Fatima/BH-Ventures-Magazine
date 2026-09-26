@@ -10,10 +10,13 @@
     "year": "MMXXVI",
     "coords": "25°12′N 55°16′E",
     "tagline": "Building opportunities. Creating global impact.",
-    "licence": ""
+    "licence": "",
+    "pages": "28"
   },
   "cover": {
     "kicker": "BH Ventures FZE LLC · Dubai, UAE · Edition 01",
+    "_themes_note": "NEW COPY - not from the client draft. The reference cover carries a theme line above the headline and there was nothing in the approved text that fits the slot. Needs sign-off, or delete this field and the slot closes on its own.",
+    "themes": "Strategy / Innovation / Global Growth",
     "title_a": "Building the Future",
     "title_b": "of Ventures.",
     "deck": "Bridging Trade, Technology & Innovation from the UAE.",
@@ -34,7 +37,7 @@
     "body": [
       "BH Ventures FZE LLC is a UAE-based, licensed free-zone company built around a simple conviction: opportunity has no single address.",
       "What began as an international trading operation has grown into a portfolio of ventures spanning global trade, artificial intelligence, Web3, digital analytics, marketing, and market intelligence — unified not by industry, but by discipline.",
-      "The company operates as a builder of businesses rather than a single business itself: identifying high-potential markets, constructing ventures inside them, and connecting the partnerships that let those ventures scale. Every division — from automobile export to AI consultancy — answers to the same address in Dubai."
+      "The company operates as a builder of businesses rather than a single business itself: identifying high-potential markets, constructing ventures inside them, and connecting the partnerships that let those ventures scale. Every division — from automobile export to AI consultancy — is engineered to the same exacting standard, and answers to the same address in Dubai."
     ],
     "spans_label": "Portfolio spans",
     "spans": [
@@ -57,49 +60,59 @@
     "direct": [
       {
         "name": "United Arab Emirates",
-        "coords": "25°12′N 55°16′E"
+        "coords": "25°12′N 55°16′E",
+        "flag": "ae"
       },
       {
         "name": "Pakistan",
-        "coords": "30°22′N 69°21′E"
+        "coords": "30°22′N 69°21′E",
+        "flag": "pk"
       },
       {
         "name": "United Kingdom",
-        "coords": "51°30′N 00°07′W"
+        "coords": "51°30′N 00°07′W",
+        "flag": "gb"
       },
       {
         "name": "United States",
-        "coords": "38°54′N 77°02′W"
+        "coords": "38°54′N 77°02′W",
+        "flag": "us"
       },
       {
         "name": "France",
-        "coords": "48°51′N 02°21′E"
+        "coords": "48°51′N 02°21′E",
+        "flag": "fr"
       }
     ],
     "partners_label": "Strategic Partnerships",
     "partners": [
       {
         "name": "Germany",
-        "coords": "52°31′N 13°24′E"
+        "coords": "52°31′N 13°24′E",
+        "flag": "de"
       },
       {
         "name": "Estonia",
-        "coords": "59°26′N 24°45′E"
+        "coords": "59°26′N 24°45′E",
+        "flag": "ee"
       },
       {
         "name": "Denmark",
-        "coords": "55°40′N 12°34′E"
+        "coords": "55°40′N 12°34′E",
+        "flag": "dk"
       },
       {
         "name": "Ukraine",
-        "coords": "50°27′N 30°31′E"
+        "coords": "50°27′N 30°31′E",
+        "flag": "ua"
       }
     ],
     "wider_label": "Wider network",
     "wider": [
       {
         "name": "Saudi Arabia",
-        "coords": "24°42′N 46°41′E"
+        "coords": "24°42′N 46°41′E",
+        "flag": "sa"
       }
     ],
     "body": "Add Saudi Arabia to the wider network, and the footprint stretches across the Gulf, South Asia, Europe, and North America — nine markets and growing, each chosen for what it adds to the whole rather than for its size alone. Beyond direct geography, the company's trading community reaches further still — a network built for traders across 150+ countries, proof that BH Ventures' idea of “market” was never bound by borders in the first place.",
@@ -127,105 +140,110 @@
     "kicker": "The Ventures",
     "title_a": "Ten Disciplines,",
     "title_b": "One Address.",
-    "groups": [
-      {
-        "label": "Global Trade",
-        "items": [
-          {
-            "n": "01",
-            "name": "New Automobile Trading (Export)",
-            "desc": "Moving vehicles out of the UAE and into new markets, built on precision logistics and trusted export channels.",
-            "icon": "auto"
-          },
-          {
-            "n": "02",
-            "name": "Foodstuff Trading",
-            "desc": "Import and export of foodstuff, connecting supply chains across borders with reliability at scale.",
-            "icon": "food"
-          }
-        ]
-      },
-      {
-        "label": "Venture Building",
-        "items": [
-          {
-            "n": "03",
-            "name": "Web3 Venture Studio",
-            "desc": "From concept to launch, building decentralized ventures for a market still being defined.",
-            "icon": "web3"
-          }
-        ]
-      },
-      {
-        "label": "Data & Insight",
-        "items": [
-          {
-            "n": "04",
-            "name": "Digital Analytics Services",
-            "desc": "Dashboards and attribution that turn scattered data into decisions.",
-            "icon": "analytics"
-          }
-        ]
-      },
-      {
-        "label": "Growth",
-        "items": [
-          {
-            "n": "05",
-            "name": "Marketing via Social Media",
-            "desc": "Strategy and amplification for brands that need to be seen, not just heard.",
-            "icon": "social"
-          },
-          {
-            "n": "06",
-            "name": "Advertising",
-            "desc": "Campaign strategy and execution built for reach and recall.",
-            "icon": "ads"
-          },
-          {
-            "n": "07",
-            "name": "Marketing Management",
-            "desc": "Strategy and growth, managed end to end.",
-            "icon": "manage"
-          }
-        ]
-      },
-      {
-        "label": "Innovation",
-        "items": [
-          {
-            "n": "08",
-            "name": "AI Research & Consultancies",
-            "desc": "An innovation practice exploring where artificial intelligence actually creates value.",
-            "icon": "ai"
-          }
-        ]
-      },
-      {
-        "label": "Assessment",
-        "items": [
-          {
-            "n": "09",
-            "name": "Surveying & Evaluating",
-            "desc": "Ground-truth services that inform decisions before capital moves.",
-            "icon": "survey"
-          }
-        ]
-      },
-      {
-        "label": "Experience",
-        "items": [
-          {
-            "n": "10",
-            "name": "Exhibition Organizing",
-            "desc": "From concept to on-site execution, building the moments where business happens in person.",
-            "icon": "expo"
-          }
-        ]
-      }
-    ],
     "closing": "Trade. Web3. AI. Marketing. Nine services, one address — each engineered to the same exacting standard.",
-    "_closing_note": "PRE-PRINT ITEM 1: the draft says 'Nine services' but lists ten ventures, and sections 02 and 06 both say 'ten disciplines'. Change to 'Ten ventures' once the client confirms."
+    "_closing_note": "PRE-PRINT ITEM 1: the draft says 'Nine services' but lists ten ventures, and sections 02 and 06 both say 'ten disciplines'. Change to 'Ten ventures' once the client confirms.",
+    "ventures": [
+      {
+        "n": "01",
+        "name": "New Automobile Trading (Export)",
+        "desc": "Moving vehicles out of the UAE and into new markets, built on precision logistics and trusted export channels.",
+        "icon": "auto",
+        "group": "Global Trade",
+        "image": "ventures-automobile",
+        "caption": "New vehicles on the quay · export by sea",
+        "page": "09"
+      },
+      {
+        "n": "02",
+        "name": "Foodstuff Trading",
+        "desc": "Import and export of foodstuff, dates above all, connecting supply chains across borders with reliability at scale.",
+        "icon": "food",
+        "group": "Global Trade",
+        "image": "ventures-foodstuff",
+        "caption": "Dates crated for export · Gulf supply chain",
+        "page": "10"
+      },
+      {
+        "n": "03",
+        "name": "Web3 Venture Studio",
+        "desc": "From concept to launch, building decentralized ventures for a market still being defined.",
+        "icon": "web3",
+        "group": "Venture Building",
+        "image": "ventures-web3",
+        "caption": "The network layer · protocol infrastructure",
+        "page": "11"
+      },
+      {
+        "n": "04",
+        "name": "Digital Analytics Services",
+        "desc": "Dashboards and attribution that turn scattered data into decisions.",
+        "icon": "analytics",
+        "group": "Data & Insight",
+        "image": "ventures-analytics",
+        "caption": "Operations room · attribution in real time",
+        "page": "12"
+      },
+      {
+        "n": "05",
+        "name": "Marketing via Social Media",
+        "desc": "Strategy and amplification for brands that need to be seen, not just heard.",
+        "icon": "social",
+        "group": "Growth",
+        "image": "ventures-social",
+        "caption": "Content desk · a week of posts, planned",
+        "page": "13"
+      },
+      {
+        "n": "06",
+        "name": "Advertising",
+        "desc": "Campaign strategy and execution built for reach and recall.",
+        "icon": "ads",
+        "group": "Growth",
+        "image": "ventures-ads",
+        "caption": "Facade screen · Downtown Dubai at night",
+        "page": "14"
+      },
+      {
+        "n": "07",
+        "name": "Marketing Management",
+        "desc": "Strategy and growth, managed end to end.",
+        "icon": "manage",
+        "group": "Growth",
+        "image": "ventures-manage",
+        "caption": "The planning table · a quarter, mapped",
+        "page": "15"
+      },
+      {
+        "n": "08",
+        "name": "AI Research & Consultancies",
+        "desc": "An innovation practice exploring where artificial intelligence actually creates value.",
+        "icon": "ai",
+        "group": "Innovation",
+        "image": "ventures-ai",
+        "caption": "Research floor · machine and operator",
+        "page": "16"
+      },
+      {
+        "n": "09",
+        "name": "Surveying & Evaluating",
+        "desc": "Ground-truth services that inform decisions before capital moves.",
+        "icon": "survey",
+        "group": "Assessment",
+        "image": "ventures-survey",
+        "caption": "Total station on site · before capital moves",
+        "page": "17"
+      },
+      {
+        "n": "10",
+        "name": "Exhibition Organizing",
+        "desc": "From concept to on-site execution, building the moments where business happens in person.",
+        "icon": "expo",
+        "group": "Experience",
+        "image": "ventures-exhibition",
+        "caption": "Exhibition floor · the stands, open",
+        "page": "18"
+      }
+    ]
   },
   "s05": {
     "n": "05",
@@ -282,12 +300,12 @@
     "body": "Numbers rarely tell the whole story, but they mark the distance travelled. A licensed free-zone company. Nine markets, five of them direct. Ten active ventures under one roof. A trading network built for a global community, not a local one.",
     "stats": [
       {
-        "value": "9",
+        "value": "09",
         "label": "Markets",
         "note": "Gulf · South Asia · Europe · N. America"
       },
       {
-        "value": "5",
+        "value": "05",
         "label": "Direct Operations",
         "note": "Wholly operated by BH Ventures"
       },
@@ -321,7 +339,7 @@
         "label": "Traders Worldwide"
       }
     ],
-    "_community_note": "PRE-PRINT ITEM 2: the client's own draft says 'Confirm real numbers with the client before print'. These four must be filled before the PDF goes to a printer.",
+    "_community_note": "NO LONGER RENDERED. The Trading Community page was removed at the client's instruction, so these four figures do not appear in the magazine and the pre-print item they carried is closed. The copy is kept because the numbers are the client's to use elsewhere. Original note: PRE-PRINT ITEM 2: the client's own draft says 'Confirm real numbers with the client before print'. These four must be filled before the PDF goes to a printer.",
     "closing_a": "Every number here is a marker,",
     "closing_em": "not a ceiling."
   },
@@ -349,52 +367,52 @@
     {
       "n": "01",
       "title": "The Opening",
-      "page": "03"
+      "page": "04"
     },
     {
       "n": "02",
       "title": "The Company",
-      "page": "04"
+      "page": "05"
     },
     {
       "n": "03",
       "title": "The World We Operate In",
-      "page": "05"
+      "page": "06"
     },
     {
       "n": "04",
       "title": "The Ventures",
-      "page": "07"
+      "page": "08"
     },
     {
       "n": "05",
       "title": "The People Behind the Vision",
-      "page": "10"
+      "page": "19"
     },
     {
       "n": "06",
       "title": "The Way We Create Value",
-      "page": "11"
+      "page": "20"
     },
     {
       "n": "07",
       "title": "Global Connections",
-      "page": "12"
+      "page": "21"
     },
     {
       "n": "08",
       "title": "Proof",
-      "page": "13"
+      "page": "22"
     },
     {
       "n": "09",
       "title": "The Future",
-      "page": "14"
+      "page": "23"
     },
     {
       "n": "10",
       "title": "Let's Build",
-      "page": "15"
+      "page": "24"
     }
   ],
   "presentation": {
@@ -463,5 +481,64 @@
         "Body text uses oldstyle figures, which sit inside a line of prose instead of shouting out of it."
       ]
     }
+  },
+  "captions": {
+    "cover": "Burj Khalifa, Downtown Dubai · 25°11′N 55°16′E",
+    "opening": "Downtown Dubai · 25°12′N 55°16′E",
+    "people": "The atrium · 25°12′N 55°16′E",
+    "value": "The long view",
+    "connections": "The air corridor, after dark",
+    "future": "The city at dusk · 25°12′N 55°16′E",
+    "build": "Where it starts",
+    "_build_note": "Picture credit, not client copy. It takes its three words from the last three of the client's own paragraph on that page, and it claims no place - the frame is a table and a model, and it could be anywhere.",
+    "_future_note": "Picture credit, not client copy. This one DOES carry coordinates, unlike the value and connections credits: the Burj Khalifa and the Marina towers are both in frame, so the place is not in doubt.",
+    "_connections_note": "Picture credit, not client copy. No place and no coordinates, for the same reason as the value credit: the aerial is not identifiably Dubai. Flagged for the client.",
+    "_value_note": "Picture credit, not client copy. It names NO place and carries no coordinates, unlike every other credit in the book, and that is deliberate: the skyline in this frame does not read as Dubai. Captioning it with the company's coordinates would be a claim the photograph contradicts. Flagged for the client.",
+    "_people_note": "Picture credit, not client copy. It names the place and nothing else on purpose: the people in the frame are not the company's team, and a caption that implied they were would be a claim the picture cannot support.",
+    "_opening_note": "Picture credit, not client copy. The frame changed from a dusk skyline to an interior, so the old caption no longer described it. Coordinates are the company address used throughout the book. Needs sign-off."
+  },
+  "imprint": {
+    "label": "Imprint",
+    "title": "Edition 01",
+    "lines": [
+      {
+        "k": "Published by",
+        "v": "BH Ventures FZE LLC"
+      },
+      {
+        "k": "Address",
+        "v": "Dubai, United Arab Emirates"
+      },
+      {
+        "k": "Coordinates",
+        "v": "25°12′N 55°16′E"
+      },
+      {
+        "k": "Contact",
+        "v": "info@bhventures.ae"
+      },
+      {
+        "k": "Online",
+        "v": "bhventures.ae"
+      }
+    ],
+    "_deck_note": "NEW COPY - not from the client draft. The reference layout carries two short lines under the statement and there was nothing in the approved text for the slot. Needs sign-off, or delete both fields and the slot closes on its own.",
+    "deck_a": "Diverse expertise.",
+    "deck_b": "A unified vision.",
+    "colophon": "Set in Playfair Display and Inter. Printed on A4, 210 × 297 mm."
+  },
+  "back": {
+    "strap": "Building opportunities.",
+    "lines": [
+      "BH Ventures FZE LLC",
+      "Dubai, United Arab Emirates"
+    ]
+  },
+  "ui": {
+    "contents": "Contents",
+    "section": "Section",
+    "page": "Page",
+    "ventures_index": "The ten",
+    "photo_pending": "Photography to come"
   }
 }

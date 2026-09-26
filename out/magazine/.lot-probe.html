@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BH Ventures FZE LLC — Corporate Magazine, Edition 01</title>
+<link rel="stylesheet" href="../../brand/tokens.css">
+<link rel="stylesheet" href="../../src/fonts.css">
+<link rel="stylesheet" href="../../src/print.css">
+<link rel="stylesheet" href="../../src/components.css">
+<link rel="stylesheet" href="../../src/magazine.css">
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+<!-- ============================================================
+     Ten venture icons. One 24x24 grid, one stroke weight, no
+     fills, no rounded-corner flourishes on some and not others.
+     Mixed stroke weights across an icon set is the single
+     loudest amateur tell, so every path here is stroke-width 1.5
+     and the stroke is set once, in components.css.
+     ============================================================ -->
+
+  <!-- 01 New Automobile Trading (Export) — a vehicle on a deck, moving off the edge -->
+  <symbol id="i-auto" viewBox="0 0 24 24">
+    <path d="M3 14.5h18"/>
+    <path d="M5 14.5v-2.2l2-3.6a1.4 1.4 0 0 1 1.2-.7h7.6a1.4 1.4 0 0 1 1.2.7l2 3.6v2.2"/>
+    <circle cx="8" cy="16.6" r="1.6"/>
+    <circle cx="16" cy="16.6" r="1.6"/>
+    <path d="M7.4 11.4h9.2"/>
+    <path d="M3 19.5h13"/>
+    <path d="M18 19.5h3"/>
+  </symbol>
+
+  <!-- 02 Foodstuff Trading — stacked crates crossing a border line -->
+  <symbol id="i-food" viewBox="0 0 24 24">
+    <rect x="3.5" y="12" width="7.5" height="7"/>
+    <rect x="13" y="12" width="7.5" height="7"/>
+    <rect x="8.25" y="5" width="7.5" height="7"/>
+    <path d="M7.25 12v7"/>
+    <path d="M16.75 12v7"/>
+    <path d="M12 5v7"/>
+  </symbol>
+
+  <!-- 03 Web3 Venture Studio — a block in a chain, one node still open -->
+  <symbol id="i-web3" viewBox="0 0 24 24">
+    <path d="M12 3.2 19 7v10l-7 3.8L5 17V7Z"/>
+    <path d="M12 3.2V12l7-5"/>
+    <path d="M12 12 5 7"/>
+    <path d="M12 12v8.8"/>
+  </symbol>
+
+  <!-- 04 Digital Analytics Services — scattered data resolving into a trend -->
+  <symbol id="i-analytics" viewBox="0 0 24 24">
+    <path d="M3.5 20.5h17"/>
+    <path d="M6 20.5v-5.5"/>
+    <path d="M10.5 20.5v-9"/>
+    <path d="M15 20.5v-4"/>
+    <path d="M19.5 20.5v-12"/>
+    <path d="M4.5 10.5 9 6l3.5 3.5L20 3"/>
+    <circle cx="9" cy="6" r="1"/>
+  </symbol>
+
+  <!-- 05 Marketing via Social Media — one signal reaching a network -->
+  <symbol id="i-social" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="2.4"/>
+    <circle cx="5" cy="6" r="1.8"/>
+    <circle cx="19" cy="6" r="1.8"/>
+    <circle cx="5" cy="18" r="1.8"/>
+    <circle cx="19" cy="18" r="1.8"/>
+    <path d="M10.3 10.3 6.4 7.2"/>
+    <path d="M13.7 10.3l3.9-3.1"/>
+    <path d="M10.3 13.7 6.4 16.8"/>
+    <path d="M13.7 13.7l3.9 3.1"/>
+  </symbol>
+
+  <!-- 06 Advertising — a campaign broadcast, measured in reach -->
+  <symbol id="i-ads" viewBox="0 0 24 24">
+    <path d="M4 9.5v5a1 1 0 0 0 1 1h3l6 4V4.5l-6 4H5a1 1 0 0 0-1 1Z"/>
+    <path d="M8 15.5v4"/>
+    <path d="M17.5 8.5a5 5 0 0 1 0 7"/>
+    <path d="M20 6a8.5 8.5 0 0 1 0 12"/>
+  </symbol>
+
+  <!-- 07 Marketing Management — work moving across stages, end to end -->
+  <symbol id="i-manage" viewBox="0 0 24 24">
+    <rect x="3.5" y="4.5" width="5" height="15"/>
+    <rect x="9.5" y="4.5" width="5" height="15"/>
+    <rect x="15.5" y="4.5" width="5" height="15"/>
+    <path d="M3.5 9h5"/>
+    <path d="M9.5 12.5h5"/>
+    <path d="M15.5 16h5"/>
+  </symbol>
+
+  <!-- 08 AI Research & Consultancies — a core with its connections out -->
+  <symbol id="i-ai" viewBox="0 0 24 24">
+    <rect x="8.5" y="8.5" width="7" height="7"/>
+    <path d="M12 3.5v5"/>
+    <path d="M12 15.5v5"/>
+    <path d="M3.5 12h5"/>
+    <path d="M15.5 12h5"/>
+    <path d="M6.2 6.2 8.5 8.5"/>
+    <path d="M15.5 15.5l2.3 2.3"/>
+    <path d="M17.8 6.2 15.5 8.5"/>
+    <path d="M8.5 15.5 6.2 17.8"/>
+  </symbol>
+
+  <!-- 09 Surveying & Evaluating — ground truth taken before anything moves -->
+  <symbol id="i-survey" viewBox="0 0 24 24">
+    <circle cx="12" cy="9" r="4.5"/>
+    <path d="M12 4.5v9"/>
+    <path d="M7.5 9h9"/>
+    <path d="M12 13.5 8 20.5"/>
+    <path d="M12 13.5 16 20.5"/>
+    <path d="M9.4 18h5.2"/>
+  </symbol>
+
+  <!-- 10 Exhibition Organizing — a stand, built for the moment it opens -->
+  <symbol id="i-expo" viewBox="0 0 24 24">
+    <path d="M3 8.5h18"/>
+    <path d="M3 8.5 5 4.5h14l2 4"/>
+    <path d="M5 8.5v11"/>
+    <path d="M19 8.5v11"/>
+    <path d="M5 19.5h14"/>
+    <path d="M9 19.5v-6h6v6"/>
+  </symbol>
+
+  <!-- Editorial: global connections — a globe with a trade lane across it -->
+  <symbol id="i-globe" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.5"/>
+    <path d="M3.5 12h17"/>
+    <path d="M12 3.5c2.6 2.4 4 5.3 4 8.5s-1.4 6.1-4 8.5c-2.6-2.4-4-5.3-4-8.5s1.4-6.1 4-8.5z"/>
+  </symbol>
+
+  <!-- Editorial: the future — a tower crane over a rising core -->
+  <symbol id="i-build" viewBox="0 0 24 24">
+    <path d="M4 20.5h16"/>
+    <path d="M7 20.5V7"/>
+    <path d="M3.5 7h13"/>
+    <path d="M7 7l4-3.5"/>
+    <path d="M14 7v3.5"/>
+    <path d="M11.5 14.5h7v6h-7z"/>
+  </symbol>
+</svg>
+
+
+<!-- ============================================================
+     p1 — COVER
+
+     A masthead band on paper, and a photograph of Dubai filling
+     everything under it.
+
+     THE COMMENT THAT USED TO BE HERE claimed the signature move
+     was a cut-out spire crossing in front of the masthead -
+     National Geographic's trick. It is a good trick and it is the
+     wrong one for this book, twice over. The client asked plainly
+     that the building NOT run into BH VENTURES, which is the
+     opposite instruction. And a cut-out can only be made from an
+     AI render here, because cutOut() needs a clean white ground
+     that no real Dubai photograph has - so chasing that trick is
+     what kept putting a fake-looking building on the front.
+
+     The band settles the instruction by structure rather than by
+     a fragile height cap: the picture starts below the masthead,
+     so nothing in it can ever reach the logo.
+     ============================================================ -->
+<section class="page page--no-datum page--bleed cover">
+  <div class="decor cover__ground" aria-hidden="true">
+    
+    <img class="cover__img" src="../../assets/images/graded/cover-day-close@300.jpg" alt="">
+    
+    
+  </div>
+
+  <div class="cover__inner">
+    <div class="cover__rail">
+      <span>Corporate Magazine</span>
+      <span>Edition 01 · MMXXVI</span>
+    </div>
+
+    <span class="cover__toprule"></span>
+
+    <div class="cover__masthead">
+      <img src="../../brand/logo-lockup.png" alt="BH Ventures FZE LLC">
+    </div>
+
+    <div class="cover__head">
+      
+      <p class="cover__themes">Strategy / Innovation / Global Growth</p>
+      <span class="cover__themerule"></span>
+      
+
+      <h1 class="cover__title">Building<br>the Future<br><span class="em">of Ventures.</span></h1>
+
+      <p class="cover__deck">Bridging Trade, Technology &amp; Innovation from the UAE.</p>
+    </div>
+
+    <ul class="cover__lines">
+      
+      <li><span class="cover__lines-n">01</span><span class="cover__lines-t">The World We Operate In</span></li>
+      
+      <li><span class="cover__lines-n">02</span><span class="cover__lines-t">The Ventures</span></li>
+      
+      <li><span class="cover__lines-n">03</span><span class="cover__lines-t">Global Connections</span></li>
+      
+    </ul>
+
+    <p class="cover__place"><span class="cover__place-dash"></span>Dubai · United Arab Emirates</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p2 — THE INSIDE FRONT
+
+     A white page: two inset frames at the head - the facade
+     detail on the left, the cloth-draped tower on the right - a
+     statement across the measure beneath them, and a navy band
+     running off all three edges at the foot.
+
+     IT WAS A FULL-BLEED PHOTOGRAPH for a while, built to a
+     reference the client sent, and it has come back to this.
+
+     THE BAND IS LOAD-BEARING, not decorative. check-ink measures
+     navy as distance from #0E1B2B under 70 - a colour test, not a
+     darkness one - so neither photograph counts toward the 10%
+     floor however dark it looks; pure black would not qualify
+     either. Without the band this page fails as TOO PLAIN.
+
+     Its corners are square because they have to be: tokens.css
+     allows a rounded panel only inset far enough that all four
+     corners show, or pushed past the bleed by more than a radius.
+     A band that reaches the trim can do neither. .decor so
+     check-fit knows it is meant to reach the paper edge.
+     ============================================================ -->
+<section class="page page--no-datum imprint">
+  <span class="rule--brand imprint__rule"></span>
+  <p class="imprint__kicker">Imprint · Edition 01 · MMXXVI</p>
+
+  <div class="decor imprint__mark" aria-hidden="true">
+    <img src="../../brand/logo-monogram-wash.png" alt="">
+  </div>
+
+  <h1 class="imprint__statement">Ten disciplines<br>Nine markets<br><span class="em">One standard</span></h1>
+
+  <div class="panel decor imprint__foot">
+    <dl class="imprint__facts">
+      
+      <div class="imprint__fact">
+        <dt>Published by</dt>
+        <dd>BH Ventures FZE LLC</dd>
+      </div>
+      
+      <div class="imprint__fact">
+        <dt>Address</dt>
+        <dd>Dubai, United Arab Emirates</dd>
+      </div>
+      
+      <div class="imprint__fact">
+        <dt>Coordinates</dt>
+        <dd>25°12′N 55°16′E</dd>
+      </div>
+      
+      <div class="imprint__fact">
+        <dt>Contact</dt>
+        <dd>info@bhventures.ae</dd>
+      </div>
+      
+      <div class="imprint__fact">
+        <dt>Online</dt>
+        <dd>bhventures.ae</dd>
+      </div>
+      
+    </dl>
+    <p class="imprint__colophon">Set in Playfair Display and Inter. Printed on A4, 210 × 297 mm.</p>
+  </div>
+
+  <div class="folio imprint__folio">
+    <span>BH Ventures FZE LLC · 25°12′N 55°16′E</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">02</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p3 — CONTENTS
+     ============================================================ -->
+<section class="page page--stack page--plain contents-page">
+  <div class="contents__rail">
+    <span>BH Ventures FZE LLC</span>
+    <span>Edition 01 · MMXXVI</span>
+  </div>
+  <span class="rule contents__rule"></span>
+
+  <h1 class="contents__title">Contents</h1>
+
+  <ol class="toc">
+    
+    <li class="toc__row">
+      <span class="toc__n">01</span>
+      <span class="toc__title">The Opening</span>
+      <span class="toc__page">04</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">02</span>
+      <span class="toc__title">The Company</span>
+      <span class="toc__page">05</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">03</span>
+      <span class="toc__title">The World We Operate In</span>
+      <span class="toc__page">06</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">04</span>
+      <span class="toc__title">The Ventures</span>
+      <span class="toc__page">08</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">05</span>
+      <span class="toc__title">The People Behind the Vision</span>
+      <span class="toc__page">19</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">06</span>
+      <span class="toc__title">The Way We Create Value</span>
+      <span class="toc__page">20</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">07</span>
+      <span class="toc__title">Global Connections</span>
+      <span class="toc__page">21</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">08</span>
+      <span class="toc__title">Proof</span>
+      <span class="toc__page">22</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">09</span>
+      <span class="toc__title">The Future</span>
+      <span class="toc__page">24</span>
+    </li>
+    
+    <li class="toc__row">
+      <span class="toc__n">10</span>
+      <span class="toc__title">Let’s Build</span>
+      <span class="toc__page">25</span>
+    </li>
+    
+  </ol>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · 25°12′N 55°16′E</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">03</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p4 — 01 THE OPENING
+
+     Three strata, and no boxes: photograph, navy, paper. The page
+     used to be a rounded picture card stacked on a rounded navy
+     card stacked on two columns, which is the device the client
+     has now rejected twice. A band that runs off both edges is
+     not a card - it reads as a layer of the page rather than as
+     an object sitting on it.
+
+     The photograph bleeds off the top as well. It is the first
+     page after the contents and it is the one place in the book
+     where a picture is allowed to arrive without a margin.
+     ============================================================ -->
+<section class="page page--no-datum page--stack opening">
+  <div class="opening__band">
+    
+    <img class="photo" src="../../assets/images/graded/opening-office@300.jpg" alt="">
+    
+  </div>
+
+  <div class="panel opening__stratum">
+    <div class="opening__head">
+      <span class="kicker"><span class="kicker__n">01</span><span>The Opening</span></span>
+      <span class="opening__credit">Downtown Dubai · 25°12′N 55°16′E</span>
+    </div>
+
+    <h1 class="opening__statement">
+      Where trade meets technology, and ambition becomes architecture. <span class="em">This is BH Ventures.</span>
+    </h1>
+  </div>
+
+  <span class="rule opening__rule"></span>
+  <p class="body body--2col opening__text">From a single address in Dubai, BH Ventures moves cars, cargo, code, and capital across nine countries and counting. It is not one business — it is ten disciplines operating on one standard, built by a licensed free-zone company that treats ambition as infrastructure, not inspiration.</p>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Opening</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">04</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p5 — 02 WHO WE ARE
+
+     Nothing on this page sits on navy. The heading was reversed
+     out of a navy headband and the strap out of a navy panel at
+     the foot; both are gone, and the client's instruction was
+     exact about why - text should not have a block behind it.
+
+     What replaces them is a photograph that holds the bottom half
+     of the page and runs off three edges, with the pull-quote set
+     on its sky in NAVY. A picture is not a block: the sentence
+     has the city behind it rather than a rectangle.
+
+     Read as a spread with p4 this is one diagonal - picture at
+     the top of the left page, picture at the foot of the right.
+
+     The dark card page that used to follow, PORTFOLIO SPANS, is
+     gone at the client's instruction, so this section is one page
+     now. The six domains it listed are still in the copy and
+     still named in the paragraph above.
+     ============================================================ -->
+<section class="page page--stack page--plain company-page">
+  <div class="kicker company__kicker"><span class="kicker__n">02</span><span>The Company</span></div>
+  <span class="rule company__rule"></span>
+
+  <h1 class="company__title">Who <span class="em">We Are</span></h1>
+
+  <div class="company__cols">
+    
+    <p class="body">BH Ventures FZE LLC is a UAE-based, licensed free-zone company built around a simple conviction: opportunity has no single address.</p>
+    
+    <p class="body">What began as an international trading operation has grown into a portfolio of ventures spanning global trade, artificial intelligence, Web3, digital analytics, marketing, and market intelligence — unified not by industry, but by discipline.</p>
+    
+    <p class="body">The company operates as a builder of businesses rather than a single business itself: identifying high-potential markets, constructing ventures inside them, and connecting the partnerships that let those ventures scale. Every division — from automobile export to AI consultancy — is engineered to the same exacting standard, and answers to the same address in Dubai.</p>
+    
+  </div>
+
+  <div class="decor company__band">
+    
+    <img class="photo" src="../../assets/images/graded/company-terrace@300.jpg" alt="">
+    
+    <blockquote class="company__quote">Ten disciplines. <span class="em">One standard.</span></blockquote>
+  </div>
+
+  <div class="folio company__folio">
+    <span>BH Ventures FZE LLC · The Company</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">05</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p6 — 03 WHERE WE OPERATE
+
+     The heading was reversed out of a rounded navy band and the
+     band is gone. Nothing on this page has a block behind it.
+
+     The navy that band used to supply now comes from the map
+     itself, which is a navy frame running off both edges. That is
+     the better arrangement anyway: on a page about reach, the
+     weight should be the world rather than a rectangle behind two
+     words.
+     ============================================================ -->
+<section class="page page--stack map-page">
+  <div class="kicker map__kicker"><span class="kicker__n">03</span><span>The World We Operate In</span></div>
+  <span class="rule map__rule"></span>
+
+  <h1 class="map__title">Where We Operate</h1>
+  <p class="map__deck">BH Ventures runs on two kinds of presence: direct operations, and strategic partnership.</p>
+
+  <div class="decor map__band">
+    
+    <img class="photo" src="../../assets/images/graded/world-atlas@300.jpg" alt="World map with routes radiating from Dubai">
+    
+  </div>
+
+  <div class="countries">
+    <div class="countries__col">
+      <span class="group-label">Direct Operations</span>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/ae.svg" alt="">
+        <span class="country__name">United Arab Emirates</span>
+        <span class="country__coords">25°12′N 55°16′E</span>
+      </div>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/pk.svg" alt="">
+        <span class="country__name">Pakistan</span>
+        <span class="country__coords">30°22′N 69°21′E</span>
+      </div>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/gb.svg" alt="">
+        <span class="country__name">United Kingdom</span>
+        <span class="country__coords">51°30′N 00°07′W</span>
+      </div>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/us.svg" alt="">
+        <span class="country__name">United States</span>
+        <span class="country__coords">38°54′N 77°02′W</span>
+      </div>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/fr.svg" alt="">
+        <span class="country__name">France</span>
+        <span class="country__coords">48°51′N 02°21′E</span>
+      </div>
+      
+    </div>
+
+    <div class="countries__col">
+      <span class="group-label">Strategic Partnerships</span>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/de.svg" alt="">
+        <span class="country__name">Germany</span>
+        <span class="country__coords">52°31′N 13°24′E</span>
+      </div>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/ee.svg" alt="">
+        <span class="country__name">Estonia</span>
+        <span class="country__coords">59°26′N 24°45′E</span>
+      </div>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/dk.svg" alt="">
+        <span class="country__name">Denmark</span>
+        <span class="country__coords">55°40′N 12°34′E</span>
+      </div>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/ua.svg" alt="">
+        <span class="country__name">Ukraine</span>
+        <span class="country__coords">50°27′N 30°31′E</span>
+      </div>
+      
+    </div>
+
+    <div class="countries__col">
+      <span class="group-label">Wider network</span>
+      
+      <div class="country">
+        <img class="flag" src="../../assets/flags/sa.svg" alt="">
+        <span class="country__name">Saudi Arabia</span>
+        <span class="country__coords">24°42′N 46°41′E</span>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The World We Operate In</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">06</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p7 — 03 THE NUMBERS
+
+     Four figures, set as a table rather than as four tiles.
+
+     The tiles were the wrong container twice over: a box round a
+     number makes four equal objects to be scanned, where four
+     figures want one column to be read down - and each tile was
+     mostly empty, because a numeral and a six-word label do not
+     fill a quarter of a page. A rule between the rows does the
+     separating and costs nothing.
+
+     The navy panel at the foot is gone at the client's
+     instruction. It held the company name and the coordinates,
+     which the imprint on p2 and the contact page both carry.
+     ============================================================ -->
+<section class="page page--stack page--plain reach-page">
+  <div class="kicker reach__kicker"><span class="kicker__n">03</span><span>The World We Operate In</span></div>
+  <span class="rule reach__rule"></span>
+
+  <p class="reach__lede">Add Saudi Arabia to the wider network, and the footprint stretches across the Gulf, South Asia, Europe, and North America — nine markets and growing, each chosen for what it adds to the whole rather than for its size alone. Beyond direct geography, the company’s trading community reaches further still — a network built for traders across 150+ countries, proof that BH Ventures’ idea of “market” was never bound by borders in the first place.</p>
+
+  <dl class="reach__figures">
+    
+    <div class="reach__row">
+      <dt class="reach__n">9</dt>
+      <dd class="reach__label">Locations</dd>
+    </div>
+    
+    <div class="reach__row">
+      <dt class="reach__n">5</dt>
+      <dd class="reach__label">Direct Operations</dd>
+    </div>
+    
+    <div class="reach__row">
+      <dt class="reach__n">4</dt>
+      <dd class="reach__label">Strategic Partnerships</dd>
+    </div>
+    
+    <div class="reach__row">
+      <dt class="reach__n">150+</dt>
+      <dd class="reach__label">Countries in Trading Network</dd>
+    </div>
+    
+  </dl>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The World We Operate In</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">07</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p8 — 04 THE VENTURES, the chapter opener
+
+     The page was hollow in two places and neither showed up in
+     the checks: the index had flex:1 with its rows centred, so
+     50mm of nothing above it and 60mm below it reported as a
+     filled box. magazine.css warns about exactly this trick on
+     another page. The rows now fill the page by being set at the
+     height that fills it.
+
+     The closing line has come up under the title, where it reads
+     as the deck of the chapter rather than as a caption stranded
+     at the bottom.
+     ============================================================ -->
+<section class="page page--deep page--no-datum page--stack ventures-opener">
+  
+
+  <div class="kicker rel"><span class="kicker__n">04</span><span>The Ventures</span></div>
+  <span class="rule rel ventures-opener__rule"></span>
+
+  <h1 class="rel ventures-opener__title">Ten Disciplines, <span class="em">One Address.</span></h1>
+
+  <p class="rel ventures-opener__deck">Trade. Web3. AI. Marketing. Nine services, one address — each engineered to the same exacting standard.</p>
+
+  <ol class="rel vindex">
+    
+    <li class="vindex__row">
+      <span class="vindex__n">01</span>
+      <span class="vindex__name">New Automobile Trading (Export)</span>
+      <span class="vindex__page">09</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">02</span>
+      <span class="vindex__name">Foodstuff Trading</span>
+      <span class="vindex__page">10</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">03</span>
+      <span class="vindex__name">Web3 Venture Studio</span>
+      <span class="vindex__page">11</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">04</span>
+      <span class="vindex__name">Digital Analytics Services</span>
+      <span class="vindex__page">12</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">05</span>
+      <span class="vindex__name">Marketing via Social Media</span>
+      <span class="vindex__page">13</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">06</span>
+      <span class="vindex__name">Advertising</span>
+      <span class="vindex__page">14</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">07</span>
+      <span class="vindex__name">Marketing Management</span>
+      <span class="vindex__page">15</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">08</span>
+      <span class="vindex__name">AI Research &amp; Consultancies</span>
+      <span class="vindex__page">16</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">09</span>
+      <span class="vindex__name">Surveying &amp; Evaluating</span>
+      <span class="vindex__page">17</span>
+    </li>
+    
+    <li class="vindex__row">
+      <span class="vindex__n">10</span>
+      <span class="vindex__name">Exhibition Organizing</span>
+      <span class="vindex__page">18</span>
+    </li>
+    
+  </ol>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">08</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p9-18 — THE TEN VENTURES, one activity to a page.
+
+     SCALE IS THE SECTION.
+
+     Every other page in this book is set the same way: a rail, a
+     hairline, a heading on the left margin, content under it.
+     That is right for the book and it is exactly why the ventures
+     had no face of their own - ten pages that look like the rest
+     of the magazine are ten pages nobody remembers.
+
+     So these ten open on a numeral at 110pt. It is the largest
+     type in the magazine after the cover, it is in the brand's
+     deep green rather than in navy, and it is the only thing
+     above the name. Nothing is drawn, nothing is boxed, nothing
+     is tinted: the whole device is one glyph set very large
+     against type set very small, and it changes on every page -
+     01 to 10 - so flipping the section is a count.
+
+     The rule under the rail is the 0.8mm brand bar rather than
+     the book's hairline, and that is the second half of the same
+     idea. Two weights of line, two sizes of type, and no third
+     thing.
+
+     One template, ten pages, one grid: the name and the sentence
+     sit in slots of fixed height, so the plate starts and ends at
+     the same millimetre on all ten sheets.
+
+     Every picture is the literal subject of its own service -
+     cars for automobile export, dates for foodstuff. Until a
+     photograph arrives the page shows its icon plate, so the book
+     is complete and printable today and nothing moves when the
+     picture lands.
+     ============================================================ -->
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Global Trade</span>
+    <span class="venture__count">01 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">01</span>
+  <h1 class="venture__title">New Automobile Trading (Export)</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-automobile@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">New vehicles on the quay · export by sea</span>
+
+  <p class="venture__desc">Moving vehicles out of the UAE and into new markets, built on precision logistics and trusted export channels.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">09</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Global Trade</span>
+    <span class="venture__count">02 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">02</span>
+  <h1 class="venture__title">Foodstuff Trading</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-foodstuff@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">Dates crated for export · Gulf supply chain</span>
+
+  <p class="venture__desc">Import and export of foodstuff, connecting supply chains across borders with reliability at scale.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">10</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Venture Building</span>
+    <span class="venture__count">03 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">03</span>
+  <h1 class="venture__title">Web3 Venture Studio</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-web3@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">The network layer · protocol infrastructure</span>
+
+  <p class="venture__desc">From concept to launch, building decentralized ventures for a market still being defined.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">11</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Data &amp; Insight</span>
+    <span class="venture__count">04 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">04</span>
+  <h1 class="venture__title">Digital Analytics Services</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-analytics@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">Operations room · attribution in real time</span>
+
+  <p class="venture__desc">Dashboards and attribution that turn scattered data into decisions.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">12</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Growth</span>
+    <span class="venture__count">05 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">05</span>
+  <h1 class="venture__title">Marketing via Social Media</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-social@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">Content desk · a week of posts, planned</span>
+
+  <p class="venture__desc">Strategy and amplification for brands that need to be seen, not just heard.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">13</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Growth</span>
+    <span class="venture__count">06 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">06</span>
+  <h1 class="venture__title">Advertising</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-ads@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">Facade screen · Downtown Dubai at night</span>
+
+  <p class="venture__desc">Campaign strategy and execution built for reach and recall.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">14</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Growth</span>
+    <span class="venture__count">07 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">07</span>
+  <h1 class="venture__title">Marketing Management</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-manage@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">The planning table · a quarter, mapped</span>
+
+  <p class="venture__desc">Strategy and growth, managed end to end.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">15</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Innovation</span>
+    <span class="venture__count">08 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">08</span>
+  <h1 class="venture__title">AI Research &amp; Consultancies</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-ai@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">Research floor · machine and operator</span>
+
+  <p class="venture__desc">An innovation practice exploring where artificial intelligence actually creates value.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">16</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Assessment</span>
+    <span class="venture__count">09 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">09</span>
+  <h1 class="venture__title">Surveying &amp; Evaluating</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-survey@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">Total station on site · before capital moves</span>
+
+  <p class="venture__desc">Ground-truth services that inform decisions before capital moves.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">17</span>
+  </div>
+</section>
+
+<section class="page page--no-datum page--stack venture-page">
+  <div class="venture__rail">
+    <span class="venture__group">Experience</span>
+    <span class="venture__count">10 / 10</span>
+  </div>
+  <span class="rule--brand venture__rule"></span>
+
+  <span class="venture__n">10</span>
+  <h1 class="venture__title">Exhibition Organizing</h1>
+
+  <div class="venture__band">
+    
+    <img class="photo" src="../../assets/images/graded/ventures-exhibition@300.jpg" alt="">
+    
+    
+  </div>
+
+  <span class="venture__credit">Exhibition floor · the stands, open</span>
+
+  <p class="venture__desc">From concept to on-site execution, building the moments where business happens in person.</p>
+
+  <div class="venture__foot">
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Ventures</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">18</span>
+  </div>
+</section>
+
+
+
+<!-- ============================================================
+     p19 — 05 THE PEOPLE BEHIND THE VISION
+     Leadership names, bios and portraits were not supplied. The
+     page is built to receive them.
+     ============================================================ -->
+<section class="page page--stack people-page">
+  <div class="headband">
+    <div class="headband__top">
+      <span class="kicker"><span class="kicker__n">05</span><span>The People Behind the Vision</span></span>
+    </div>
+    <h1 class="headband__title">The People <span class="em">Behind the Vision</span></h1>
+  </div>
+
+  <p class="body body--2col people__body">Behind every venture is a decision made by someone who chose to build rather than wait. BH Ventures is run by a small team of operators — traders, technologists, and market builders — who treat every new market the way an architect treats a blank site: with respect for what’s already there, and a plan for what isn’t yet.</p>
+
+  <div class="card card--warm people__quote">
+    <blockquote class="pullquote pullquote--bare">
+      We don’t enter markets. <span class="em">We build inside them.</span>
+    </blockquote>
+  </div>
+
+  <div class="panel panel--foot people__band">
+    <span class="group-label">The People Behind the Vision</span>
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The People Behind the Vision</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">19</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p20 — 06 THE WAY WE CREATE VALUE
+     ============================================================ -->
+<section class="page page--stack value-page">
+  <div class="headband">
+    <div class="headband__top">
+      <span class="kicker"><span class="kicker__n">06</span><span>The Way We Create Value</span></span>
+    </div>
+    <h1 class="headband__title">Built for Global Growth</h1>
+    <p class="headband__deck">BH Ventures creates value through four disciplines, applied consistently across every venture:</p>
+  </div>
+
+  <div class="card-grid value__grid">
+    
+    <div class="card value__item">
+      <span class="pill pill--outline value__n">01</span>
+      <h3 class="card__title value__name">Strategic Market Expansion</h3>
+      <p class="card__sub value__desc">Identifying high-potential markets before they’re obvious, and building the on-ramps into them.</p>
+    </div>
+    
+    <div class="card value__item">
+      <span class="pill pill--outline value__n">02</span>
+      <h3 class="card__title value__name">Diversified Business Ventures</h3>
+      <p class="card__sub value__desc">Constructing and supporting businesses across trading, technology, digital solutions, and emerging industries — so growth in one discipline strengthens the others.</p>
+    </div>
+    
+    <div class="card value__item">
+      <span class="pill pill--outline value__n">03</span>
+      <h3 class="card__title value__name">Technology-Driven Innovation</h3>
+      <p class="card__sub value__desc">Applying AI, Web3, and modern digital infrastructure not as buzzwords, but as working tools inside every venture.</p>
+    </div>
+    
+    <div class="card value__item">
+      <span class="pill pill--outline value__n">04</span>
+      <h3 class="card__title value__name">Trusted Global Partnerships</h3>
+      <p class="card__sub value__desc">Treating every partner relationship as long-term infrastructure, not a transaction.</p>
+    </div>
+    
+  </div>
+
+  <div class="panel panel--foot value__band">
+    <p class="value__closing">This is not diversification for its own sake — it’s <span class="em">a single operating model</span>, applied to ten different disciplines.</p>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Way We Create Value</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">20</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p21 — 07 GLOBAL CONNECTIONS
+     ============================================================ -->
+<section class="page page--stack page--photo connect-page">
+  <div class="headband">
+    <div class="headband__top">
+      <span class="kicker"><span class="kicker__n">07</span><span>Global Connections</span></span>
+    </div>
+    <h1 class="headband__title">Beyond Borders</h1>
+  </div>
+
+  <div class="photo-frame connect__media">
+    
+    
+    <div class="plate">
+      <svg class="plate__icon" viewBox="0 0 24 24"><use href="#i-globe"></use></svg>
+      <span class="plate__tag">Photography to come</span>
+    </div>
+    
+  </div>
+
+  <div class="connect__body">
+    <p class="body body--2col">Direct operations in the UAE, Pakistan, the UK, the US, and France give BH Ventures hands-on presence in five markets. Strategic partnerships in Germany, Estonia, Denmark, and Ukraine extend that reach into Europe’s trading and technology corridors. Together, they form a network built not for size, but for relevance — every connection chosen because it opens a door somewhere else.</p>
+  </div>
+
+  <div class="panel panel--foot connect__band">
+    <span class="group-label">Wider network</span>
+    <p class="connect__strap">A trading community trusted by traders across 150+ countries — real opportunities, structured access, without requiring traders to risk their own capital.</p>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · Global Connections</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">21</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p22 — 08 PROOF
+     ============================================================ -->
+<section class="page page--stack proof-page">
+  <div class="headband">
+    <div class="headband__top">
+      <span class="kicker"><span class="kicker__n">08</span><span>Proof</span></span>
+    </div>
+    <h1 class="headband__title">Not Claims. <span class="em">Outcomes.</span></h1>
+  </div>
+
+  <p class="body body--2col proof__body">Numbers rarely tell the whole story, but they mark the distance travelled. A licensed free-zone company. Nine markets, five of them direct. Ten active ventures under one roof. A trading network built for a global community, not a local one.</p>
+
+  <div class="stats stats--wrap proof__stats">
+    
+    <div class="stat">
+      <span class="stat__value">9</span>
+      <span class="stat__label">Markets</span>
+      <span class="stat__note">Gulf · South Asia · Europe · N. America</span>
+    </div>
+    
+    <div class="stat">
+      <span class="stat__value">5</span>
+      <span class="stat__label">Direct Operations</span>
+      <span class="stat__note">Wholly operated by BH Ventures</span>
+    </div>
+    
+    <div class="stat">
+      <span class="stat__value">10</span>
+      <span class="stat__label">Active Ventures</span>
+      <span class="stat__note">Under one licensed roof</span>
+    </div>
+    
+    <div class="stat">
+      <span class="stat__value">150+</span>
+      <span class="stat__label">Countries in Network</span>
+      <span class="stat__note">Trading community reach</span>
+    </div>
+    
+  </div>
+
+  <div class="panel panel--foot proof__band">
+    <p class="proof__closing">Every number here is a marker, <span class="em">not a ceiling.</span></p>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · Proof</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">22</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p23 — 08 THE TRADING COMMUNITY
+     The four figures the client's own draft marks "confirm real
+     numbers before print". They are set as visible slots rather
+     than quietly zeroed, and build.mjs reports every one of them
+     on every run.
+     ============================================================ -->
+<section class="page page--dark page--no-datum page--stack community-page">
+
+  <div class="kicker rel"><span class="kicker__n">08</span><span>Trading Community</span></div>
+
+  <div class="rel community__head">
+    <h2 class="display-s">Trading Community</h2>
+  </div>
+
+  <div class="rel stats stats--wrap community__grid">
+    
+    <div class="stat stat--todo">
+      <span class="stat__value">[X]+</span>
+      <span class="stat__label">Countries Registered</span>
+    </div>
+    
+    <div class="stat stat--todo">
+      <span class="stat__value">[X]h</span>
+      <span class="stat__label">Average Payout Processing</span>
+    </div>
+    
+    <div class="stat stat--todo">
+      <span class="stat__value">$[X]K+</span>
+      <span class="stat__label">Paid Out to Traders</span>
+    </div>
+    
+    <div class="stat stat--todo">
+      <span class="stat__value">[X]K+</span>
+      <span class="stat__label">Traders Worldwide</span>
+    </div>
+    
+  </div>
+
+  <div class="rel community__foot">
+    <span class="rule--brand community__brandrule"></span>
+    <p class="community__closing">Every number here is a marker, <span class="em">not a ceiling.</span></p>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · Proof</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">23</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p24 — 09 THE FUTURE
+     ============================================================ -->
+<section class="page page--stack page--photo future-page">
+  <div class="headband">
+    <div class="headband__top">
+      <span class="kicker"><span class="kicker__n">09</span><span>The Future</span></span>
+    </div>
+    <h1 class="headband__title">What Comes Next</h1>
+  </div>
+
+  <div class="photo-frame future__media">
+    
+    
+    <div class="plate">
+      <svg class="plate__icon" viewBox="0 0 24 24"><use href="#i-build"></use></svg>
+      <span class="plate__tag">Photography to come</span>
+    </div>
+    
+  </div>
+
+  <div class="future__cols">
+    
+    <p class="body">BH Ventures was never built to stay ten disciplines wide. Every venture added has followed the same test: does it open a market, sharpen a capability, or strengthen a partnership? The ones that pass, stay.</p>
+    
+    <p class="body">What’s next is more of the same discipline, applied further — deeper AI and Web3 capability, new trade corridors, and partnerships in markets not yet on the map. The company isn’t forecasting where global business is headed. It’s building the infrastructure to be there first.</p>
+    
+  </div>
+
+  <div class="panel panel--foot future__foot">
+    <blockquote class="pullquote pullquote--bare future__quote">
+      We’re not predicting the next market. <span class="em">We’re building the road to it.</span>
+    </blockquote>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · The Future</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">24</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p25 — 10 LET'S BUILD
+     ============================================================ -->
+<section class="page page--stack build-page">
+  <div class="kicker build__kicker"><span class="kicker__n">10</span><span>Let’s Build</span></div>
+
+  <div class="build__head">
+    <h1 class="display-xl build__title">Let’s<br><span class="em">Build.</span></h1>
+  </div>
+
+  <div class="build__body">
+    <span class="rule--brand build__rule"></span>
+    <p class="body build__text">Every venture on these pages started as a conversation. If there’s a market you’re trying to enter, a business you’re trying to build, or a partnership you’re trying to form — this is where it starts.</p>
+  </div>
+
+  <div class="panel panel--foot build__band">
+    <span class="group-label">The Ventures</span>
+    <p class="build__strap">Trade · Technology · Innovation</p>
+    <span class="coords">25°12′N 55°16′E</span>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · Let’s Build</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">25</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p26 — CONTACT
+     ============================================================ -->
+<section class="page page--stack contact-page">
+  <div class="headband">
+    <div class="headband__top">
+      <span class="kicker"><span>Contact</span></span>
+      <span class="pill pill--onnavy">Edition 01</span>
+    </div>
+    <h1 class="headband__title">BH Ventures FZE LLC</h1>
+  </div>
+
+  <div class="card contact__card">
+    <div class="contact__mark">
+      <img src="../../brand/logo-mark.png" alt="BH Ventures FZE LLC">
+    </div>
+
+    <p class="contact__line">Dubai<br>United Arab Emirates</p>
+
+    <dl class="keyval contact__keys">
+      <div class="keyval__row"><dt>Email</dt><dd>info@bhventures.ae</dd></div>
+      <div class="keyval__row"><dt>Online</dt><dd>bhventures.ae</dd></div>
+      <div class="keyval__row"><dt>Coordinates</dt><dd>25°12′N 55°16′E</dd></div>
+    </dl>
+  </div>
+
+  <div class="panel panel--foot contact__band">
+    <p class="contact__strap">Ten disciplines · Nine markets · One standard</p>
+  </div>
+
+  <div class="folio">
+    <span>BH Ventures FZE LLC · 25°12′N 55°16′E</span>
+    <span class="folio__rule"></span>
+    <span class="folio__n">26</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     p27 — BACK COVER
+     The answer to the front. The cover is a photograph with one
+     mark on it; this is one mark with no photograph. Everything
+     the reader needs after they close the book, set as quietly as
+     the cover is set loudly.
+     ============================================================ -->
+<section class="page page--deep page--bleed page--no-datum back">
+  <div class="back__inner">
+    <div class="back__mark">
+      <img src="../../brand/logo-white.png" alt="BH Ventures FZE LLC">
+    </div>
+
+    <div class="back__foot">
+      <span class="rule--brand back__brandrule"></span>
+      <p class="back__strap">Building opportunities.</p>
+      <p class="back__lines">info@bhventures.ae · bhventures.ae</p>
+      <span class="coords back__coords">25°12′N 55°16′E</span>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var mm = function (px) { return (px / 96 * 25.4).toFixed(1); };
+  var out = [];
+  document.querySelectorAll('.venture-page').forEach(function (p, i) {
+    var t = p.querySelector('.venture__title');
+    var d = p.querySelector('.venture__desc');
+    var b = p.querySelector('.venture__band');
+    var f = p.querySelector('.venture__foot');
+    var top = p.getBoundingClientRect().top;
+    out.push(('0' + (i + 1)).slice(-2) +
+      '  title ' + mm(t.getBoundingClientRect().height) +
+      '  desc ' + mm(d.getBoundingClientRect().height) +
+      '  plateTop ' + mm(b.getBoundingClientRect().top - top) +
+      '  footBottom ' + mm(f.getBoundingClientRect().bottom - top));
+  });
+  var e = document.createElement('div');
+  e.id = 'r';
+  e.textContent = out.join(' | ');
+  document.body.appendChild(e);
+});
+</script></body>
+</html>

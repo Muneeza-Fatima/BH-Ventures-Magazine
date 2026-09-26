@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "ae",
+    "name": "United Arab Emirates",
+    "ratio": 2,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20the%20United%20Arab%20Emirates.svg"
+  },
+  {
+    "slug": "pk",
+    "name": "Pakistan",
+    "ratio": 1.5,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20Pakistan.svg"
+  },
+  {
+    "slug": "gb",
+    "name": "United Kingdom",
+    "ratio": 1.6667,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20the%20United%20Kingdom.svg"
+  },
+  {
+    "slug": "us",
+    "name": "United States",
+    "ratio": 1.9,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20the%20United%20States.svg"
+  },
+  {
+    "slug": "fr",
+    "name": "France",
+    "ratio": 1.5,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20France.svg"
+  },
+  {
+    "slug": "de",
+    "name": "Germany",
+    "ratio": 1.6667,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20Germany.svg"
+  },
+  {
+    "slug": "ee",
+    "name": "Estonia",
+    "ratio": 1.5714,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20Estonia.svg"
+  },
+  {
+    "slug": "dk",
+    "name": "Denmark",
+    "ratio": 1.3214,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20Denmark.svg"
+  },
+  {
+    "slug": "ua",
+    "name": "Ukraine",
+    "ratio": 1.5,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20Ukraine.svg"
+  },
+  {
+    "slug": "sa",
+    "name": "Saudi Arabia",
+    "ratio": 1.5,
+    "source": "https://commons.wikimedia.org/wiki/File%3AFlag%20of%20Saudi%20Arabia.svg"
+  }
+]

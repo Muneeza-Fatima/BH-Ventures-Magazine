@@ -13,30 +13,90 @@
      Every value extracted from the BH Ventures logo.
      No colour from outside the mark. Warmth comes from the
      photography, not from the palette.
+
+     The book is now LIGHT: white paper is the ground and navy
+     arrives as inset rounded panels rather than as full-bleed
+     bands. The palette did not change to do that — only which
+     colour is the ground and which is the device.
      ---------------------------------------------------------- */
 
   /* Structure */
   --ink:        #0E1B2B;   /* primary navy — the logo's own ground */
+  --ink-panel:  #16304A;   /* rounded panels on white. Slightly lifted
+                              off --ink: at panel size the true ink
+                              reads as a hole punched in the page */
   --ink-deep:   #0A1420;   /* near-black, for statement pages */
   --ink-soft:   #16273B;   /* raised panels on dark pages */
-  --paper:      #FAFAF8;   /* light ground — never pure #FFF */
-  --paper-alt:  #F1F0EC;   /* secondary light panels */
+
+  /* Paper — NEVER pure #FFF. Two reasons, both real: on coated
+     stock pure white reads cold and makes every photograph's white
+     point look dirty; and build/check-ink.mjs is calibrated on the
+     assumption that paper and pasteboard are distinguishable. */
+  --paper:      #FDFDFB;   /* light ground */
+  --paper-alt:  #F4F5F2;   /* secondary light panels, tinted rows */
 
   /* Brand */
-  --mint:       #61DECE;   /* gradient light stop */
+  --mint:       #61DECE;   /* light stop — on navy only */
   --aqua:       #2DD4C0;   /* rules, numerals, accents — DARK PAGES ONLY (1.8:1 on paper) */
-  --teal:       #0B8F81;   /* fills, icons, gradients */
-  --teal-deep:  #185D58;   /* the only teal safe as TEXT on light pages (7.3:1) */
+  --teal:       #0B8F81;   /* fills, icons */
+  --teal-deep:  #185D58;   /* the only teal safe as TEXT on light pages (7.3:1).
+                              This is the heading colour — the role the
+                              client's reference gives to bronze. Bronze
+                              is not in the mark and fights the teal. */
 
   /* Text */
   --muted:      #5A6672;   /* body text on light (5.6:1) */
-  --muted-dark: #8FA3B5;   /* body text on dark  (6.6:1) */
+  --muted-dark: #9FB0C0;   /* body text on dark  (6.6:1) */
 
-  /* Hairlines — the structural lines of the "Infrastructure" concept */
+  /* Hairlines — on a white page these do the work a drop shadow
+     would. That is not a compromise. A blurred box-shadow exports
+     as a /Luminosity soft mask over a JPEG grey plate, which
+     build/verify-pdf.mjs rejects; and a hairline prints sharper
+     than a shadow ever will. Both measured. */
+  --line-pale:  #DDE3E8;   /* the pale card edge */
   --rule-dark:  rgba(45, 212, 192, 0.28);   /* aqua hairline on dark */
   --rule-light: rgba(24, 93, 88, 0.22);     /* teal hairline on light */
+  /* The keyline round a photograph. Not --rule-light: a 22% teal
+     hairline is set to be read against paper with text on it, and
+     against the edge of a picture it disappears. This one has to
+     hold a border between a photograph and the page. */
+  --rule-photo: rgba(14, 27, 43, 0.28);     /* keyline round a picture */
 
-  --grad-brand: linear-gradient(135deg, #61DECE 0%, #2DD4C0 38%, #0B8F81 72%, #185D58 100%);
+
+  /* ---------- RADIUS -----------------------------------------
+     One family, seven steps. Every rounded corner in the book
+     comes from this scale and nothing else — a mixed radius is
+     the loudest amateur tell after a mixed stroke weight.
+
+     The reference's corners measure 24-32px at 96dpi screen
+     scale, which is 6.3-8.5mm. These are real millimetres, so
+     they survive the trimmed web variant unchanged.
+     ---------------------------------------------------------- */
+  --r-dot:    1.2mm;   /* status dots */
+  --r-xs:     2.5mm;   /* chips, swatches, flags */
+  --r-sm:       4mm;   /* pin bubbles, stat tiles */
+  --r-md:     5.5mm;   /* feature cards */
+  --r-lg:       7mm;   /* navy panels, photo frames */
+  --r-xl:       9mm;   /* header bands, the cover panel */
+  --r-pill:    99mm;
+
+  /* A rounded panel must never be sliced by the trim. Either inset
+     it so all four corners are round, or push it past the bleed by
+     more than --r-xl so the curve falls off the sheet. A half-cut
+     corner reads as a misregistered print. */
+
+
+  /* ---------- ELEVATION --------------------------------------
+     Borders only. No blur anywhere — see the hairline note above.
+     A zero-blur box-shadow is a spread ring and exports as a plain
+     filled path; .flag has shipped one since the first edition. */
+  --e-hair:  0 0 0 0.25mm var(--line-pale);
+  --e-warm:  0 0 0 0.25mm var(--rule-light);
+
+  /* One stroke weight for every icon, rule and border.
+     Mixed stroke weights are the loudest amateur tell. */
+  --stroke:       0.35mm;
+  --stroke-icon:     1.4;   /* SVG stroke-width in a 24-unit box */
 
 
   /* ---------- PAGE GEOMETRY ----------------------------------
@@ -66,9 +126,13 @@
   --p-outer:    19mm;
   --p-inner:    23mm;
 
-  /* The datum line: one hairline at the same height on every
-     page, photo or text. The eye locks onto it while flipping. */
-  --datum:      65mm;    /* bleed + 62mm from trim */
+  /* The datum line is retired — the light book is structured by
+     rounded header bands, not by one hairline across every page.
+     The TOKEN stays, at zero, because build/check-space.mjs parses
+     it to decide where to start scanning. Deleting it makes
+     parseFloat of an empty string return NaN, and the scan then
+     silently starts somewhere else with no error at all. */
+  --datum:      0mm;
 
   /* 12-column grid */
   --cols:       12;
@@ -77,42 +141,80 @@
   /* 4mm baseline grid — keeps facing pages' lines aligned */
   --baseline:   4mm;
 
+  /* ---------- THE SHARED PAGE HEAD ---------------------------
+     Every interior page opens rail · hairline · heading. These
+     were set page by page and drifted: the hairline sat at four
+     different heights across the book and the heading 12 or 16mm
+     under it. One value each now; build/check-align.mjs holds
+     every page to them. */
+  --rule-gap:   3mm;     /* rail to hairline */
+  --title-gap:  16mm;    /* hairline to heading (= --s-4) */
+
+  /* Two-column body text. It was 4mm on some pages and 9mm on
+     another, so the second column started at a different x on
+     facing pages. 6mm is enough air for justified 9.5pt. */
+  --col-gap:    6mm;
+
+  /* Photo plates stand 13mm off the paper edge (10mm off trim),
+     wider than the text column so a picture reads as a plate
+     rather than as a boxed figure. Was hard-coded in seven places. */
+  --plate-inset: 13mm;
+  --plate-gap:   12mm;   /* heading or text to the plate (= --s-3) */
+
+  /* Ragged-right measures. There were eleven different ones
+     (124 to 174mm), so no two pages shared a right edge. */
+  --measure-wide:   160mm;
+  --measure:        150mm;
+  --measure-narrow: 124mm;
+
+  /* Folio baseline off the page edge (bleed + 9mm from trim). */
+  --folio-drop: 12mm;
+
 
   /* ---------- TYPE SCALE -------------------------------------
-     Fraunces  — display, editorial serif with real character
-     Inter     — body, neutral and excellent at 9.5pt
-     Space Grotesk — kickers, folios, numerals; geometric, so it
-                     rhymes with the all-caps logo wordmark
+     Playfair Display — display, headings, card titles. A high-
+               contrast serif. Poppins was here and it was wrong:
+               a geometric sans reads as a website, not as a
+               magazine, and this is a magazine.
+     Inter   — body copy, kickers, folios, numerals. Neutral, and
+               excellent at 9.5pt, which Playfair is not.
      ---------------------------------------------------------- */
 
-  /* Three optical sizes, three families. Static instances cannot
-     carry a variation axis, and Fraunces' optical size is the
-     reason it was chosen — so it is baked in per size instead. */
-  --font-display:    "Fraunces 144", Georgia, "Times New Roman", serif;
-  --font-display-72: "Fraunces 72",  Georgia, "Times New Roman", serif;
-  --font-display-36: "Fraunces 36",  Georgia, "Times New Roman", serif;
-  --font-body:    "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-mono:    "Space Grotesk", "Segoe UI", Helvetica, Arial, sans-serif;
+  /* Each stack names the OTHER embedded family before it reaches
+     any system font. That is not belt-and-braces, it is load
+     bearing: Poppins has no PRIME glyph (U+2032), and this book
+     prints 25°12′N 55°16′E on almost every page. Without Inter in
+     the stack Chrome fell back per-glyph to Segoe UI and embedded
+     it — a system font, on the printer's machine, inside a PDF
+     that is otherwise fully self-contained.
 
-  --t-display-xl: 88pt;   --lh-display-xl: 84pt;
-  --t-display-l:  72pt;   --lh-display-l:  70pt;
-  --t-display-m:  48pt;   --lh-display-m:  50pt;
-  --t-display-s:  28pt;   --lh-display-s:  36pt;
-  --t-deck:       13pt;   --lh-deck:       20pt;
+     Measured, not assumed: every other non-ASCII character in the
+     book (° · × — ’ “ ”) is present in both families; the prime is
+     present only in Inter. */
+  --font-display: "Playfair Display", "Inter", Georgia, "Times New Roman", serif;
+  --font-label:   "Inter", "Playfair Display", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-body:    "Inter", "Playfair Display", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  /* Playfair has a smaller x-height and a narrower set than Poppins,
+     so the same nominal size looks smaller and fits more in the
+     measure. Every display step goes back up. */
+  --t-display-xl: 68pt;   --lh-display-xl: 66pt;   /* cover only */
+  --t-display-l:  46pt;   --lh-display-l:  48pt;   /* chapter openers */
+  --t-display-m:  31pt;   --lh-display-m:  36pt;   /* page headings */
+  --t-display-s:  21pt;   --lh-display-s:  27pt;   /* panel headings */
+  --t-head:       14pt;   --lh-head:       19pt;   /* card titles */
+  --t-deck:     11.5pt;   --lh-deck:       18pt;   /* italic sub-description */
   --t-body:      9.5pt;   --lh-body:       15pt;
   --t-caption:     8pt;   --lh-caption:    12pt;
-  --t-kicker:      8pt;   --lh-kicker:      8pt;
+  --t-kicker:    7.5pt;   --lh-kicker:     10pt;
   --t-folio:       7pt;   --lh-folio:       7pt;
-  --t-stat:       42pt;   --lh-stat:       40pt;
+  --t-stat:       38pt;   --lh-stat:       38pt;
 
-  --track-display: -0.02em;   /* large type looks loose untracked */
-  --track-kicker:   0.18em;
-  --track-folio:    0.14em;
-
-  /* Optical size axis values for Fraunces */
-  --opsz-xl: 144;
-  --opsz-m:   72;
-  --opsz-s:   36;
+  /* A high-contrast serif at display size needs real negative
+     tracking; untracked, 68pt Playfair looks loose. */
+  --track-display: -0.02em;
+  --track-kicker:   0.16em;
+  --track-folio:    0.12em;
 
 
   /* ---------- SPACING ----------------------------------------
@@ -124,7 +226,9 @@
   --s-6: 24mm;
   --s-8: 32mm;
 
-  /* One stroke weight for every icon, rule and diagram.
-     Mixed stroke weights are the loudest amateur tell. */
-  --stroke: 0.4pt;
+  /* Padding inside cards and panels. Generous on purpose: a tight
+     card reads cheap, and a little more air than feels necessary
+     is most of what "premium" actually is. */
+  --pad-card:   7mm;
+  --pad-panel: 10mm;
 }

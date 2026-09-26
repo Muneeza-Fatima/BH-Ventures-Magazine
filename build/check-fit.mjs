@@ -16,14 +16,22 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const page = process.argv[2] ?? resolve(ROOT, 'out/sample/preview.html');
+const page = process.argv[2] ?? resolve(ROOT, 'out/magazine/preview.html');
 if (!existsSync(page)) {
   console.error('check-fit: no such file: ' + page);
   process.exit(2);
 }
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const PROBE = resolve(ROOT, 'out/.fit-probe.html');
+/* The probe has to be written NEXT TO the page it measures.
+   Every stylesheet in preview.html is linked as ../../src/*.css,
+   which resolves from out/magazine/. Writing the probe one
+   directory up meant those links pointed outside the repo, no
+   CSS loaded at all, and the measurement was taken on an
+   unstyled document -- which reported a clean bill of health for
+   a page with a 90mm hole in it. Check the instrument before
+   trusting the reading. */
+const PROBE = resolve(dirname(page), '.fit-probe.html');
 
 /* Inject a measuring script, render, and read the verdict out of
    the DOM. Chrome's --dump-dom snapshots before async work, so the
@@ -39,14 +47,34 @@ document.addEventListener('DOMContentLoaded', function () {
     var padBottom = parseFloat(cs.paddingBottom);
     var limit = p.clientHeight - padBottom;
     var lowest = padTop;
-    p.querySelectorAll('.page > *').forEach(function () {});
-    Array.prototype.forEach.call(p.children, function (el) {
-      if (el.classList.contains('folio')) return;
-      if (getComputedStyle(el).position === 'absolute') return;
-      var b = el.getBoundingClientRect().bottom - p.getBoundingClientRect().top;
-      if (b > lowest) lowest = b;
+    var top = p.getBoundingClientRect().top;
+    var worst = '';
+    p.querySelectorAll('*').forEach(function (el) {
+      /* Things that are MEANT to reach the paper edge. Marked with
+         .decor in the markup rather than listed here by name --
+         the list version had grown to eight classes and still kept
+         missing the <img> inside each of them. */
+      /* .sidebar, .venture-page__media, .foot-block and
+         .sheet-numeral were listed here and are all gone from the
+         markup now. Dead exemptions are how this list reached
+         eight entries the first time, so they go with the
+         components. */
+      if (el.closest('.folio')) return;
+      if (el.closest('.decor')) return;
+      if (el.closest('.photo-bleed')) return;
+      if (el.closest('.cover__inner')) return;
+      if (el.closest('.back__inner')) return;
+      var r = el.getBoundingClientRect();
+      if (r.height === 0 && r.width === 0) return;
+      var b = r.bottom - top;
+      if (b > lowest) {
+        lowest = b;
+        worst = el.tagName.toLowerCase() +
+          (el.className && typeof el.className === 'string'
+            ? '.' + el.className.trim().split(' ').join('.') : '');
+      }
     });
-    out.push((i + 1) + ':' + Math.round(lowest) + ':' + Math.round(limit));
+    out.push((i + 1) + ':' + Math.round(lowest) + ':' + Math.round(limit) + ':' + worst);
   });
   var d = document.createElement('div');
   d.id = 'fit-result';
@@ -82,11 +110,11 @@ console.log('');
 console.log('  check-fit');
 console.log('  ' + '-'.repeat(46));
 for (const entry of m[1].split(',').filter(Boolean)) {
-  const [n, lowest, limit] = entry.split(':').map(Number);
-  const over = (lowest - limit) / PX_PER_MM;
+  const [n, lowest, limit, worst] = entry.split(':');
+  const over = (Number(lowest) - Number(limit)) / PX_PER_MM;
   if (over > 0.5) {
     bad++;
-    console.log('  page ' + n + '  content runs ' + over.toFixed(1) + 'mm past the margin');
+    console.log('  page ' + n + '  content runs ' + over.toFixed(1) + 'mm past the margin   <- ' + worst);
   } else {
     console.log('  page ' + n + '  clear by ' + (-over).toFixed(1) + 'mm');
   }

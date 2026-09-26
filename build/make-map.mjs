@@ -1,263 +1,243 @@
 /* ============================================================
-   make-map.mjs — generates assets/graphics/network-map.svg
+   make-map.mjs — generates assets/graphics/world-map.svg
 
-   This is the magazine's most ambitious graphic, so it is worth
-   saying what it is and is not.
+   The first version of this page was a radial diagram centred on
+   Dubai. The client asked for an actual world map, so this is a
+   world map.
 
-   It is NOT a decorative globe with dots on it. It is an
-   azimuthal projection centred on Dubai: every market sits at its
-   true compass bearing from the BH Ventures office, and its
-   distance ring is its real great-circle distance. Dubai is
-   literally the centre of the drawing, which is the company's own
-   sentence — "from a single address in Dubai" — stated as
-   geometry instead of as a claim.
+   The source is File:BlankMap-World-Equirectangular.svg from
+   Wikimedia Commons, PD-USGov-CIA-WF — public domain, no licence
+   conditions at all, and vector, so it stays sharp at any size.
 
-   The radial scale is compressed (square root) so that Pakistan at
-   1,400km and Washington at 11,000km can share one page without
-   the near markets collapsing into the centre. That compression is
-   not hidden: the rings carry their real distances, so the reader
-   can see exactly what the scale is doing.
+   The useful thing about that file is that every country is a
+   group carrying its ISO 3166-1 alpha-2 code as its id. So the
+   nine markets are not plotted as dots guessed from a projection
+   — the actual countries are filled. That is both more accurate
+   and much better looking than markers on an outline.
+
+   It also sidesteps a real problem: the file's aspect is 1.79,
+   not the 2.0 a full plate-carrée would be, so it is cropped and
+   its latitude range cannot be assumed. Using the country
+   geometry directly means no projection maths is needed anywhere.
 
    Run: node build/make-map.mjs
    ============================================================ */
 
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-mkdirSync(resolve(ROOT, 'assets/graphics'), { recursive: true });
+const SRC = resolve(ROOT, 'assets/graphics/world-raw.svg');
+const OUT = resolve(ROOT, 'assets/graphics/world-map.svg');
 
-const ORIGIN = { name: 'Dubai', lat: 25.2048, lon: 55.2708, label: '25°12′N 55°16′E' };
-
-const MARKETS = [
-  // Direct operations — filled nodes
-  { name: 'United Arab Emirates', short: 'UAE', lat: 25.2048, lon: 55.2708, coords: '25°12′N 55°16′E', kind: 'direct', origin: true },
-  { name: 'Pakistan', short: 'Pakistan', lat: 30.3753, lon: 69.3451, coords: '30°22′N 69°21′E', kind: 'direct' },
-  { name: 'United Kingdom', short: 'United Kingdom', lat: 51.5072, lon: -0.1276, coords: '51°30′N 00°07′W', kind: 'direct' },
-  { name: 'United States', short: 'United States', lat: 38.9072, lon: -77.0369, coords: '38°54′N 77°02′W', kind: 'direct' },
-  { name: 'France', short: 'France', lat: 48.8566, lon: 2.3522, coords: '48°51′N 02°21′E', kind: 'direct' },
-  // Strategic partnerships — hollow rings
-  { name: 'Germany', short: 'Germany', lat: 52.52, lon: 13.405, coords: '52°31′N 13°24′E', kind: 'partner' },
-  { name: 'Estonia', short: 'Estonia', lat: 59.437, lon: 24.7536, coords: '59°26′N 24°45′E', kind: 'partner' },
-  { name: 'Denmark', short: 'Denmark', lat: 55.6761, lon: 12.5683, coords: '55°40′N 12°34′E', kind: 'partner' },
-  { name: 'Ukraine', short: 'Ukraine', lat: 50.4501, lon: 30.5234, coords: '50°27′N 30°31′E', kind: 'partner' },
-  // Wider network
-  { name: 'Saudi Arabia', short: 'Saudi Arabia', lat: 24.7136, lon: 46.6753, coords: '24°42′N 46°41′E', kind: 'wider' },
-];
-
-const R_EARTH = 6371;
-const rad = (d) => (d * Math.PI) / 180;
-const deg = (r) => (r * 180) / Math.PI;
-
-function greatCircle(a, b) {
-  const p1 = rad(a.lat);
-  const p2 = rad(b.lat);
-  const dl = rad(b.lon - a.lon);
-  const dp = p2 - p1;
-  const h = Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
-  return 2 * R_EARTH * Math.asin(Math.min(1, Math.sqrt(h)));
+if (!existsSync(SRC)) {
+  console.error('make-map: assets/graphics/world-raw.svg is missing.');
+  console.error('  curl -sL -o assets/graphics/world-raw.svg \\');
+  console.error('    https://upload.wikimedia.org/wikipedia/commons/9/9f/BlankMap-World-Equirectangular.svg');
+  process.exit(2);
 }
 
-function bearing(a, b) {
-  const p1 = rad(a.lat);
-  const p2 = rad(b.lat);
-  const dl = rad(b.lon - a.lon);
-  const y = Math.sin(dl) * Math.cos(p2);
-  const x = Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dl);
-  return (deg(Math.atan2(y, x)) + 360) % 360;
+const svg = readFileSync(SRC, 'utf8');
+
+/* --- the markets ------------------------------------------- */
+
+const DIRECT = ['ae', 'pk', 'gb', 'us', 'fr'];
+const PARTNER = ['de', 'ee', 'dk', 'ua'];
+const WIDER = ['sa'];
+const OURS = [...DIRECT, ...PARTNER, ...WIDER];
+
+/* France, in this dataset, includes French Guiana, Réunion and the
+   Caribbean départements. They are legally France, but highlighting
+   a patch of South America on a map of a Dubai company's markets
+   reads as a mistake, not as a fact — and the French operation is in
+   Paris. So France is clipped to Europe.
+
+   The United States deliberately is not clipped: Alaska and Hawaii
+   read as part of the country, and removing them would look like the
+   map was broken rather than edited. */
+const CLIP = {
+  fr: { x0: 1180, y0: 330, x1: 1420, y1: 470 },
+};
+
+const withinClip = (id, d) => {
+  const box = CLIP[id];
+  if (!box) return true;
+  const n = d.match(/-?\d+(?:\.\d+)?/g);
+  if (!n) return false;
+  let sx = 0, sy = 0, count = 0;
+  for (let i = 0; i + 1 < n.length; i += 2) {
+    sx += +n[i];
+    sy += +n[i + 1];
+    count++;
+  }
+  const cx = sx / count;
+  const cy = sy / count;
+  return cx >= box.x0 && cx <= box.x1 && cy >= box.y0 && cy <= box.y1;
+};
+
+/* --- pull every country group out of the source -------------- */
+
+/** @type {Map<string, {d: string[], box: {x0:number,y0:number,x1:number,y1:number}}>} */
+const countries = new Map();
+
+/* The source is not consistent about how a country is expressed:
+   most are <g id="xx"> holding several paths (islands, exclaves),
+   but some — Pakistan and Ukraine among them — are a single
+   <path id="xx">. Reading only the groups silently dropped those
+   two, which is the kind of omission nobody notices until a reader
+   from that country does. Both forms are handled. */
+
+const bodies = new Map(); // id -> markup to scan for d attributes
+
+// 1. single-path countries
+for (const m of svg.matchAll(/<path\b[^>]*\bid="([a-z]{2})"[^>]*\/?>/g)) {
+  bodies.set(m[1], m[0]);
 }
 
-/* Canvas.
+// 2. grouped countries, scanning for the matching close tag so a
+//    nested <g> cannot end the group early
+for (const m of svg.matchAll(/<g\b[^>]*\bid="([a-z]{2})"[^>]*>/g)) {
+  const id = m[1];
+  let i = m.index + m[0].length;
+  let depth = 1;
+  const tagRe = /<\/?g\b/g;
+  tagRe.lastIndex = i;
+  let t;
+  while (depth > 0 && (t = tagRe.exec(svg)) !== null) {
+    depth += t[0] === '</g' ? -1 : 1;
+    i = t.index + t[0].length;
+  }
+  bodies.set(id, svg.slice(m.index, i));
+}
 
-   Two things the first draft got wrong, both visible the moment
-   it was rendered:
+for (const [id, body] of bodies) {
+  const ds = [...body.matchAll(/\sd="([^"]+)"/g)].map((m) => m[1]).filter((d) => withinClip(id, d));
+  if (!ds.length) continue;
 
-   1. Seven of the nine markets sit between bearing 314 and 336 —
-      they really are almost all north-west of Dubai. Plotted
-      truthfully, their labels land on top of each other. So the
-      DOTS keep their true positions and the LABELS move out to a
-      ruled column, joined by leader lines. That is what a
-      technical drawing does, and it moves nothing that carries
-      data.
+  /* Paths here use absolute commands throughout, so the numbers in
+     the d attribute are page coordinates. Bezier control points can
+     sit slightly outside the drawn shape, which makes this bounding
+     box a shade generous — fine for placing a marker, and we are not
+     using it for anything that needs to be exact. */
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const d of ds) {
+    const nums = d.match(/-?\d+(?:\.\d+)?/g);
+    if (!nums) continue;
+    for (let i = 0; i + 1 < nums.length; i += 2) {
+      const x = +nums[i];
+      const y = +nums[i + 1];
+      if (x < x0) x0 = x;
+      if (x > x1) x1 = x;
+      if (y < y0) y0 = y;
+      if (y > y1) y1 = y;
+    }
+  }
+  countries.set(id, { d: ds, box: { x0, y0, x1, y1 } });
+}
 
-   2. Nothing at all lies south of Dubai, so a full circle left
-      the bottom half of the page empty. The canvas is cropped to
-      the arc that actually carries markets. Empty space that
-      means something is composition; empty space that means
-      nothing is just a hole. */
-const W = 900;
-const H = 780;
-const CX = 430;
-const CY = 545;
-const R_MAX = 330;
-const D_MAX = 12000; // km at the outer ring
-const rOf = (km) => Math.sqrt(Math.min(km, D_MAX) / D_MAX) * R_MAX;
+/* --- crop -------------------------------------------------
+   Antarctica is a wide white band across the bottom that no
+   reader needs and that would otherwise eat a third of the page.
+   Drop it, and trim to what is left. */
 
-const LABEL_GAP = 46;  // minimum vertical space between stacked labels
-const LEFT_X = 14;
-const RIGHT_X = W - 14;
+const keep = [...countries.entries()].filter(([id]) => id !== 'aq');
 
-const RINGS = [1000, 3000, 6000, 12000];
+let X0 = Infinity, Y0 = Infinity, X1 = -Infinity, Y1 = -Infinity;
+for (const [, c] of keep) {
+  X0 = Math.min(X0, c.box.x0);
+  Y0 = Math.min(Y0, c.box.y0);
+  X1 = Math.max(X1, c.box.x1);
+  Y1 = Math.max(Y1, c.box.y1);
+}
 
-const nodes = MARKETS.map((m) => {
-  const km = m.origin ? 0 : greatCircle(ORIGIN, m);
-  const brg = m.origin ? 0 : bearing(ORIGIN, m);
-  const r = rOf(km);
-  // Screen angle: 0deg bearing is north, which is -90deg in SVG.
-  const a = rad(brg - 90);
-  return { ...m, km, brg, x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
-});
+const pad = 14;
+X0 -= pad; Y0 -= pad; X1 += pad; Y1 += pad;
+const W = X1 - X0;
+const H = Y1 - Y0;
 
-const f = (n) => n.toFixed(1);
+/* --- draw --------------------------------------------------- */
+
+const f = (n) => Number(n.toFixed(2));
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
-/* --- arcs ---------------------------------------------------
-   Each connection bows slightly, the way a route drawn on a
-   sphere does. The bow is perpendicular to the chord and scales
-   with length, so short hops stay nearly straight. */
-const arcs = nodes
-  .filter((n) => !n.origin)
-  .map((n) => {
-    const dx = n.x - CX;
-    const dy = n.y - CY;
-    const len = Math.hypot(dx, dy);
-    const bow = len * 0.16;
-    const mx = CX + dx / 2 - (dy / len) * bow;
-    const my = CY + dy / 2 + (dx / len) * bow;
-    const stroke = n.kind === 'direct' ? 'var(--aqua, #2DD4C0)' : 'var(--teal, #0B8F81)';
-    const dash = n.kind === 'direct' ? '' : ' stroke-dasharray="3 4"';
-    const op = n.kind === 'direct' ? 0.55 : 0.4;
-    return `    <path d="M${f(CX)} ${f(CY)} Q${f(mx)} ${f(my)} ${f(n.x)} ${f(n.y)}" fill="none" stroke="${stroke}" stroke-width="1"${dash} opacity="${op}"/>`;
-  })
-  .join('\n');
+const layer = (ids, cls) =>
+  keep
+    .filter(([id]) => ids.includes(id))
+    .map(([id, c]) => `    <g class="${cls}" id="c-${id}">` + c.d.map((d) => `<path d="${d}"/>`).join('') + '</g>')
+    .join('\n');
 
-/* --- distance rings ---------------------------------------- */
-const rings = RINGS.map((km) => {
-  const r = rOf(km);
-  return `    <circle cx="${CX}" cy="${CY}" r="${f(r)}" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.16"/>
-    <text x="${CX + 4}" y="${f(CY - r - 5)}" class="ring-label">${km.toLocaleString('en-US')} KM</text>`;
-}).join('\n');
+const base = keep
+  .filter(([id]) => !OURS.includes(id))
+  .map(([, c]) => c.d.map((d) => `<path d="${d}"/>`).join(''))
+  .join('');
 
-/* --- bearing spokes every 30 degrees ------------------------ */
-const spokes = Array.from({ length: 12 }, (_, i) => {
-  const a = rad(i * 30 - 90);
-  const r0 = rOf(600);
-  const r1 = R_MAX;
-  return `    <line x1="${f(CX + r0 * Math.cos(a))}" y1="${f(CY + r0 * Math.sin(a))}" x2="${f(CX + r1 * Math.cos(a))}" y2="${f(CY + r1 * Math.sin(a))}" stroke="#2DD4C0" stroke-width="0.5" opacity="0.08"/>`;
-}).join('\n');
+/* Markers sit at the centre of each country's box. For the big
+   sprawling ones that is not where a person would point, but it is
+   honest — the marker means "this country", not "this city". Dubai
+   is the exception and gets its own precise treatment. */
+const marker = (id, cls) => {
+  const c = countries.get(id);
+  if (!c) return '';
+  const cx = (c.box.x0 + c.box.x1) / 2;
+  const cy = (c.box.y0 + c.box.y1) / 2;
+  return `    <circle class="${cls}" cx="${f(cx)}" cy="${f(cy)}" r="7"/>`;
+};
 
-/* --- label ladder --------------------------------------------
-   Each label is pushed out to a column and given a y-slot that
-   cannot collide with its neighbours. The dot never moves; only
-   the label does, and a leader line keeps the two tied together
-   so nothing about the data is obscured. */
-function ladder(list, side) {
-  const col = list.slice().sort((a, b) => a.y - b.y);
-  let last = -Infinity;
-  for (const n of col) {
-    n.ly = Math.max(n.y, last + LABEL_GAP);
-    last = n.ly;
-  }
-  // If the stack overflowed the canvas, lift the whole column.
-  const overflow = last - (H - 150);
-  if (overflow > 0) for (const n of col) n.ly -= overflow;
-  for (const n of col) n.side = side;
-  return col;
-}
+const ae = countries.get('ae').box;
+const dubaiX = (ae.x0 + ae.x1) / 2;
+const dubaiY = (ae.y0 + ae.y1) / 2;
 
-const placed = nodes.filter((n) => !n.origin);
-ladder(placed.filter((n) => n.x < CX), 'left');
-ladder(placed.filter((n) => n.x >= CX), 'right');
-
-const marks = [
-  `    <g>
-      <circle cx="${CX}" cy="${CY}" r="26" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.35"/>
-      <circle cx="${CX}" cy="${CY}" r="15" fill="none" stroke="#2DD4C0" stroke-width="0.75" opacity="0.7"/>
-      <circle cx="${CX}" cy="${CY}" r="4.5" fill="#2DD4C0"/>
-      <text x="${CX}" y="${CY + 48}" text-anchor="middle" class="origin-name">DUBAI</text>
-      <text x="${CX}" y="${CY + 62}" text-anchor="middle" class="node-coord">${esc(ORIGIN.label)}</text>
-    </g>`,
-  ...placed.map((n) => {
-    const left = n.side === 'left';
-    const lx = left ? LEFT_X : RIGHT_X;
-    const anchor = left ? 'start' : 'end';
-    const elbow = left ? lx + 116 : lx - 116;
-
-    const dot =
-      n.kind === 'direct'
-        ? `<circle cx="${f(n.x)}" cy="${f(n.y)}" r="4" fill="#2DD4C0"/>`
-        : `<circle cx="${f(n.x)}" cy="${f(n.y)}" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>`;
-
-    return `    <g>
-      <path d="M${f(n.x)} ${f(n.y)} L${f(elbow)} ${f(n.ly - 4)} L${f(left ? elbow + 8 : elbow - 8)} ${f(n.ly - 4)}" fill="none" stroke="#2DD4C0" stroke-width="0.5" opacity="0.3"/>
-      ${dot}
-      <text x="${lx}" y="${f(n.ly - 6)}" text-anchor="${anchor}" class="node-name ${n.kind}">${esc(n.short.toUpperCase())}</text>
-      <text x="${lx}" y="${f(n.ly + 6)}" text-anchor="${anchor}" class="node-coord">${esc(n.coords)} &#183; ${Math.round(n.km).toLocaleString('en-US')} KM</text>
-    </g>`;
-  }),
-].join('\n');
-
-const TOP = 165;   // everything above the outer ring is empty, so crop it away
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 ${TOP} ${W} ${H - TOP}" width="${W}" height="${H - TOP}" role="img" aria-label="Network of BH Ventures markets, plotted by true bearing and distance from Dubai">
-  <title>Markets by bearing and distance from Dubai</title>
+const out = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${f(X0)} ${f(Y0)} ${f(W)} ${f(H)}" role="img" aria-label="World map with BH Ventures markets highlighted">
+  <title>BH Ventures markets</title>
   <style>
-    .ring-label { font-family: "Space Grotesk", sans-serif; font-size: 9px; letter-spacing: .16em; fill: #2DD4C0; opacity: .34; }
-    .node-name  { font-family: "Space Grotesk", sans-serif; font-size: 12px; letter-spacing: .14em; fill: #FAFAF8; }
-    .node-name.partner { fill: #8FA3B5; }
-    .node-coord { font-family: "Space Grotesk", sans-serif; font-size: 8px;  letter-spacing: .10em; fill: #2DD4C0; opacity: .7; }
-    .legend     { font-family: "Space Grotesk", sans-serif; font-size: 9px;  letter-spacing: .16em; fill: #8FA3B5; }
-    .legend-n   { font-family: "Space Grotesk", sans-serif; font-size: 9px;  letter-spacing: .16em; fill: #2DD4C0; }
-    .origin-name{ font-family: "Space Grotesk", sans-serif; font-size: 13px; letter-spacing: .2em; fill: #FAFAF8; }
-    .cardinal   { font-family: "Space Grotesk", sans-serif; font-size: 9px;  letter-spacing: .2em;  fill: #2DD4C0; opacity: .3; }
+    /* The first version drew land at #E6E4DE on #FAFAF8 paper.
+       Those are nearly the same value, so the continents dissolved
+       and only the highlighted markets showed — the client's note
+       that the map "is white in places".
+
+       Land cannot read against nothing; it reads against sea. So
+       the map now has a sea, the land is a cool grey-blue that
+       separates from both sea and paper, and every coast carries a
+       hairline. That last one is what makes continents look drawn
+       rather than smudged. */
+    .sea      { fill: #F4F5F2; }
+    .land     { fill: #C6D0D2; stroke: #185D58; stroke-width: 0.8; stroke-opacity: .35; stroke-linejoin: round; }
+    .direct   { fill: #185D58; stroke: #123F3C; stroke-width: 0.8; stroke-linejoin: round; }
+    .partner  { fill: #7FB3AD; stroke: #185D58; stroke-width: 0.8; stroke-opacity: .55; stroke-linejoin: round; }
+    .wider    { fill: #B9CFCB; stroke: #185D58; stroke-width: 0.8; stroke-opacity: .45; stroke-linejoin: round; }
+    .pin      { fill: #0B8F81; }
+    .pin-dir  { fill: #185D58; }
+    .origin   { fill: #0B8F81; }
+    .ring     { fill: none; stroke: #0B8F81; stroke-width: 2.4; }
+    .ring-2   { fill: none; stroke: #0B8F81; stroke-width: 1.8; opacity: .45; }
   </style>
 
-  <g id="spokes">
-${spokes}
-  </g>
+  <rect class="sea" x="${f(X0)}" y="${f(Y0)}" width="${f(W)}" height="${f(H)}"/>
 
-  <g id="rings">
-${rings}
-  </g>
+  <g class="land">${base}</g>
 
-  <g id="cardinals">
-    <text x="${CX}" y="${CY - R_MAX - 20}" text-anchor="middle" class="cardinal">N</text>
-  </g>
+${layer(WIDER, 'wider')}
+${layer(PARTNER, 'partner')}
+${layer(DIRECT, 'direct')}
 
-  <g id="arcs">
-${arcs}
-  </g>
-
-  <g id="nodes">
-${marks}
-  </g>
-
-  <g id="legend" transform="translate(0 ${H - 84})">
-    <line x1="0" y1="0" x2="${W}" y2="0" stroke="#2DD4C0" stroke-width="0.6" opacity="0.22"/>
-    <circle cx="8" cy="26" r="4" fill="#2DD4C0"/>
-    <text x="22" y="30" class="legend-n">DIRECT OPERATIONS</text>
-    <text x="196" y="30" class="legend">5</text>
-
-    <circle cx="8" cy="52" r="4" fill="none" stroke="#0B8F81" stroke-width="1.2"/>
-    <text x="22" y="56" class="legend">STRATEGIC PARTNERSHIPS</text>
-    <text x="252" y="56" class="legend">4</text>
-
-    <text x="380" y="30" class="legend">PLOTTED BY TRUE BEARING FROM DUBAI</text>
-    <text x="380" y="56" class="legend">RINGS ARE GREAT-CIRCLE DISTANCE</text>
+  <g id="origin">
+    <circle class="ring-2" cx="${f(dubaiX)}" cy="${f(dubaiY)}" r="42"/>
+    <circle class="ring"   cx="${f(dubaiX)}" cy="${f(dubaiY)}" r="24"/>
+    <circle class="origin" cx="${f(dubaiX)}" cy="${f(dubaiY)}" r="8"/>
   </g>
 </svg>
 `;
 
-const out = resolve(ROOT, 'assets/graphics/network-map.svg');
-writeFileSync(out, svg);
+writeFileSync(OUT, out);
 
-console.log('wrote assets/graphics/network-map.svg');
+const kb = (out.length / 1024).toFixed(0);
+console.log('wrote assets/graphics/world-map.svg  (' + kb + 'KB, viewBox ' + f(W) + '×' + f(H) + ')');
 console.log('');
-console.log('  market            bearing   distance');
-console.log('  ' + '-'.repeat(42));
-for (const n of nodes) {
-  if (n.origin) continue;
-  console.log(
-    '  ' + n.short.padEnd(18) + (n.brg.toFixed(0) + '°').padStart(6) + '   ' + Math.round(n.km).toLocaleString('en-US').padStart(7) + ' km',
-  );
-}
+console.log('  highlighted   ' + OURS.length + ' countries');
+console.log('  direct        ' + DIRECT.join(' ').toUpperCase());
+console.log('  partnerships  ' + PARTNER.join(' ').toUpperCase());
+console.log('  wider         ' + WIDER.join(' ').toUpperCase());
+
+const missing = OURS.filter((id) => !countries.has(id));
+if (missing.length) console.log('\n!  not present in the source map: ' + missing.join(', '));

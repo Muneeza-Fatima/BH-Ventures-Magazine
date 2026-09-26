@@ -110,4 +110,21 @@
     <path d="M5 19.5h14"/>
     <path d="M9 19.5v-6h6v6"/>
   </symbol>
+
+  <!-- Editorial: global connections — a globe with a trade lane across it -->
+  <symbol id="i-globe" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.5"/>
+    <path d="M3.5 12h17"/>
+    <path d="M12 3.5c2.6 2.4 4 5.3 4 8.5s-1.4 6.1-4 8.5c-2.6-2.4-4-5.3-4-8.5s1.4-6.1 4-8.5z"/>
+  </symbol>
+
+  <!-- Editorial: the future — a tower crane over a rising core -->
+  <symbol id="i-build" viewBox="0 0 24 24">
+    <path d="M4 20.5h16"/>
+    <path d="M7 20.5V7"/>
+    <path d="M3.5 7h13"/>
+    <path d="M7 7l4-3.5"/>
+    <path d="M14 7v3.5"/>
+    <path d="M11.5 14.5h7v6h-7z"/>
+  </symbol>
 </svg>

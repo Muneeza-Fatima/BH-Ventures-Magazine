@@ -73,6 +73,11 @@ const FULL_BLEED = 2200;
 const CARD = 950;
 
 const SHOTS = [
+  /* The cover. A CUT-OUT, so the sky matters as much as the
+     buildings: it has to be clear and even, because grade-images.mjs
+     keys it out and a mottled or hazy sky leaves a ragged edge.
+     Queries are ordered widest-net first. */
+  { slug: 'cover-dubai-real', minW: 3000, queries: ['Downtown Dubai skyline', 'Burj Khalifa Downtown Dubai', 'Dubai skyline day', 'Sheikh Zayed Road skyline', 'Burj Khalifa daytime'] },
   { slug: 'cover-dubai-skyline', minW: FULL_BLEED, queries: ['Dubai skyline night', 'Dubai Downtown skyline', 'Burj Khalifa night'] },
   { slug: 'opening-dubai-road', minW: FULL_BLEED, queries: ['Sheikh Zayed Road', 'Dubai skyline day', 'Dubai Business Bay', 'Dubai cityscape'] },
   { slug: 'connections-port', minW: FULL_BLEED, queries: ['container terminal', 'container ship port', 'Hamburg container terminal', 'port of Rotterdam containers'] },

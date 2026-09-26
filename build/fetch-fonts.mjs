@@ -17,9 +17,25 @@
    the face is still FrauncesWonky144pt-Medium — so the optical
    size and the WONK axis the design wants are preserved.
 
-   Fraunces is fetched at three optical sizes because that axis is
-   the whole reason for choosing it: 144 for display, 72 for
-   section headings and figures, 36 for pull-quotes.
+   Playfair Display is the display face. It replaced Poppins because
+   Poppins is a geometric sans and a geometric sans does not read as
+   a magazine - it reads as a website. Playfair is a high-contrast
+   serif: the visible difference between thick and thin strokes is
+   the thing the eye actually recognises as editorial, and it is what
+   mastheads have been set in for two hundred years.
+
+   It is also the right partner for the cover: the building cutout is
+   all straight verticals, and a serif contrasts with that where a
+   geometric sans competes with it.
+
+   Playfair IS a variable font on Google Fonts, so every axis here is
+   pinned - that is what makes the response a static instance, and
+   verify-pdf.mjs asserts Type3 = 0 on the far end.
+
+   Inter stays for body copy. Poppins is wide and tiring in long
+   paragraphs at 9.5pt; Inter is not, and it is already tuned to the
+   body size. Note its opsz axis is now pinned too - it was NOT
+   before, which broke this file's own rule and was passing on luck.
 
    Usage: node build/fetch-fonts.mjs
    ============================================================ */
@@ -51,22 +67,30 @@ function latinUrl(css) {
   return /https:\/\/[^)]+/.exec(latin ?? '')?.[0] ?? null;
 }
 
-/* ital,opsz,wght,SOFT,WONK — every axis pinned to one value, which
-   is what makes the response static rather than variable. */
-const fraunces = (ital, opsz, wght) =>
-  `https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@${ital},${opsz},${wght},0,1&display=swap`;
+/* Every axis pinned to one value, which is what makes the response
+   static rather than variable. Inter has TWO axes (opsz, wght) and
+   both must be named, or Google may serve the variable file and
+   Chrome embeds it as Type 3. */
+/* Every axis pinned to one value, which is what makes the response
+   static rather than variable. Inter has TWO axes (opsz, wght) and
+   both must be named, or Google may serve the variable file and
+   Chrome embeds it as Type 3. */
+const playfair = (ital, wght) =>
+  `https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@${ital},${wght}&display=swap`;
+
+const inter = (ital, wght) =>
+  `https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@${ital},14,${wght}&display=swap`;
 
 const FILES = [
-  { name: 'fraunces-144.woff2',  css: fraunces(0, 144, 500) },
-  { name: 'fraunces-144i.woff2', css: fraunces(1, 144, 500) },
-  { name: 'fraunces-72.woff2',   css: fraunces(0, 72, 500) },
-  { name: 'fraunces-72i.woff2',  css: fraunces(1, 72, 500) },
-  { name: 'fraunces-36.woff2',   css: fraunces(0, 36, 400) },
-  { name: 'fraunces-36i.woff2',  css: fraunces(1, 36, 400) },
-  { name: 'inter-400.woff2',     css: 'https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap' },
-  { name: 'inter-600.woff2',     css: 'https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap' },
-  { name: 'grotesk-400.woff2',   css: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap' },
-  { name: 'grotesk-500.woff2',   css: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap' },
+  { name: 'playfair-500.woff2',  css: playfair(0, 500) },   // section headings, card titles
+  { name: 'playfair-500i.woff2', css: playfair(1, 500) },   // the emphasised half of a headline
+  { name: 'playfair-700.woff2',  css: playfair(0, 700) },   // cover, chapter openers
+  { name: 'playfair-700i.woff2', css: playfair(1, 700) },   // the cover's second line
+
+  { name: 'inter-400.woff2',    css: inter(0, 400) },
+  { name: 'inter-400i.woff2',   css: inter(1, 400) },
+  { name: 'inter-500.woff2',    css: inter(0, 500) },
+  { name: 'inter-600.woff2',    css: inter(0, 600) },
 ];
 
 for (const f of FILES) {

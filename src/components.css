@@ -1,63 +1,293 @@
 /* ============================================================
    components.css — the parts the pages are assembled from.
    Page geometry lives in print.css; colour and scale in tokens.css.
+
+   THE COLOUR CONTRACT
+   The page is light. Brand colour is never the ground — it is the
+   things standing on it: a panel, a header band, a card, a rule,
+   a numeral. So every page carries navy without any page being
+   dark.
+
+   Every component below is written light-first, with a dark
+   variant that applies inside .panel, .headband, .card--navy, or
+   on the few pages that really are dark (.page--dark,
+   .page--deep).
+
+   HOW THE NAVY ARRIVES — this is what changed.
+   It used to arrive as full-bleed bands, a full-height sidebar and
+   a foot-block that ran off the bottom edge. It now arrives as
+   INSET ROUNDED PANELS. Two consequences worth stating:
+
+     · Nothing navy touches the trim any more, so no corner is
+       ever sliced. A half-cut radius reads as a misregistered
+       print, and it is the fastest way to look cheap.
+     · There is less navy overall, which is the point — but the
+       book still has to carry the brand. build/check-ink.mjs
+       measures that, and its bounds did NOT have to move: the
+       navy did not leave, it changed shape. Header bands and foot
+       panels carry what full-bleed blocks and sidebars used to.
+
+   NO BLURRED SHADOWS, ANYWHERE.
+   The reference this design follows lifts its cards on soft drop
+   shadows. We cannot: a blurred box-shadow exports from Chrome as
+   a /Luminosity soft mask fed by a DCT-compressed grey bitmap, and
+   build/verify-pdf.mjs hard-fails on /Luminosity — the same
+   construct that rendered every photo pink in Firefox once before.
+   filter: drop-shadow() is worse; it rasterises the whole subtree
+   and takes the live text with it.
+
+   So elevation here is a HAIRLINE: a zero-blur spread ring, which
+   exports as a plain filled path. At reading distance it reads the
+   same as the reference's shadow and it prints sharper. All of
+   this was measured through the real Chrome -> pdf.js chain, not
+   assumed.
    ============================================================ */
 
-/* ---------- KICKER ------------------------------------------
-   'O3 · THE WORLD WE OPERATE IN' — the running head of each
-   section. Space Grotesk, wide tracking, small. */
+/* The light default comes FIRST, and the dark list after it.
+
+   Order matters here and getting it wrong is silent. `.page` and
+   `.page--deep` have identical specificity (0,1,0), so whichever
+   is written last wins. With the dark list first, every dark page
+   re-inherited `--fg: var(--ink)` from `.page` and set navy type
+   on a navy ground — the imprint page printed its own address in
+   invisible ink. Nothing in the markup showed it; only looking at
+   the rendered page did. */
+.page {
+  --fg: var(--ink);
+  --fg-muted: var(--muted);
+  --fg-accent: var(--teal-deep);
+  --fg-rule: var(--rule-light);
+}
+
+/* One selector list, used throughout, for "this sits on navy". */
+.panel,
+.headband,
+.card--navy,
+.page--dark,
+.page--deep {
+  --fg: var(--paper);
+  --fg-muted: var(--muted-dark);
+  --fg-accent: var(--aqua);
+  --fg-rule: var(--rule-dark);
+  color: var(--paper);
+}
+
+
+/* ---------- THE NAVY DEVICES --------------------------------
+   Three, and no more. Used one or two to a page; a page with
+   three has stopped being a light page. */
+
+/* PANEL — a rounded block holding white type.
+   Verified clean in the PDF: a rounded rect emits as vector
+   Beziers with no mask and no transparency group, and the text
+   set on it stays live and searchable. */
+.panel {
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  padding: var(--pad-panel);
+}
+
+.panel--deep { background: var(--ink-deep); }
+
+/* PANEL AT THE FOOT — the answer to the hole every text page had.
+
+   The copy in this magazine is short: a section is three
+   paragraphs and a quote, which on A4 at a readable size fills the
+   top half and leaves the bottom half blank. check-space kept
+   finding 40 to 60mm of nothing on nine different pages.
+
+   The old fix was a band that ran off the bottom edge. Against a
+   white page that reads as a printing error rather than a design,
+   so it is now a panel that sits ON the page with the margin
+   showing beneath it — anchored to the foot, generous, and
+   holding the thing the page ends on.
+
+   Requires the page to be `display: flex; flex-direction: column`
+   — .page--stack below. */
+.page--stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel--foot {
+  margin-top: auto;
+  min-height: 40mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* HEADBAND — the rounded navy header band a section page opens
+   with. It reaches OUT past the text column so it reads as a
+   band, and stops 9mm short of the trim on every side so all four
+   corners stay round.
+
+   The inset is measured from the page edge, not the trim, because
+   that is what CSS has: 9mm from the page edge is 6mm from the
+   trim after the 3mm bleed. */
+.headband {
+  position: relative;
+  margin: calc(9mm - var(--p-top)) calc(9mm - var(--p-outer)) var(--s-3) calc(9mm - var(--p-inner));
+  padding: var(--pad-panel);
+  min-height: 46mm;
+  background: var(--ink);
+  border-radius: var(--r-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Mirror the deeper gutter margin on verso pages. */
+.page:nth-of-type(even) .headband {
+  margin-left: calc(9mm - var(--p-outer));
+  margin-right: calc(9mm - var(--p-inner));
+}
+
+.headband__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.headband__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--t-display-m);
+  line-height: var(--lh-display-m);
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+.headband__deck {
+  margin: var(--s-1) 0 0;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: var(--t-deck);
+  line-height: var(--lh-deck);
+  color: var(--muted-dark);
+  max-width: 118mm;
+  text-wrap: balance;
+}
+
+
+/* ---------- CARD --------------------------------------------
+   The white rounded feature card. This is the workhorse of the
+   whole design — the reference is built almost entirely out of
+   them.
+
+   The hairline IS the elevation. See the file header for why
+   there is no shadow here. */
+
+.card {
+  background: var(--paper);
+  border: var(--stroke) solid var(--line-pale);
+  border-radius: var(--r-md);
+  padding: var(--pad-card);
+  break-inside: avoid;
+}
+
+.card--warm {
+  background: var(--paper-alt);
+  border-color: var(--rule-light);
+}
+
+.card--navy {
+  background: var(--ink);
+  border-color: transparent;
+}
+
+.card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--t-head);
+  line-height: var(--lh-head);
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+/* The italic sub-description under a card title. This is the
+   reference's signature voice and it is doing real work: it keeps
+   two sizes of information apart without needing a second colour
+   or a rule between them. */
+.card__sub {
+  margin: 2mm 0 0;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: var(--t-caption);
+  line-height: var(--lh-caption);
+  color: var(--fg-muted);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-1);
+}
+
+.card-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+
+
+/* ---------- PILL --------------------------------------------
+   Section numbers, "03 / 10", edition chips. Replaces the giant
+   outlined sheet numeral, which was drawing its glyphs with
+   -webkit-text-stroke and therefore embedding Type 3 fonts into
+   the PDF — not permitted in PDF/X-4, and shipped undetected
+   until verify-pdf.mjs learned to look. */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2mm;
+  padding: 1.6mm 4mm;
+  border-radius: var(--r-pill);
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: var(--t-kicker);
+  line-height: var(--lh-kicker);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.pill--solid   { background: var(--teal-deep); color: var(--paper); }
+.pill--navy    { background: var(--ink); color: var(--aqua); }
+.pill--onnavy  { background: rgba(45, 212, 192, 0.14); color: var(--aqua); }
+.pill--outline { background: transparent; color: var(--fg-accent); box-shadow: 0 0 0 0.25mm var(--fg-rule); }
+
+
+/* ---------- KICKER ------------------------------------------ */
 
 .kicker {
   display: flex;
   align-items: baseline;
   gap: 3mm;
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: var(--t-kicker);
   line-height: var(--lh-kicker);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
-  color: var(--muted-dark);
+  color: var(--fg-muted);
 }
-
-.page--light .kicker { color: var(--muted); }
 
 .kicker__n {
   font-family: var(--font-display);
-  font-family: var(--font-display-36);
-  font-size: 12pt;
+  font-weight: 600;
+  font-size: 11pt;
+  /* Zero, so the larger numeral hangs on the kicker's baseline
+     without making the line taller. At its own line-height it
+     pushed the hairline 0.6mm lower on every kicker page than on
+     the rail pages (contents, ventures, contact). */
+  line-height: 0;
   letter-spacing: 0;
-  color: var(--aqua);
-  font-feature-settings: "tnum" 1;
+  color: var(--fg-accent);
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
-.page--light .kicker__n { color: var(--teal-deep); }
-
-/* ---------- SHEET NUMERAL ----------------------------------
-   The section number set the way a drawing set numbers its
-   sheets: very large, outlined, bleeding off the edge. Structure,
-   not ornament — so it is never filled, never centred. */
-
-.sheet-numeral {
-  position: absolute;
-  font-family: var(--font-display);
-  font-size: 132pt;
-  line-height: 0.8;
-  font-weight: 500;
-  color: transparent;
-  -webkit-text-stroke: 0.6pt var(--aqua);
-  /* Quiet. It is a sheet number, not a headline — at 0.38 it was
-     competing with the section title for the top of the page. */
-  opacity: 0.2;
-  font-feature-settings: "tnum" 1;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-.page--light .sheet-numeral {
-  -webkit-text-stroke-color: var(--teal-deep);
-  opacity: 0.22;
-}
 
 /* ---------- DISPLAY TYPE ------------------------------------ */
 
@@ -66,96 +296,99 @@
 .display-m,
 .display-s {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: var(--track-display);
   margin: 0;
   /* Display type is always ragged right. Justifying a headline
      opens rivers you cannot close. */
   text-wrap: balance;
   hyphens: none;
+  color: var(--fg);
 }
 
-.display-xl { font-size: var(--t-display-xl); line-height: var(--lh-display-xl); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1; }
-.display-l  { font-size: var(--t-display-l);  line-height: var(--lh-display-l);  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1; }
-.display-m  { font-family: var(--font-display-72); font-size: var(--t-display-m);  line-height: var(--lh-display-m);  font-variation-settings: "opsz" 72,  "SOFT" 0, "WONK" 1; }
-.display-s  { font-family: var(--font-display-36); font-size: var(--t-display-s);  line-height: var(--lh-display-s);  font-variation-settings: "opsz" 36,  "SOFT" 0, "WONK" 1; }
+.display-xl { font-size: var(--t-display-xl); line-height: var(--lh-display-xl); font-weight: 700; }
+.display-l  { font-size: var(--t-display-l);  line-height: var(--lh-display-l); }
+.display-m  { font-size: var(--t-display-m);  line-height: var(--lh-display-m); }
+.display-s  { font-size: var(--t-display-s);  line-height: var(--lh-display-s); }
 
-/* The second half of a two-part headline, set in italic teal.
-   Used sparingly — it is the magazine's one flourish. */
+/* The second half of a two-part headline. Italic, and in the
+   accent — the magazine's one flourish, used sparingly. */
 .em {
   font-style: italic;
-  color: var(--aqua);
+  color: var(--fg-accent);
 }
 
-.page--light .em { color: var(--teal-deep); }
 
 /* ---------- BODY -------------------------------------------- */
 
+/* The deck is italic by default. In the reference every piece of
+   secondary text is, and it is the single detail that most makes
+   the two look like the same family. */
 .deck {
   font-family: var(--font-body);
+  font-style: italic;
   font-size: var(--t-deck);
   line-height: var(--lh-deck);
   font-weight: 400;
-  color: var(--muted-dark);
+  color: var(--fg-muted);
   margin: 0;
-  max-width: 105mm;
+  max-width: 118mm;
+  text-wrap: balance;
 }
 
-.page--light .deck { color: var(--muted); }
+.deck--roman { font-style: normal; }
 
 .body {
   font-family: var(--font-body);
   font-size: var(--t-body);
   line-height: var(--lh-body);
-  color: var(--muted-dark);
-  /* Oldstyle figures sit inside a line of prose instead of
-     shouting out of it. */
-  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+  color: var(--fg-muted);
+  /* Lining figures, not oldstyle. Oldstyle belongs with a serif;
+     next to a geometric sans its descending 3s and 9s read as a
+     mistake. */
+  font-feature-settings: "kern" 1, "liga" 1, "lnum" 1;
   orphans: 3;
   widows: 3;
   margin: 0 0 var(--s-1);
-  /* 60–70 characters is the readable measure. Wider tires the
-     eye; narrower breaks the rhythm. */
-  max-width: 82mm;
+  /* 60–70 characters is the readable measure. */
+  max-width: 88mm;
 }
-
-.page--light .body { color: var(--muted); }
 
 .body strong {
   font-weight: 600;
-  color: var(--paper);
+  color: var(--fg);
 }
 
-.page--light .body strong { color: var(--ink); }
-
-/* Two-column setting is the one place justification belongs —
-   it is the magazine convention, and the column is narrow
-   enough that hyphenation can close the gaps. */
+/* Two-column setting is the one place justification belongs — it
+   is the magazine convention, and the column is narrow enough
+   that hyphenation can close the gaps. */
 .body--2col {
   column-count: 2;
-  column-gap: var(--gutter);
+  column-gap: var(--col-gap);
   max-width: none;
   text-align: justify;
   hyphens: auto;
   -webkit-hyphens: auto;
 }
 
-/* ---------- RULES -------------------------------------------
-   Every rule in the book is the same weight. */
+
+/* ---------- RULES ------------------------------------------- */
 
 .rule {
   height: 0;
-  border-top: var(--stroke) solid var(--rule-dark);
+  border-top: var(--stroke) solid var(--fg-rule);
   margin: 0;
 }
 
-.page--light .rule { border-top-color: var(--rule-light); }
-
+/* Was a gradient bar. A CSS gradient exports as a tiling pattern
+   plus a shading dictionary, which is live PDF machinery for
+   something that only needs to be a filled rectangle. Flat. */
 .rule--brand {
   height: 0.8mm;
   border: 0;
-  background: var(--grad-brand);
+  background: var(--fg-accent);
 }
+
 
 /* ---------- PULL-QUOTE --------------------------------------
    Hanging punctuation: the opening quote mark sits outside the
@@ -164,13 +397,16 @@
 
 .pullquote {
   position: relative;
-  font-family: var(--font-display-36);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-style: italic;
   font-size: var(--t-display-s);
   line-height: var(--lh-display-s);
-  font-weight: 400;
   letter-spacing: var(--track-display);
   margin: 0;
-  max-width: 96mm;
+  max-width: 104mm;
+  color: var(--fg);
+  text-wrap: balance;
 }
 
 .pullquote::before {
@@ -180,141 +416,160 @@
   top: -0.06em;
   font-size: 1.5em;
   line-height: 1;
-  color: var(--aqua);
-  opacity: 0.55;
+  /* A mixed colour rather than opacity: opacity pushes the element
+     into its own transparency group in the PDF, and 138 of those
+     is what the old book shipped with. */
+  color: color-mix(in srgb, var(--fg-accent) 55%, transparent);
 }
-
-.page--light .pullquote::before { color: var(--teal-deep); }
 
 .pullquote--bare::before { content: none; }
 
 .pullquote__attrib {
   display: block;
   margin-top: var(--s-1);
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-style: normal;
   font-size: var(--t-kicker);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
-  color: var(--muted-dark);
+  color: var(--fg-muted);
 }
 
-/* ---------- STAT BLOCK --------------------------------------
-   Tabular figures are not optional. Without "tnum" the digits
-   in 9 / 5 / 4 / 150+ have different widths and the row of
-   numbers visibly staggers. */
+
+/* ---------- STAT TILES --------------------------------------
+   Tabular figures are not optional. Without "tnum" the digits in
+   9 / 5 / 4 / 150+ have different widths and the row visibly
+   staggers. */
 
 .stats {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  gap: var(--gutter);
+  gap: var(--s-1);
 }
 
+.stats--wrap {
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* A stat is now a card rather than a rule with a number over it. */
 .stat {
-  padding-top: var(--s-1);
-  border-top: var(--stroke) solid var(--rule-dark);
+  background: var(--paper);
+  border: var(--stroke) solid var(--line-pale);
+  border-radius: var(--r-sm);
+  padding: var(--pad-card);
+  break-inside: avoid;
 }
 
-.page--light .stat { border-top-color: var(--rule-light); }
+.panel .stat,
+.page--dark .stat,
+.page--deep .stat {
+  background: rgba(250, 250, 248, 0.06);
+  border-color: var(--rule-dark);
+}
 
 .stat__value {
   display: block;
   font-family: var(--font-display);
-  font-family: var(--font-display-72);
   font-size: var(--t-stat);
   line-height: var(--lh-stat);
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: var(--aqua);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg-accent);
   font-feature-settings: "tnum" 1, "lnum" 1;
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-.page--light .stat__value { color: var(--teal-deep); }
-
 .stat__label {
   display: block;
   margin-top: 2mm;
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: var(--t-kicker);
   line-height: 11pt;
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
-  color: var(--paper);
+  color: var(--fg);
 }
-
-.page--light .stat__label { color: var(--ink); }
 
 .stat__note {
   display: block;
   margin-top: 1.5mm;
   font-family: var(--font-body);
+  font-style: italic;
   font-size: var(--t-caption);
   line-height: var(--lh-caption);
-  color: var(--muted-dark);
+  color: var(--fg-muted);
 }
 
-.page--light .stat__note { color: var(--muted); }
+/* An unresolved [X] placeholder. Deliberately loud: a number that
+   never got filled must not reach a printer quietly. build.mjs
+   warns on every one of these too.
 
-/* An unresolved [X] placeholder. Deliberately loud: a number
-   that never got filled must not be able to reach a printer
-   quietly. build.mjs also warns on every one of these. */
-.stat--todo .stat__value {
-  color: transparent;
-  -webkit-text-stroke: 0.4pt var(--aqua);
-  opacity: 0.8;
-}
-
+   It used to be set in outline with -webkit-text-stroke, which is
+   how Type 3 fonts got into the PDF. A dashed border says the same
+   thing and costs the document nothing. */
 .stat--todo {
-  border-top-style: dashed;
-  border-top-width: 0.5pt;
+  border-style: dashed;
+  border-color: var(--fg-accent);
 }
 
-/* ---------- VENTURE CARD ------------------------------------ */
 
-.venture {
+/* ---------- FLAGS -------------------------------------------
+   Real national flags, fetched as SVG. Each is set to one height
+   and left to find its own width, because the ratios genuinely
+   differ — 2:3, 1:2, 3:5, and Denmark's 28:37. Forcing them to a
+   single box would visibly distort half of them.
+
+   The hairline matters: Denmark's and Ukraine's both run pale to
+   the edge and would otherwise dissolve into the page. It is also
+   the same zero-blur spread ring the cards use, and it has been
+   exporting cleanly since the first edition — which is the
+   precedent the whole elevation scale now rests on. */
+
+.flag {
+  height: 4.2mm;
+  width: auto;
+  display: block;
+  border-radius: 0.6mm;
+  box-shadow: 0 0 0 0.25pt rgba(14, 27, 43, 0.28);
+}
+
+.panel .flag,
+.headband .flag,
+.card--navy .flag,
+.page--dark .flag {
+  box-shadow: 0 0 0 0.25pt rgba(250, 250, 248, 0.35);
+}
+
+.country {
   display: grid;
-  grid-template-columns: 9mm 1fr;
-  column-gap: 3mm;
-  padding: var(--s-1) 0;
-  border-top: var(--stroke) solid var(--rule-dark);
-  break-inside: avoid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 0 3mm;
+  padding: 2.1mm 0;
+  border-top: var(--stroke) solid var(--fg-rule);
 }
 
-.page--light .venture { border-top-color: var(--rule-light); }
+.country:first-child { border-top: 0; }
 
-.venture__n {
-  font-family: var(--font-display);
-  font-family: var(--font-display-36);
-  font-size: 13pt;
-  line-height: 15pt;
-  color: var(--aqua);
-  font-feature-settings: "tnum" 1;
-}
-
-.page--light .venture__n { color: var(--teal-deep); }
-
-.venture__name {
-  margin: 0;
+.country__name {
   font-family: var(--font-body);
-  font-size: 10.5pt;
-  line-height: 14pt;
+  font-size: 9pt;
   font-weight: 600;
-  color: var(--paper);
+  color: var(--fg);
 }
 
-.page--light .venture__name { color: var(--ink); }
-
-.venture__desc {
-  margin: 1.5mm 0 0;
-  font-family: var(--font-body);
-  font-size: var(--t-caption);
-  line-height: var(--lh-caption);
-  color: var(--muted-dark);
-  max-width: 62mm;
+.country__coords {
+  font-family: var(--font-label);
+  font-size: 6.5pt;
+  letter-spacing: 0.08em;
+  color: var(--fg-accent);
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
-.page--light .venture__desc { color: var(--muted); }
 
 /* The paint has to be set on the <svg> itself, not on descendant
    selectors. <use> clones its target into a shadow tree, and
@@ -330,30 +585,130 @@
   overflow: visible;
 
   fill: none;
-  stroke: var(--aqua);
-  stroke-width: 1.5;
+  stroke: var(--fg-accent);
+  stroke-width: var(--stroke-icon);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.page--light .venture__icon { stroke: var(--teal-deep); }
-
 .group-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: var(--t-kicker);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
-  color: var(--aqua);
+  color: var(--fg-accent);
   margin: 0 0 2mm;
 }
 
-.page--light .group-label { color: var(--teal-deep); }
+
+/* ---------- ICON ROW ----------------------------------------
+   A line icon, a name, and a line of italic detail under it. The
+   reference uses this list everywhere it has to say eight things
+   without eight boxes. */
+
+.iconrow {
+  display: grid;
+  grid-template-columns: 8mm 1fr;
+  gap: 0 4mm;
+  align-items: start;
+  padding: 3mm 0;
+  border-bottom: var(--stroke) solid var(--fg-rule);
+}
+
+.iconrow:last-child { border-bottom: 0; }
+
+/* Same shadow-DOM rule as .venture__icon — paint on the <svg>. */
+.iconrow__icon {
+  width: 7mm;
+  height: 7mm;
+  display: block;
+  overflow: visible;
+
+  fill: none;
+  stroke: var(--fg-accent);
+  stroke-width: var(--stroke-icon);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.iconrow__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--t-head);
+  line-height: var(--lh-head);
+  color: var(--fg);
+}
+
+.iconrow__sub {
+  margin: 1mm 0 0;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: var(--t-caption);
+  line-height: var(--lh-caption);
+  color: var(--fg-muted);
+}
+
+
+/* ---------- PIN ---------------------------------------------
+   The rounded-square map marker, carrying the mark and a small
+   status dot. It is how the reference labels a map, and it reads
+   far better in print than a leader line into a legend. */
+
+.pin {
+  position: absolute;
+  width: 12mm;
+  height: 12mm;
+  transform: translate(-50%, -50%);
+  background: var(--paper);
+  border: var(--stroke) solid var(--line-pale);
+  border-radius: var(--r-sm);
+  display: grid;
+  place-items: center;
+  z-index: 4;
+}
+
+.pin img {
+  width: 7mm;
+  height: auto;
+  display: block;
+}
+
+.pin__dot {
+  position: absolute;
+  top: -1.2mm;
+  right: -1.2mm;
+  width: 3mm;
+  height: 3mm;
+  border-radius: var(--r-dot);
+  border: 0.3mm solid var(--paper);
+}
+
+.pin__dot--direct  { background: var(--teal-deep); }
+.pin__dot--partner { background: var(--teal); }
+.pin__dot--wider   { background: var(--mint); }
+
+.pin__label {
+  position: absolute;
+  top: 12.8mm;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 6pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
 
 /* ---------- PHOTOGRAPHY -------------------------------------
    Images arrive already graded by sharp. Nothing here filters,
-   blends or masks: a CSS blend mode would export into the PDF
-   as live transparency, which is exactly the bug that turns
-   every photo pink in Firefox. */
+   blends or masks: a CSS blend mode would export into the PDF as
+   live transparency, which is the bug that turns every photo pink
+   in Firefox. */
 
 .photo {
   display: block;
@@ -362,12 +717,19 @@
   object-fit: cover;
 }
 
+/* border-radius plus overflow:hidden on an <img> was measured
+   through the real pipeline: Chrome emits it as a PDF clipping
+   path around a normally-drawn image, with no mask and no
+   re-encode of the JPEG. Safe, and it is the whole look. */
 .photo-frame {
   position: relative;
   overflow: hidden;
-  background: var(--ink-soft);
+  border-radius: var(--r-lg);
+  background: var(--paper-alt);
 }
 
+/* Full-bleed photography keeps square corners — a radius here
+   would be cut by the trim. */
 .photo-bleed {
   position: absolute;
   inset: 0;
@@ -375,28 +737,111 @@
 }
 
 .photo-caption {
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 6.5pt;
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
-  color: var(--muted-dark);
+  color: var(--fg-muted);
   margin-top: 2mm;
 }
 
-.page--light .photo-caption { color: var(--muted); }
+
+/* ---------- TILT --------------------------------------------
+   The rotated, overlapping photo card. transform: rotate() was
+   measured through the pipeline too: it emits as a plain `cm`
+   transformation matrix, and text inside a rotated element stays
+   live. Combine freely with the rounded frame.
+
+   Keep the angles small and keep them from this list. Three
+   related angles read as a considered arrangement; five arbitrary
+   ones read as a slide deck. */
+
+.tilt { position: relative; }
+
+.tilt--a { transform: rotate(-3.5deg); }
+.tilt--b { transform: rotate(2.5deg); }
+.tilt--c { transform: rotate(-1.5deg); }
+
+/* A white keyline around a tilted frame, so two overlapping
+   photographs separate from each other without a shadow. */
+.tilt .photo-frame {
+  border: 0.8mm solid var(--paper);
+}
+
+
+/* ---------- ICON PLATE --------------------------------------
+   Stands in for a venture photograph that has not arrived yet.
+   It is a designed object rather than an empty box: the venture's
+   own icon, large, on navy. The page looks finished, and when the
+   photograph arrives it drops into the same frame with nothing
+   else moving. */
+
+.plate {
+  position: relative;
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* Inside a rounded frame the plate FILLS it. Without this it sizes
+   itself to its icon and leaves the frame's own background showing
+   underneath, which does not read as a designed placeholder — it
+   reads as a broken image. The frame is already clipping, so the
+   plate does not need its own radius. */
+.photo-frame .plate {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+}
+
+/* Was a brand gradient at 10%. Flat, for the same reason
+   .rule--brand is flat. */
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(45, 212, 192, 0.07);
+}
+
+.plate__icon {
+  position: relative;
+  z-index: 1;
+  width: 48mm;
+  height: 48mm;
+  fill: none;
+  stroke: color-mix(in srgb, var(--aqua) 80%, transparent);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.plate__tag {
+  position: absolute;
+  left: 6mm;
+  top: 6mm;
+  z-index: 1;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 6pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--aqua) 50%, transparent);
+}
+
 
 /* ---------- COORDINATES ------------------------------------- */
 
 .coords {
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 6.5pt;
   letter-spacing: 0.1em;
-  color: var(--aqua);
-  opacity: 0.75;
-  font-feature-settings: "tnum" 1;
+  color: color-mix(in srgb, var(--fg-accent) 85%, transparent);
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
-.page--light .coords { color: var(--teal-deep); }
 
 /* ---------- LAYOUT HELPERS ---------------------------------- */
 
@@ -408,5 +853,31 @@
 .mt-auto { margin-top: auto; }
 .rel     { position: relative; z-index: 1; }
 
-/* Content sits below the datum line on most pages. */
-.below-datum { margin-top: calc(var(--datum) - var(--p-top) + var(--s-2)); }
+
+/* ---------- CAPTION -----------------------------------------
+   Set in the outer margin, naming what the picture shows.
+
+   Captions are the cheapest signal that an editor was involved:
+   a magazine has them, a template does not. They also do real
+   work here — the coordinates under each photograph tie the
+   pictures to the same specificity the folio and the map use. */
+
+.caption {
+  position: absolute;
+  z-index: 5;
+  font-family: var(--font-label);
+  font-size: 6pt;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(14, 27, 43, 0.55);
+}
+
+.caption--onphoto { color: rgba(250, 250, 248, 0.6); }
+
+/* Down the outer edge, reading bottom-to-top, the way a picture
+   credit runs in a printed magazine. */
+.caption--rotated {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}

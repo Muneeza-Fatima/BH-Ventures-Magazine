@@ -25,7 +25,7 @@
    ============================================================ */
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -45,19 +45,44 @@ if (!chrome) {
 const web = process.argv.includes('--web');
 const crops = process.argv.includes('--crops');
 
-const OUT = resolve(ROOT, 'out/sample');
+const OUT = resolve(ROOT, 'out/magazine');
 mkdirSync(OUT, { recursive: true });
 
-const query = [web ? 'trim=1' : '', crops ? 'crops=1' : ''].filter(Boolean).join('&');
+/* THE FLAGS USED TO DO NOTHING, and silently.
+
+   They were passed to Chrome as a query string - preview.html?
+   crops=1 - and nothing read it. There is no JavaScript in this
+   page and there must not be: a script in the source of a print
+   PDF is a thing that can fail. So .crops and .trim sat in
+   print.css as dead rules for however long, and every
+   --crops run produced a file identical to a plain one.
+
+   The class goes on <body> instead, written into a copy of the
+   page. preview.html itself is never touched, so the screen
+   preview and the press file cannot drift apart: they are the
+   same HTML with one attribute different. */
 const source = resolve(OUT, 'preview.html');
-const target = resolve(OUT, web ? 'BH-Ventures-SAMPLE-WEB.pdf' : 'BH-Ventures-SAMPLE.pdf');
+const target = resolve(OUT, web ? 'BH VENTURES FZE - WEB.pdf' : 'BH VENTURES FZE.pdf');
 
 if (!existsSync(source)) {
   console.error('render-pdf: run `node build/build.mjs` first');
   process.exit(2);
 }
 
-const url = 'file:///' + source.split(String.fromCharCode(92)).join('/') + (query ? '?' + query : '');
+const bodyClass = [web ? 'trim' : '', crops ? 'crops' : ''].filter(Boolean).join(' ');
+let page = source;
+
+if (bodyClass) {
+  const html = readFileSync(source, 'utf8');
+  if (!html.includes('<body>')) {
+    console.error('render-pdf: no plain <body> in preview.html to mark');
+    process.exit(2);
+  }
+  page = resolve(OUT, '.press.html');
+  writeFileSync(page, html.replace('<body>', '<body class="' + bodyClass + '">'));
+}
+
+const url = 'file:///' + page.split(String.fromCharCode(92)).join('/');
 
 execFileSync(
   chrome,

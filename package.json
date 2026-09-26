@@ -20,6 +20,8 @@
     "check:align": "node build/check-align.mjs",
     "check:pdf": "node build/verify-pdf.mjs \"out/magazine/BH VENTURES FZE.pdf\" --pages=26 --stitched",
     "check:ink": "node build/shoot-pages.mjs && node build/check-ink.mjs",
+    "site": "node build/site.mjs",
+    "vercel-build": "npm run check:copy && npm run html && npm run site",
     "build": "npm run check:copy && npm run html && npm run pdf && npm run check:fit && npm run check:align && npm run check:space && npm run check:pdf && npm run check:ink"
   },
   "dependencies": {

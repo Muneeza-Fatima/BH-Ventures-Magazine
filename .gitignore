@@ -1,3 +1,4 @@
 node_modules/
 out/.chrome*/
 out/.fit-probe.html
+dist/

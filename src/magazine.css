@@ -124,7 +124,7 @@
   align-items: baseline;
   font-family: var(--font-label);
   font-weight: 600;
-  font-size: 7.5pt;
+  font-size: var(--t-kicker);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink);
@@ -182,7 +182,7 @@
   margin: 0;
   font-family: var(--font-label);
   font-weight: 500;
-  font-size: 8.5pt;
+  font-size: 9.5pt;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--paper);
@@ -331,7 +331,7 @@
   margin: 15mm 0 0;
   font-family: var(--font-label);
   font-weight: 500;
-  font-size: 7pt;
+  font-size: 9pt;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--paper);
@@ -518,7 +518,7 @@
   margin: 0 0 1.4mm;
   font-family: var(--font-label);
   font-weight: 600;
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--fg-accent);
@@ -527,8 +527,8 @@
 .imprint__fact dd {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 9pt;
-  line-height: 13pt;
+  font-size: 11pt;
+  line-height: 15pt;
   color: var(--fg);
 }
 
@@ -536,7 +536,7 @@
   margin: 7mm 0 0;
   font-family: var(--font-label);
   font-weight: 500;
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -746,7 +746,7 @@
 
 .opening__credit {
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -962,7 +962,7 @@
 .countries {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0 8mm;
+  gap: 0 6mm;
   align-items: start;
 }
 
@@ -974,12 +974,17 @@
 .countries__col .group-label {
   display: block;
   margin-bottom: 2mm;
+  /* One line each, so the three lists start on the same row.
+     At 9.5pt "STRATEGIC PARTNERSHIPS" broke to two lines and
+     dropped the middle column 4mm below the other two. */
+  white-space: nowrap;
+  letter-spacing: 0.1em;
 }
 
 /* "United Arab Emirates" and "United Kingdom" were breaking
    across two lines, which makes a tidy list look accidental. */
 .countries .country { grid-template-columns: 7mm 1fr; gap: 0 2.4mm; padding: 1.9mm 0; }
-.countries .country__name { font-size: 8.5pt; line-height: 11pt; white-space: nowrap; }
+.countries .country__name { font-size: 10.5pt; line-height: 13pt; white-space: nowrap; }
 .countries .country__coords { display: none; }
 .countries .flag { height: 3.4mm; }
 
@@ -1344,7 +1349,7 @@
   margin: 4mm 0 0;
   margin-left: calc(var(--plate-inset) - var(--p-inner));
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -1443,7 +1448,7 @@
   margin: 4mm 0 0;
   margin-left: calc(var(--plate-inset) - var(--p-inner));
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -1559,7 +1564,7 @@
   left: 5mm;
   bottom: 4mm;
   font-family: var(--font-label);
-  font-size: 6pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: rgba(250, 250, 248, 0.75);
@@ -1608,8 +1613,8 @@
 .value__desc {
   margin: 1.5mm 0 0;
   font-family: var(--font-body);
-  font-size: 8.5pt;
-  line-height: 13.5pt;
+  font-size: 10.5pt;
+  line-height: 15pt;
   color: var(--fg-muted);
 }
 
@@ -1675,7 +1680,7 @@
   margin: 4mm 0 0;
   margin-left: calc(var(--plate-inset) - var(--p-inner));
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -1740,8 +1745,8 @@
   margin: var(--s-4) 0 0;
   max-width: var(--measure);
   font-family: var(--font-body);
-  font-size: 11pt;
-  line-height: 18pt;
+  font-size: 12pt;
+  line-height: 19pt;
   color: var(--fg-muted);
 }
 
@@ -1872,8 +1877,8 @@
    that closes it. */
 .future__text .body {
   margin: 0;
-  font-size: 11pt;
-  line-height: 17.5pt;
+  font-size: 12pt;
+  line-height: 18.5pt;
 }
 
 /* The heading and the paragraphs are ONE block; only the
@@ -1909,7 +1914,7 @@
   left: 5mm;
   top: 5mm;
   font-family: var(--font-label);
-  font-size: 6pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: rgba(250, 250, 248, 0.75);
@@ -2002,7 +2007,7 @@
   margin: 4mm 0 0;
   margin-left: calc(var(--plate-inset) - var(--p-inner));
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -2078,7 +2083,7 @@
   margin: 0 0 1.5mm;
   font-family: var(--font-label);
   font-weight: 600;
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -2095,6 +2100,18 @@
      bouncing on a page where they sit alone at 17pt. */
   font-variant-numeric: lining-nums;
   color: var(--fg);
+}
+
+/* The coordinates in Inter, not Playfair. Playfair's degree and
+   prime marks float high and wide of the figures, so 25°12′N read
+   as scattered glyphs rather than as one value. Inter's are drawn
+   for figures; tabular so the two halves line up. */
+.contact__row dd.contact__coords {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 15pt;
+  letter-spacing: 0.01em;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 /* Centred on the PAGE, not on the text column. auto margins
@@ -2193,7 +2210,7 @@
   margin: var(--s-2) 0 0;
   font-family: var(--font-label);
   font-weight: 600;
-  font-size: 8pt;
+  font-size: 10pt;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--paper);
@@ -2202,8 +2219,8 @@
 .back__lines {
   margin: 3mm 0 0;
   font-family: var(--font-body);
-  font-size: 9pt;
-  line-height: 15pt;
+  font-size: 11pt;
+  line-height: 16pt;
   color: var(--muted-dark);
 }
 

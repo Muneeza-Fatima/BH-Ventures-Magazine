@@ -277,7 +277,7 @@
 .kicker__n {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 11pt;
+  font-size: 12pt;
   /* Zero, so the larger numeral hangs on the kicker's baseline
      without making the line taller. At its own line-height it
      pushed the hairline 0.6mm lower on every kicker page than on
@@ -557,14 +557,14 @@
 
 .country__name {
   font-family: var(--font-body);
-  font-size: 9pt;
+  font-size: 10pt;
   font-weight: 600;
   color: var(--fg);
 }
 
 .country__coords {
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: 0.08em;
   color: var(--fg-accent);
   font-feature-settings: "tnum" 1, "lnum" 1;
@@ -697,7 +697,7 @@
   white-space: nowrap;
   font-family: var(--font-label);
   font-weight: 500;
-  font-size: 6pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--fg-accent);
@@ -738,7 +738,7 @@
 
 .photo-caption {
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--fg-muted);
@@ -825,7 +825,7 @@
   z-index: 1;
   font-family: var(--font-label);
   font-weight: 500;
-  font-size: 6pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: color-mix(in srgb, var(--aqua) 50%, transparent);
@@ -836,7 +836,7 @@
 
 .coords {
   font-family: var(--font-label);
-  font-size: 6.5pt;
+  font-size: var(--t-credit);
   letter-spacing: 0.1em;
   color: color-mix(in srgb, var(--fg-accent) 85%, transparent);
   font-feature-settings: "tnum" 1, "lnum" 1;
@@ -866,7 +866,7 @@
   position: absolute;
   z-index: 5;
   font-family: var(--font-label);
-  font-size: 6pt;
+  font-size: var(--t-credit);
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   white-space: nowrap;

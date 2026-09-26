@@ -204,10 +204,14 @@
   --t-display-s:  21pt;   --lh-display-s:  27pt;   /* panel headings */
   --t-head:       14pt;   --lh-head:       19pt;   /* card titles */
   --t-deck:     11.5pt;   --lh-deck:       18pt;   /* italic sub-description */
-  --t-body:      9.5pt;   --lh-body:       15pt;
-  --t-caption:     8pt;   --lh-caption:    12pt;
-  --t-kicker:    7.5pt;   --lh-kicker:     10pt;
-  --t-folio:       7pt;   --lh-folio:       7pt;
+  --t-body:     10.5pt;   --lh-body:       16pt;
+  --t-caption:    10pt;   --lh-caption:    14pt;
+  --t-kicker:    9.5pt;   --lh-kicker:     12pt;
+  --t-folio:       9pt;   --lh-folio:       9pt;
+  /* Picture credits, coordinates, small labels. Was 6-6.5pt, which
+     printed but could not be read at arm's length; 8.5pt is the
+     smallest size in the book now. */
+  --t-credit:    8.5pt;
   --t-stat:       38pt;   --lh-stat:       38pt;
 
   /* A high-contrast serif at display size needs real negative

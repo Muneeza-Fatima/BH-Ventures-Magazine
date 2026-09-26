@@ -92,3 +92,14 @@ passes while the sentence it replaced stays readable above it.
         and the approved sentence did not name them. The picture on
         that page is dates and its credit already said so; the
         description now says it too.
+
+2026-09-26 · 01 THE OPENING · body
+  was:  From a single address in Dubai, BH Ventures moves cars, cargo, code, and capital across nine countries and counting. It is not one business — it is ten disciplines operating on one standard, built by a licensed free-zone company that treats ambition as infrastructure, not inspiration.
+  now:  From a single address in Dubai, BH Ventures trades vehicles and foodstuff, builds ventures in Web3 and AI, and moves capital across nine countries and counting. It is not one business — it is ten disciplines operating on one standard, built by a licensed free-zone company that treats ambition as infrastructure, not inspiration.
+  why:  Client instruction. The client objected to "code" - BH
+        Ventures does not sell software, and the word read as if it
+        did. The new sentence names what the company does from its
+        own approved copy: automobile export and foodstuff trading
+        (§04), the Web3 venture studio and AI practice (§04, §06),
+        and capital across nine markets (§03). The second sentence
+        of the paragraph is unchanged.
